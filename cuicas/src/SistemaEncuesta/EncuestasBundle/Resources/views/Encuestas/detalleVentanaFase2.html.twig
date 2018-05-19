@@ -1,0 +1,241 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block titulo %}<div style="font-family: sans-serif;">Reporte: {{encuesta.nombreEncuesta|upper}}</div>
+{% set Fecha = "Now"|date("d-m-Y", "America/Caracas") %}
+{% set Hora = "Now"|date("h:i:s", "America/Caracas") %}
+<div style="font-family: sans-serif;">Fecha: {{Fecha}}, Hora: {{Hora}}</div>
+<div style="font-family: sans-serif;"> </div>
+{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/tooltip.css') }}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block cuerpo %}
+<br><br><br>
+<center>
+  {# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA#}
+  {% if encuesta is defined %}
+
+      <table class="table stacktable table-hover" border="1" style="position: absolute; top:150px;">
+        {% set totalMesaEstadal = 0 %}
+        {% set totalTestigosEstadal = 0 %}
+        {% set totalCierreEstadal = 0 %}
+        {% set totalChEstadal = 0 %}
+        {% set totalOpEstadal = 0 %}
+        {% for circuito in circuitos|sort %}
+        {% if totalGlobal is empty %}
+        <thead>
+          <td></td><th colspan="4">Circuito: {{circuito}}</th> <td colspan="4"></td>
+        </thead>
+        {% endif %}
+            {% set totalTestigosCircuito = 0 %}
+            {% set totalMesasCircuito = 0 %}
+            {% set totalCierreCircuito = 0 %}
+            {% set totalChCircuito = 0 %} 
+            {% set totalOpCircuito = 0 %}
+        
+        {% if totalGlobal is not empty %}
+              <thead>
+                <th colspan="" align="center">Total Por Municipio y Circuito</th>
+               <th align="center">Apertura</th>
+                <th align="center">Testigos</th>
+                <th align="center">Cierre</th>
+                <th align="center">Chavistas</th>
+                <th align="center">Opositores</th>
+              </thead>
+            {% endif %}
+        {% for municipio in municipios|sort %}
+          {% if municipio.circuito.id == circuito.id %}
+          {% if totalGlobal is empty %}
+          <thead>
+            <tr>
+              <th colspan="7">Municipio: {{municipio.nombreMunicipio}}</th>
+            </tr>
+            <tr>
+              <th>Parroquia</th><th align="center">Centro de Votaci&oacute;n</th>
+              {% if asistencia is not empty %}
+                <th align="center">Apertura</th>
+                <th align="center">Testigos</th>
+                <th align="center">Cierre</th>
+              {% endif %}
+              {% if asistencia is empty %}
+                <th align="center">Chavistas</th>
+                <th align="center">Opositores</th>
+              {% endif %}
+              <th>Tipo de Incidencias</th>
+              <th>Incidencias</th>
+            </tr>
+          </thead>
+          {% endif %}
+          {% set encontrado = "" %}
+          {% set totalCh = 0 %}
+          {% set totalOp = 0 %}
+          {% set totalMiembros = 0 %}
+          {% set totalMiembrosSi = 0 %}
+          
+          {% set mesas = 0 %}
+          {% set cierre = 0 %}
+          {% set testigos = 0 %}
+          {% set totalMesas = 0 %}
+          {% set totalTestigos = 0 %}
+          {% set totalCierre = 0 %}
+          {% for contactadosSufragio in datos|sort %}
+            {% if contactadosSufragio.municipio == municipio.id %}
+
+              <tr>
+                {% if totalGlobal is empty %}
+                <th>
+                      {{ contactadosSufragio.paq }}
+                </th>
+                <th>
+                      {{ contactadosSufragio.cv }}
+                </th>
+                {% endif %}
+                {% if asistencia is not empty %}
+                <th>
+                      {{ contactadosSufragio.apertura }}
+
+                 </th>
+                <th>
+                      {{ contactadosSufragio.testigos }}
+                    </th>
+                <th>
+                      {{ contactadosSufragio.cierre }}
+                </th>
+                {% endif %}
+                {% if contactadosSufragio.apertura != 'Ninguna' %}
+                        {% set mesas = contactadosSufragio.apertura|split(',') %}
+                        {% set totalMesas = totalMesas + mesas|length %}
+                     {% endif %}
+                      {% set totalMesasCircuito = mesas|length + totalMesasCircuito %}
+                       {% set totalMesaEstadal = mesas|length + totalMesaEstadal %}
+                 
+                {% if contactadosSufragio.testigos != 'Ninguna' and contactadosSufragio.testigos != ''%}
+                        {% set testigos = contactadosSufragio.testigos|split(',') %}
+                        {% set totalTestigos = totalTestigos + contactadosSufragio.testigos %}
+                        {% set totalTestigosCircuito = contactadosSufragio.testigos + totalTestigosCircuito %}
+                        {% set totalTestigosEstadal = contactadosSufragio.testigos + totalTestigosEstadal %}
+                        {# {% set totalTestigos = totalTestigos + testigos|length %} #}
+                      {% endif %}
+
+                      {% if contactadosSufragio.cierre != 'Ninguna' and contactadosSufragio.cierre != '' %}
+                        {% set cierre = contactadosSufragio.cierre|split(',') %}
+                        {% set totalCierre = totalCierre + cierre|length %}
+                      {% endif %}
+                      {% set totalCierreCircuito = cierre|length + totalCierreCircuito %}
+                      {% set totalCierreEstadal = cierre|length  + totalCierreEstadal %}
+
+                {% if asistencia is empty %}
+                {% if totalGlobal is empty %}
+                <th>
+                      {{ contactadosSufragio.oficialistas }}
+                </th>
+                 <th>
+                      {{ contactadosSufragio.opositores }}
+                </th>
+                {% endif %}
+                {% endif %}
+                {% set totalCh = totalCh + contactadosSufragio.oficialistas %}
+                {% set totalChCircuito = contactadosSufragio.oficialistas + totalChCircuito %}
+                {% set totalChEstadal = contactadosSufragio.oficialistas + totalChEstadal %}
+                {% set totalOp = totalOp + contactadosSufragio.opositores %}
+                {% set totalOpCircuito = contactadosSufragio.opositores + totalOpCircuito %}
+                {% set totalOpEstadal = contactadosSufragio.opositores + totalOpEstadal %}
+
+                {% for incidencia in incidencias %}
+                  {% if contactadosSufragio.cvid == incidencia.centroVotacion  %}
+                  {% if totalGlobal is empty %}
+
+                  <th>{{incidencia.tipoIncidencia|upper}}</th>
+                  <th>{{incidencia.descripcion}}</th> 
+                  {% endif %}
+                   {% endif %}
+                  {% endfor %}
+
+              </tr>
+              {% set encontrado = "si" %}
+            {% endif %}
+          {% endfor %}
+          {% if totalGlobal is empty %}
+          {% if encontrado == "" %}
+            <tr>
+              <th colspan="7"> No existen datos registrados en las parroquias del municipio {{municipio.nombreMunicipio}}</th>
+            </tr>
+          {% endif %}
+           {% endif %}
+          {% if encontrado == "si" %}
+            <tr>
+              {% if totalGlobal is not empty %}
+              <td colspan=""> {{municipio.nombreMunicipio}} </td><th>{{totalMesas}}</th><th>{{totalTestigos}}</th><th colspan="">{{totalCierre}}</th><th>{{totalCh}}</th><th>{{totalOp}}</th>
+              {% endif %}
+            </tr>
+            <tr>
+            </tr>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          
+          {% if totalGlobal is not empty %}
+          <tr>
+            <th colspan="">CIRCUITO {{circuito}}</th><th>{{totalMesasCircuito}}</th>
+          <th>{{totalTestigosCircuito}}</th><th>{{totalCierreCircuito}}</th><th>{{totalChCircuito}}</th><th>{{totalOpCircuito}}</th>
+              {% endif %}
+            </tr>
+        {% endfor %}
+
+      </table> 
+      {% if datos is empty %}
+
+            No hay datos que mostrar para encuestas
+
+      {% endif %}
+
+       {% if totalGlobal is not empty %}
+       <table class="table stacktable table-hover" border="1" style="position: absolute; top:100px;">
+        <thead>
+          <tr>
+          <th>Total Estadal</th>
+            <td>Mesas Aperturadas: {{totalMesaEstadal}}</td><td>Testigos: {{totalTestigosEstadal}}</td><td>Cierre: {{totalCierreEstadal}}</td><td>Chavistas: {{totalChEstadal}}</td><td>Opositores: {{totalOpEstadal}}</td>
+          </tr>
+         
+
+        </thead>
+    
+        {% endif %} 
+  {% endif %}
+</center>
+<center><input type="button" class="btn btn-default" style="position: absolute; top:50px;" onclick="javascript:window.print();" name="Imprimir" value="Imprimir"></center>
+{#<a href="{{path('encuestas_resumen') }}" class="clsVentanaCerrar">Cerrar</a> 
+<input type="button" onclick="javascript:window.close(); ">#}
+{% endblock %}
+   
+{% block javascripts %}
+  <script>
+$(document).ready(function(){
+
+
+      $('.clsVentanaCerrar').live('click',function(eEvento){ alert('o');
+      //prevenimos el comportamiento normal del enlace
+      eEvento.preventDefault();
+      //buscamos la ventana padre (del boton "cerrar")
+      var $objVentana=$($(this).parents().get(1));
+      
+      //cerramos la ventana suavemente
+      $objVentana.fadeOut(300,function(){
+        //eliminamos la ventana del DOM
+        $(this).remove();
+        //ocultamos el overlay suavemente
+        $('#divOverlay').fadeOut(500,function(){
+          //eliminamos el overlay del DOM
+          $(this).remove();
+        });
+      });
+    });
+
+}
+
+  </script>
+
+  {% endblock %}

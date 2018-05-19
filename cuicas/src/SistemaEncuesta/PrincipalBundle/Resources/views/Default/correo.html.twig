@@ -1,0 +1,49 @@
+{% extends '::frontend.html.twig' %}
+{% block titulo %}Contáctenos{% endblock %}
+{% block cuerpo %}
+<div>
+    {% for mensaje in app.session.flashbag.get('info') %}
+        <script language=Javascript>
+            alert('{{ mensaje }}')
+        </script>
+    {% endfor %}
+</div>
+<div>
+    
+   
+    <form action=" {{path('sistema_Encuesta_principal_correo') }}" method="POST" novalidate>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <strong><label>Asunto</label> </strong>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <input type="text" name="Subject"  class="form-control validate[required]">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <strong><label>Correo Electrónico</label></strong>
+        </div>
+        <div class="col-xs-3">      
+            <input type="email" name="email" class=" form-control validate[required,custom[email]]">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">          
+            <strong><label>Mensaje</label></strong>
+        </div>
+        <div class="col-xs-3 select">           
+            <textarea style="width:263px; height:100px; resize:none;" name="message" class=" form-control validate[required]" ></textarea>
+        </div>  
+    </div>
+    <input type="submit" value="Enviar" class="fueraoverflow btn btn-default" />
+</div>  
+
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{# 
+Created on : 25/08/2014, 01:05:57 PM
+Author     : Duke Victor
+#}
+{% extends '::frontend.html.twig' %}
+{% block titulo %}Contáctenos{% endblock %}
+{% block cuerpo %}
+<div>
+  {% for mensaje in app.session.flashbag.get('info') %}
+    <script language=Javascript>
+      $(document).ready(function(){
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('{{ mensaje }}'),
+          buttons: [{
+            id: 'btn-ok',   
+            //icon: 'glyphicon glyphicon-check',       
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){    
+              dialogRef.close();
+            }
+          }]
+        })
+      });
+    </script>
+  {% endfor %}
+</div>
+<form action=" {{path('sistema_Encuesta_principal_contacto') }}" method="POST" novalidate>
+<div class="col-xs-12 col-md-8 col-md-offset-2">
+  <div class="row">
+    <div class="col-xs-12">
+      <table border="0">
+          <tr>
+            <td><img src="{{ asset('imagenes/telefono.png') }}"/></td>
+            <td>0416.4705754 <br> 0416.0479570</td>
+          </tr> 
+          <tr>
+            <td><img src="{{ asset('imagenes/correo.png') }}"/></td>
+            <td>Gobernación Socialista: nader0303@gmail.com <br> Guardián Del ALBA, S.A.: araquega@guardiandelalba.pdvsa.com </td>
+          </tr>
+          <tr>
+            <td><img src="{{ asset('imagenes/sugerencia.png') }}"/></td>
+            <td>Sugerencias <br></td>
+             </tr>
+          <tr> 
+            <td></td>
+            <td>
+              <div class="col-xs-12 col-md-8">
+                <div class="row">
+                  <div class="col-xs-12"><strong>Asunto</strong><input type="text" name="Subject"  class="form-control validate[required]"></div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <strong>Correo Electrónico</strong>
+                    <input type="email" name="email" class=" form-control validate[required,custom[email]]">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <strong>Mensaje</strong>
+                    <textarea name="message" class=" form-control validate[required]" ></textarea></td>
+                  </div>
+                </div>
+              </div>
+              </td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td> 
+                  <div class="col-xs-12 col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input type="submit" value="Enviar" class="btn btn-default" />
+                      </div>
+                    </div>
+                  </div>  
+                </td>         
+              </tr>
+      </table>
+      </div>
+  </div>
+  </div>
+</form>
+
+{% endblock %}

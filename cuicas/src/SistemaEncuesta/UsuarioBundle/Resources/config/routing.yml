@@ -1,0 +1,51 @@
+usuario_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UsuarioBundle:Default:index }
+
+usuario_principal:
+    pattern:  /
+    defaults: { _controller: UsuarioBundle:Default:index }
+
+usuario_ver:
+    path:     /ver/{rol}
+    defaults: { _controller: UsuarioBundle:Default:ver }
+
+usuario_registro:
+    path:     /registro/
+    defaults: { _controller: UsuarioBundle:Default:registro }
+
+usuario_totales:
+    path:     /totalUsuarios/
+    defaults: { _controller: UsuarioBundle:Default:totalUsuarios }
+
+usuario_eliminar:
+    path:     /eliminarUsuario/{usuario_id}
+    defaults: { _controller: UsuarioBundle:Default:eliminar }
+
+usuarios_buscar_nombre:
+    path:     /buscarPorNombre/
+    defaults: { _controller: UsuarioBundle:Default:buscarNombre }
+
+usuarios_resumen:
+    path:     /resumen/
+    defaults: { _controller: UsuarioBundle:Default:resumen }
+
+usuario_perfil:
+    path:     /perfil/
+    defaults: { _controller: UsuarioBundle:Default:perfil }
+
+usuario_verperfil:
+    path:     /verPerfil/
+    defaults: { _controller: UsuarioBundle:Default:verPerfil }
+
+usuario_buscar_cedula:
+    path:     /registro/buscarCedula/
+    defaults: { _controller: UsuarioBundle:Default:buscarCedula }
+
+usuario_buscar_email:
+    path:     /registro/buscarEmail/
+    defaults: { _controller: UsuarioBundle:Default:buscarEmail }
+
+usuario_modificar_cedula:
+    path:     /perfil/buscarCedula/
+    defaults: { _controller: UsuarioBundle:Default:buscarCedula }

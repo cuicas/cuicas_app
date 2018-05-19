@@ -1,0 +1,15 @@
+sistema_Encuesta_principal_homepage:
+    path:     /
+    defaults: { _controller: SistemaEncuestaPrincipalBundle:Default:index }
+sistema_Encuesta_principal_mensaje:
+    path:     /Principal
+    defaults: { _controller: SistemaEncuestaPrincipalBundle:Default:mensaje }
+sistema_Encuesta_principal_contacto:
+    path:     /correo
+    defaults: { _controller: SistemaEncuestaPrincipalBundle:Default:contacto }
+sistema_Encuesta_principal_formulario:
+    path:     /formulario
+    defaults: { _controller: SistemaEncuestaPrincipalBundle:Default:formulario1 }
+pdf_resumen_encuestas:
+    pattern: /pdfResumen
+    defaults: { _controller: SistemaEncuestaPrincipalBundle:Default:pdfResumen }

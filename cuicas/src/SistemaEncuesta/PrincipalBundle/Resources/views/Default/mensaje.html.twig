@@ -1,0 +1,13 @@
+{% extends '::frontend.html.twig' %} 
+{% block title %}Módulo de Usuario{% endblock %}
+{# {% block id 'usuario' %}#} 
+{% block cuerpo %}
+<div>
+    {% for mensaje in app.session.flashbag.get('info') %}
+        <script language=Javascript>
+alert('{{ mensaje }}')
+</script>
+{% endfor %}
+</div>
+
+{% endblock %}

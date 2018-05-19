@@ -1,0 +1,129 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Encuestas Totales{% endblock %}
+{% block titulo %}Encuestas{% endblock %}
+{% block cuerpo %}
+  {% for mensaje in app.session.flashbag.get('info') %}
+    <script language=Javascript>
+    $(document).ready(function(){
+      $(this).tab('show');
+      BootstrapDialog.show({
+        title: 'Mensaje',
+        message: ('{{ mensaje }}'),
+        buttons: [{
+          id: 'btn-ok',   
+          //icon: 'glyphicon glyphicon-check',       
+          label: 'Aceptar',
+          cssClass: 'btn btn-default',
+          autospin: false,
+          action: function(dialogRef){    
+            dialogRef.close();
+          }
+        }]
+      })
+    });
+    </script>
+  {% endfor %}
+
+<div class="col-xs-12 col-md-8 col-md-offset-2">
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="tabla1" class="table stacktable table-hover" border="0">
+				<thead>
+					<th>Encuestas</th>
+					<th>Tipo</th>
+					<th>Configurar</th>
+					<th>Realizar</th>
+					<th>Mapa</th>
+					{% if app.user.roles[0] != "ROLE_USUARIO" and app.user.roles[0] != "ROLE_ADMIN" %}
+					<th></th>
+					{% endif %}
+				</thead>                 
+    			{% for encuesta in pagination %}
+	  				<tr>	
+							<td>{{ encuesta.nombreEncuesta }}</td>
+
+							{% set tipo = encuesta.tipoEncuesta %}
+							{% if encuesta.tipoEncuesta == 'general' %}
+								{% set tipo = "Socio-Política"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'estatal' %}
+								{% set tipo = "Sufragio - Por Estado"  %}
+							{% endif %}
+
+							{% if encuesta.tipoEncuesta == 'alcalde' %}
+								{% set tipo = "Sufragio - Por Municipio"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'circuito' %}
+								{% set tipo = "Sufragio - Por Circuito"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'fase1' %}
+								{% set tipo = "Sufragio - 1era Fase"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'fase2' %}
+								{% set tipo = "Sufragio - 2da Fase"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'voto-lista' %}
+								{% set tipo = "Sufragio - Por Circuito - Voto Lista"  %}
+							{% endif %}
+							{% if encuesta.tipoEncuesta == 'comando' %}
+								{% set tipo = "Comando de campaña"  %}
+							{% endif %}
+							<td>{{ tipo }}</td>
+							<td align="center"> 
+								{% if encuesta.tipoEncuesta == "general" or encuesta.tipoEncuesta == "comando"%}
+									<a href="{{ path('encuestas_crearPreguntas',{'id_encuesta': encuesta.id}) }}" class="clsBoton">Preguntas</a>
+								{% endif %}
+								{% if encuesta.tipoEncuesta == "fase1" or encuesta.tipoEncuesta == "fase2" %}
+									<a href= "" onclick="javascript:$(document).ready(function(){$(this).tab('show'); BootstrapDialog.show({title: 'Mensaje',message: ('No se pueden configurar las preguntas'),buttons: [{id: 'btn-ok',label: 'Aceptar', cssClass: 'btn btn-default', autospin: false, action: function(dialogRef){dialogRef.close();}}]})}); event.preventDefault();" class="clsBoton">Preguntas</a>
+								{% endif %}
+
+								{% if encuesta.tipoEncuesta == "alcalde" or encuesta.tipoEncuesta == "circuito" or encuesta.tipoEncuesta == "estatal" or encuesta.tipoEncuesta == "voto-lista" %}
+									<a href="{{ path('encuestas_cargar_candidato',{'id_encuesta': encuesta.id}) }}" class="clsBoton">Candidatos</a>
+								{% endif %}
+
+	    				<td align="center">
+	    					<a href={% if encuesta.tipoEncuesta == "general" %}"{{ path('encuestas_datosEncuesta',{'id_encuesta': encuesta.id}) }}" 
+	    					{% else %}
+		    					{% if encuesta.tipoEncuesta == "comando" %}"{{ path('encuestas_datosEncuestaComando',{'id_encuesta': encuesta.id}) }}" 
+		    					{% else %}
+		    						"{{ path('encuestas_datosEncuestaSufragio',{'id_encuesta': encuesta.id}) }}"
+		    					{% endif %}
+	    					{% endif %}{% if encuesta.definitiva == 0 %} title='La encuesta no es definitiva' alt='La encuesta no es definitiva' onclick="javascript:$(document).ready(function(){$(this).tab('show'); BootstrapDialog.show({title: 'Mensaje',message: ('La encuesta no es definitiva'),buttons: [{id: 'btn-ok',label: 'Aceptar', cssClass: 'btn btn-default', autospin: false, action: function(dialogRef){dialogRef.close();}}]})}); event.preventDefault();"{% endif %} class="clsBoton" >Encuesta</a> 
+
+
+	    				</td>
+	    				<td align="center">
+	    					<a href={% if encuesta.tipoEncuesta == "circuito" or encuesta.tipoEncuesta == "voto-lista" %}"{{ path('mapas_circuito_ventana',{'id_encuesta': encuesta.id}) }}" class="clsVentanaIFrame clsBoton1" 
+	    					{% elseif  encuesta.tipoEncuesta == "estatal" or encuesta.tipoEncuesta == "alcalde"  %}"{{ path('mapas_cargar_proyecto_ventana',{'id_encuesta': encuesta.id}) }}" class="clsVentanaIFrame clsBoton1" {% else %} "" title='Esta encuesta no tiene asociado un mapa' alt='Esta encuesta no tiene asociado un mapa' onclick="javascript:$(document).ready(function(){$(this).tab('show'); BootstrapDialog.show({title: 'Mensaje',message: ('Esta encuesta no tiene configurado un Mapa'),buttons: [{id: 'btn-ok',label: 'Aceptar', cssClass: 'btn btn-default', autospin: false, action: function(dialogRef){dialogRef.close();}}]})}); event.preventDefault();"
+	    					{% endif %} rel="SESM - Estado Bolivariano de M&eacute;rida" >Ver</a> 
+	    				</td>
+	    				{% if app.user.roles[0] != "ROLE_USUARIO" and app.user.roles[0] != "ROLE_ADMIN" %}
+	    				<td align="center">
+	    				 	<a href="{{ path('encuestas_eliminar',{'id_encuesta': encuesta.id}) }}" class="clsBoton" alt="confirma eliminar" onclick="javascript:var agree=confirm('¿Está seguro que desea eliminar esta encuesta y todos sus datos? '); if (agree) return true; else return false;">Eliminar</a>
+	    				</td>
+	    				{% endif %}
+	    			</tr>
+    			{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="col-xs-12 col-md-5 col-md-offset-5 text-right">
+	<div class="row">
+		<div class="col-xs-12">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function() {
+	$('#tabla1').stacktable();
+});
+</script>
+
+{% endblock %}
+
+
+

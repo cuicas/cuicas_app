@@ -1,0 +1,401 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}{% endblock %}
+{% block cuerpo %}
+	
+	{# <img alt="Fotograf�a de la oferta" src="{{ asset('imagenes/usuarios_login.png') }}" height="100" width="200"> #}
+	{# <a href="{{ path('usuario_principal') }}"><h1>Usuarios</h1></a> #}
+	{# <a href="{{ path('proyectos_principal') }}"><h1>Proyectos</h1></a> #}
+
+
+
+	 
+</div>
+<div class="logo1">
+<div class="botones_menu">
+
+<div class="mensaje_sesion">
+<?php echo "Usuario: ".$_SESSION['usuario'];?></div>
+{# {% set eje = 1 %} #}
+{% if id_municipio == 1 %}
+  <map name="libertador">
+<area shape="poly" coords="469,76,455,98,469,103,485,96,493,91,483,87"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 1}) }}" " title="Antonio Spinetti Dini" alt="Antonio Spinetti Dini">
+
+<area shape="poly" coords="469,101,522,114,510,139,575,204,575,223,518,194,496,195,454,169,478,149,487,126" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 2}) }}" " title="Arias" alt="Arias">
+
+<area shape="poly" coords="430,78,406,96,434,105,438,92" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 3}) }}" " title="Caracciolo Parra Perez" alt="Caracciolo Parra Perez">
+
+<area shape="poly" coords="451,99,410,100,413,117,452,117,457,110" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 4}) }}" " title="Domingo Pe�a" alt="Domingo Pe�a">
+
+<area shape="poly" coords="422,95,470,98,470,112,425,105" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 5}) }}" " title="El Llano" alt="El Llano">
+
+<area shape="poly" coords="565,27,534,62,520,94,544,103,655,85,720,83,790,85,812,74,774,61,750,41,702,38,626,37,589,35" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 6}) }}" " title="Gonzalo Pic�n Febres" alt="Gonzalo Pic�n Febres">
+
+<area shape="poly" coords="468,110,416,112,408,102,351,91,330,112,318,115,332,141,365,149,389,164,430,174,455,165,468,151,482,128" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 7}) }}" " title="Jacinto PLaza" alt="Jacinto Plaza">
+
+<area shape="poly" coords="354,84,355,81,386,89,421,96,430,103,404,110,375,105,350,96" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 8}) }}" " title="Juan Rodriguez Suarez" alt="Juan Rodriguez Suarez">
+
+<area shape="poly" coords="437,30,488,26,490,42,475,66,459,80,430,86,418,97,393,95,418,71,420,54" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 9}) }}" " title="Lasso de la Vega" alt="Lasso de la Vega">
+
+<area shape="poly" coords="438,79,468,69,470,88,466,100,439,103,425,102,432,92" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 10}) }}" " title="Mariano Pic�n Salas" alt="Mariano Pic�n Salas">
+
+<area shape="poly" coords="502,18,520,27,556,22,536,59,525,83,529,110,482,107,491,89,473,76,488,41,489,25" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 11}) }}" " title="Milla" alt="Milla">
+
+<area shape="poly" coords="369,85,420,51" href="detalle_parroquia.php?id=12" " title="Sagrario" alt="Sagrario">
+<area shape="poly" coords="371,83,417,53,421,79,398,92,379,95" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 12}) }}" " title="Osuna Rodr�guez" alt="Osuna Rodr�guez">
+
+<area shape="poly" coords="459,96,455,115,473,120,478,101" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 13}) }}" " title="Sagrario" alt="Sagrario">
+ 
+<area shape="poly" coords="429,171,379,161,342,146,323,121,263,131,266,163,257,215,260,233,287,225,303,246,331,266,349,298,367,319,374,351,386,379,417,386,475,353,544,354,558,328,554,286,564,237,526,245,461,259,435,252,416,236,401,222,392,188" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 14}) }}" " title="El Morro" alt="El Morro">
+
+<area shape="poly" coords="455,164,499,188,537,195,572,221,526,236,479,250,441,250,422,240,425,217,400,204,396,184,432,175"href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 15}) }}" " title="Los Nevados" alt="Los Nevados">
+</map>
+
+  <img src="{{ asset('imagenes/merida/parroquias/2/1.png') }}" width="1031" height="443" border="0"  class="libertador" >
+    <img src="{{ asset('imagenes/merida/parroquias/2/2.png') }}" width="1031" height="443" border="0" class="libertador" >
+   <img src="{{ asset('imagenes/merida/parroquias/2/3.png') }}" width="1031" height="443" border="0" class="libertador">
+    <img src="{{ asset('imagenes/merida/parroquias/2/4.png') }}" width="1031" height="443" border="0" class="libertador" >
+  <img src="{{ asset('imagenes/merida/parroquias/2/5.png') }}" width="1031" height="443" border="0"  class="libertador"  >
+   <img src="{{ asset('imagenes/merida/parroquias/2/6.png') }}" width="1031" height="443" border="0"  class="libertador" >
+    <img src="{{ asset('imagenes/merida/parroquias/2/7.png') }}" width="1031" height="443" border="0" class="libertador">
+    <img src="{{ asset('imagenes/merida/parroquias/2/8.png') }}" width="1031" height="443" border="0"  class="libertador">
+    <img src="{{ asset('imagenes/merida/parroquias/2/9.png') }}" width="1031" height="443" border="0"  class="libertador" >
+    <img src="{{ asset('imagenes/merida/parroquias/2/10.png') }}" width="1031" height="443" border="0"  class="libertador" >
+    <img src="{{ asset('imagenes/merida/parroquias/2/11.png') }}" width="1031" height="443" border="0"   class="libertador">
+   <img src="{{ asset('imagenes/merida/parroquias/2/12.png') }}" width="1031" height="443" border="0"   class="libertador">
+   <img src="{{ asset('imagenes/merida/parroquias/2/13.png') }}" width="1031" height="443" border="0"  class="libertador" >
+   <img src="{{ asset('imagenes/merida/parroquias/2/14.png') }}" width="1031" height="443" border="0"  class="libertador" >
+     <img src="{{ asset('imagenes/merida/parroquias/2/15.png') }}" width="1031" height="434" border="0" class="libertador" >
+	 <img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="1031" height="434" class="libertador" usemap="#libertador" >
+   
+   {% endif %} 
+  
+  {% if id_municipio == 2 %}
+  <map name="Santos_Marquina">
+<area shape="poly" coords="156,260,280,263,345,246,372,249,390,264,397,260,375,217,345,200,296,210,256,214,241,214,232,236,199,242,170,244"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 16}) }}" " title="Tabay" alt="Tabay">
+</map>
+  <img src="{{ asset('imagenes/merida/municipios/2/16.png') }}" width="752" height="314" border="0" class="santos_marquina"  usemap="#Santos_Marquina">
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" class="santos_marquina" usemap="#Santos_Marquina" >
+  
+   {% endif %} 
+  
+  {% if id_municipio == 3 %}
+  <map name="sucre">
+<area shape="poly" coords="382,61,409,31,433,27,433,44,435,60,418,71,428,105,403,113,395,120,386,127,356,132,331,117,314,96,320,75,347,61,360,44"  href="detalle_parroquia.php?id=17" " title="Chiguar�" alt="Chiguar�">
+
+<area shape="poly" coords="317,152,315,152,352,137,331,118,328,111,314,91,281,101,260,128,259,139,237,146,216,142,183,154,160,171,171,191,175,205,176,223,201,220,225,233,246,234,276,230,290,228,305,213,312,204,295,190,293,168,301,160"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 18}) }}" " title="Estanquez" alt="Estanquez">
+
+<area shape="poly" coords="507,120,459,116,440,110,423,106,405,115,392,123,344,141,373,166,392,150,456,179,503,162,515,148"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 19}) }}" " title="Lagunillas" alt="Lagunillas">
+
+<area shape="poly" coords="482,61,446,46,434,28,432,52,431,67,420,71,425,95,441,114,462,118,506,122,534,109,541,94,527,84"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 20}) }}" " title="La Trampa" alt="La Trampa">
+
+<area shape="poly" coords="456,179,398,149,380,163,346,142,297,164,293,188,318,203,297,229,303,250,308,264,311,270,349,266,345,250,365,237,404,236,413,223,429,213,447,197"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 21}) }}" " title="Pueblo Nuevo del Sur" alt="Pueblo Nuevo del Sur">
+
+<area shape="poly" coords="418,227,450,221,510,209,519,194,531,176,539,154,518,151,485,171,458,177,449,202"  href="detalle_parroquia.php?id=22" " title="San Juan" alt="San Juan">
+</map>
+  <img src="{{ asset('imagenes/merida/parroquias/2/17.png') }}" width="752" height="314" border="0"  class="municipio">
+   <img src="{{ asset('imagenes/merida/parroquias/2/18.png') }}" width="752" height="314" border="0"  class="municipio">
+    <img src="{{ asset('imagenes/merida/parroquias/2/19.png') }}" width="752" height="314" border="0"  class="municipio">
+	<img src="{{ asset('imagenes/merida/parroquias/2/20.png') }}" width="752" height="314" border="0" class="municipio">
+	 <img src="{{ asset('imagenes/merida/parroquias/2/21.png') }}" width="752" height="314" border="0" class="municipio">
+	  <img src="{{ asset('imagenes/merida/parroquias/2/22.png') }}" width="752" height="314" border="0" class="municipio">
+	   <img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" class="municipio" usemap="#Sucre" >
+	   
+	   {% endif %}
+	   
+	   {% if id_municipio == 4 %}
+	   <map name="Campo_Elias">
+<area shape="poly" coords="445,142,415,137,378,128,327,121,330,134,341,142,341,157,356,183,391,177,410,163,426,157"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 23}) }}" " title="Fernandez Pe�a" alt="Fernandez Pe�a">
+ 
+<area shape="poly" coords="357,120,399,121,428,107,475,92,487,98,460,118,439,135,407,134,359,126"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 24}) }}" " title="Matriz" alt="Matriz">
+
+<area shape="poly" coords="523,56,570,62,628,81,588,83,552,83,529,93,520,108,493,123,459,143,434,135,482,102,485,91"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 25}) }}" " title="Montalban" alt="Montalban">
+
+<area shape="poly" coords="356,270,351,248,363,217,367,199,346,169,336,156,330,138,307,142,301,157,288,172,271,177,275,189,286,208,284,221,287,244,291,263,302,275"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 26}) }}" " title="Acequias" alt="campo_elias">
+
+<area shape="poly" coords="518,57,475,35,455,37,417,12,375,12,363,26,321,39,314,60,334,77,349,82,360,92,390,97,445,81,479,88,514,75"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 27}) }}" " title="Jaji" alt="Jaji">
+
+<area shape="poly" coords="404,114,427,106,453,98,464,93,433,84,392,97,380,101,349,91,337,103,327,117,350,124,381,119"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 28}) }}" " title="La Mesa" alt="La Mesa">
+
+<area shape="poly" coords="275,229,237,219,220,223,193,213,173,213,162,200,135,200,139,177,192,174,203,166,203,152,232,155,263,149,294,149,271,173,275,195,281,217"   href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 29}) }}" " title="San Jos� de Sur" alt="San Jos� del Sur">
+</map>
+
+ <img src="{{ asset('imagenes/merida/parroquias/2/23.png') }}" width="752" height="314" border="0"  class="campo_elias">
+  <img src="{{ asset('imagenes/merida/parroquias/2/24.png') }}" width="752" height="314" border="0"  class="campo_elias">
+   <img src="{{ asset('imagenes/merida/parroquias/2/25.png') }}" width="752" height="314" border="0"  class="campo_elias">
+     <img src="{{ asset('imagenes/merida/parroquias/2/26.png') }}" width="752" height="314" border="0" class="campo_elias">
+    <img src="{{ asset('imagenes/merida/parroquias/2/27.png') }}" width="752" height="314" border="0" class="campo_elias">
+	  <img src="{{ asset('imagenes/merida/parroquias/2/28.png') }}" width="752" height="314" border="0"class="campo_elias">
+	  <img src="{{ asset('imagenes/merida/parroquias/2/29.png') }}" width="752" height="314" border="0" class="campo_elias">
+	  	<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" class="campo_elias" usemap="#Campo_Elias" >
+	   
+	   {% endif %}
+    
+ {% if id_municipio == 5 %}
+  <map name="adriani">
+<area shape="poly" coords="301,54,376,103,418,99,408,113,417,131,411,145,395,154,381,171,364,152,348,137,345,124,342,109,342,89,321,86,297,66" href="detalle_parroquia.php?id=30" " title="Presidente Betancourt" alt="Presidente Betancourt">
+
+<area shape="poly" coords="161,13,189,18,209,18,232,18,296,54,298,67,336,87,341,100,346,133,368,154,329,150,307,142,258,119,216,125,179,144,170,144,176,115,190,83,173,56,161,30" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 31}) }}" " title="Presidente Paez" alt="Presidente Paez">
+
+<area shape="poly" coords="367,157,315,149,258,115,222,122,201,133,191,146,183,159,177,174,237,180,293,188,321,197,348,186,375,182,375,166" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 32}) }}" " title="Presidente Romulo Gallegos" alt="Presidente Romulo Gallegos">
+
+<area shape="poly" coords="382,189,372,216,359,238,331,244,316,236,305,226,300,215,328,198,356,187" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 33}) }}" " title="Gabriel Pic�n Gonzales" alt="Gabriel Pic�n Gonzales">
+
+<area shape="poly" coords="478,103,552,108,541,125,560,135,576,148,574,169,572,185,532,197,524,206,480,203,466,191,441,200,408,165,438,155,455,129,463,120" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 34}) }}" " title="Hector Amable Mora" alt="Hector Amable Mora">
+
+<area shape="poly" coords="420,101,474,105,446,150,412,151,413,123,413,111" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 35}) }}" " title="Jose Nucete Sardi" alt="Jose Nucete Sardi">
+
+<area shape="poly" coords="402,148,370,182,386,192,381,210,392,238,435,201,413,174,410,159" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 36}) }}" " title="Pulido Mendez" alt="Pulido Mendez">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/30.png') }}" width="752" height="314" border="0" class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/31.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/32.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/33.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/34.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/35.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/parroquias/2/36.png') }}" width="752" height="314" border="0"  class="parroquia_adriani" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" class="parroquia_adriani" usemap="#adriani" >
+  
+  {% endif %}
+  
+   {% if id_municipio == 6 %}
+<img src="{{ asset('imagenes/merida/municipios/2/6.png') }}" width="752" height="314" border="0" usemap="#Map" class="parroquia_azulita" >
+<map name="Map">
+<area shape="poly" coords="302,76,335,69,361,59,390,60,419,90,438,124,378,103,356,106,335,88"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 37}) }}" " title="La Azulita" alt="La Azulita">
+</map>
+    {% endif %}
+	
+	{% if id_municipio == 7 %}
+	<map name="Caracciolo">
+<area shape="poly" coords="382,51,434,60,422,72,477,113,466,141,486,164,533,165,547,181,566,203,557,216,500,236,471,233,442,228,421,228,399,228,332,223,287,208,327,158,332,119,340,100,369,74"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 38}) }}" " title="Tucan�" alt="Tucan�">
+
+<area shape="poly" coords="384,52,325,44,302,11,254,31,233,51,242,70,209,78,214,114,216,141,229,173,236,199,284,212,308,181,319,152,323,127,334,113,335,98,368,81"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 39}) }}" " title="Florencio Ram�rez" alt="Florencio Ram�rez">
+</map>
+  <img src="{{ asset('imagenes/merida/parroquias/2/38.png') }}" width="752" height="314" border="0" class="parroquia" >
+   <img src="{{ asset('imagenes/merida/parroquias/2/39.png') }}" width="752" height="314" border="0" class="parroquia" >
+   <img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314') }}"  usemap="#Caracciolo" class="parroquia" >
+    
+	{% endif %}
+	
+    {% if id_municipio == 8 %}	
+	<map name="Tulio">
+<area shape="poly" coords="381,66,396,29,420,19,433,56,443,79,436,100,430,116,411,116,401,85"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 40}) }}" " title="Independencia" alt="Independencia">
+
+<area shape="poly" coords="524,162,526,172,519,192,565,180,595,181,586,165,550,165"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 41}) }}" " title="Maria de la Concepcion Palacios Blanco" alt="Maria de la Concepcion Palacios Blanco">
+
+<area shape="poly" coords="451,79,480,99,474,116,473,129,458,144,451,164,438,173,406,149,413,116,434,118,439,94,449,87" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 42}) }}" " title="Nueva Bolivia" alt="Nueva Bolivia">
+
+<area shape="poly" coords="205,125,393,145,401,160,412,188,402,212,347,230,318,247,295,232,246,219,225,195,240,179,202,156,198,134" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 43}) }}" " title="Santa Apolonia" alt="Santa Apolonia">
+</map>
+ <img src="{{ asset('imagenes/merida/parroquias/2/40.png') }}" width="752" height="314" border="0" class="parroquia"  >
+ <img src="{{ asset('imagenes/merida/parroquias/2/41.png') }}" width="752" height="314" border="0" class="parroquia" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/42.png') }}" width="752" height="314" border="0" class="parroquia"  >
+<img src="{{ asset('imagenes/merida/parroquias/2/43.png') }}" width="752" height="314" border="0" class="parroquia"  >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314"  usemap="#Tulio" class="parroquia" >
+
+{% endif %}
+
+ {% if id_municipio == 9 %}
+ <map name="Julio">
+<area shape="poly" coords="320,28,326,43,331,63,352,66,350,52,344,31,335,26"href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 44}) }}" " title="Arapuey" alt="Arapuey">
+   
+<area shape="poly" coords="345,29,455,37,430,67,445,92,410,139,404,161,426,193,401,198,359,184,370,156,384,130,376,74,351,65,350,51" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 45}) }}" " title="Palmira" alt="Palmira">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/44.png') }}" border="0" class="parroquia" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/45.png') }}" border="0" class="parroquia" >
+ <img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314"  usemap="#Julio" class="parroquia">
+
+{% endif %}
+
+{% if id_municipio == 10 %}
+<map name="Justo">
+<area shape="poly" coords="489,76,550,57,591,70,605,81,612,119,531,102,503,86"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 46}) }}" title="San Cristobal de Torondy" alt="San Cristobal de Torondoy">
+<area shape="poly" coords="353,47,348,18,397,37,397,48,416,39,421,18,442,15,448,30,498,39,485,78,519,98,520,127,480,160,468,195,417,221,399,228,374,221,336,220,331,233,305,224,273,224,243,222,220,205,195,199,176,184,224,167,251,149,251,139,272,136,296,117,328,108,354,97,366,82,369,65"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 47}) }}" title="Torondoy" alt="Torondoy">
+</map>
+  <img src="{{ asset('imagenes/merida/parroquias/2/46.png') }}" width="752" height="314" border="0" class="parroquia">
+  <img src="{{ asset('imagenes/merida/parroquias/2/47.png') }}" width="752" height="314" border="0" class="parroquia">
+  <img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" usemap="#Justo" class="parroquia">	
+
+{% endif %}	
+
+{% if id_municipio == 11 %}
+<map name="Obispo">
+<area shape="poly" coords="178,33,350,47,352,61,317,84,289,102,212,122,202,101,210,84,196,71,173,56,170,43" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 48}) }}" title="Eloy Paredes" alt="Eloy Paredes">
+
+<area shape="poly" coords="509,59,594,66,596,92,562,102,536,119,520,135,532,151,500,167,495,190,502,224,472,207,471,162,476,132,499,101,501,74" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 49}) }}" title="San Rafael de Alcazar" alt="San Rafael de Alcazar">
+
+<area shape="poly" coords="353,44,509,60,496,78,498,101,479,116,475,137,466,189,392,153,367,108,334,106,298,101,344,67" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 50}) }}" title="Santa Elena de Arenales" alt="Santa Elena de Arenales">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/48.png') }}" width="752" height="314" border="0" class="parroquia_obispo" >
+<img src="{{ asset('imagenes/merida/parroquias/2/49.png') }}" width="752" height="314" border="0" class="parroquia_obispo" >
+<img src="{{ asset('imagenes/merida/parroquias/2/50.png') }}" width="752" height="314" border="0" class="parroquia_obispo"  >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" usemap="#Obispo" class="parroquia_obispo" >
+
+{% endif %}	
+ 
+ {% if id_municipio == 12 %}
+<map name="Cardenal">
+<area shape="poly" coords="201,157,243,164,305,163,326,160,376,136,379,110,367,86,337,74,302,73,264,78,241,72,221,67,205,73,204,87,188,92,171,97,152,115,176,117,197,122,213,131,200,144" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 51}) }}" " title="Santo Domingo" alt="Santo Domingo">
+<area shape="poly" coords="388,117,416,125,456,110,495,110,528,100,559,100,577,105,589,120,589,127,567,137,543,143,532,158,505,154,480,156,461,164,454,174,442,187,422,188,405,181,395,177,381,166,370,159,343,157,335,147,364,142,378,124" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 52}) }}" " title="Las Piedras" alt="Las Piedras">
+</map>
+ <img src="{{ asset('imagenes/merida/parroquias/2/51.png') }}" width="752" height="314" border="0" usemap="#Map" class="parroquia" >
+<img src="{{ asset('imagenes/merida/parroquias/2/52.png') }}" width="752" height="314" border="0" usemap="#Map2" class="parroquia" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="1031" height="434"  usemap="#Cardenal" class="parroquia" >
+
+{% endif %}	
+ 
+ {% if id_municipio == 13 %}
+<map name="Miranda">
+<area shape="poly" coords="328,152,370,155,403,183,404,196,392,218,356,224,353,215,363,210,365,188,344,167,333,162" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 53}) }}" " title="Andres Eloy Blanco" alt="Andres Eloy Blanco">
+<area shape="poly" coords="278,137,295,157,323,154,339,170,368,184,362,211,349,215,319,220,272,212,251,205,246,184,242,163,253,146" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 54}) }}" " title="La Venta" alt="La Venta">
+<area shape="poly" coords="362,23,436,43,419,75,444,91,431,113,400,121,390,132,367,154,314,154,293,153,279,135,304,115,309,88,335,67,357,53" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 55}) }}" " title="Pi�ango" alt="Pi�ango">
+<area shape="poly" coords="451,92" href="#"><area shape="poly" coords="450,96,490,97,489,123,525,145,513,170,501,183,506,218,446,214,420,213,393,219,407,186,374,154,390,143,390,128,428,124" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 56}) }}" " title="Timotes" alt="Timotes">
+</map>
+
+ <img src="{{ asset('imagenes/merida/parroquias/2/53.png') }}" border="0" class="parroquia_miranda" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/54.png') }}" border="0" class="parroquia_miranda" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/55.png') }}" border="0" class="parroquia_miranda">
+ <img src="{{ asset('imagenes/merida/parroquias/2/56.png') }}" border="0" class="parroquia_miranda" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="1031" height="434"  usemap="#Miranda" class="parroquia_miranda">
+
+{% endif %}	
+
+ {% if id_municipio == 14 %}
+<map name="P_llano">
+<area shape="poly" coords="493,144,518,149,548,150,609,156,643,161,646,168,611,172,584,176,560,176,539,183,509,183,505,162,484,154" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 57}) }}" " title="Pueblo Llano" alt="Pueblo Llano">
+</map>
+<img src="{{ asset('imagenes/merida/municipios/2/14.png') }}" border="0" usemap="#P_llano" class="parroquia">
+
+{% endif %}	
+ 
+ {% if id_municipio == 15 %}
+<map name="Rangel">
+<area shape="poly" coords="244,31,192,67,190,83,217,101,244,118,248,90,236,74,248,52" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 58}) }}" " title="Cacute" alt="Cacute">
+<area shape="poly" coords="434,34,450,36,466,37,486,44,475,58,459,67,440,85,424,87,413,96,392,90,401,68,410,57,414,40,424,37" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 59}) }}" " title="La Toma" alt="La Toma">
+<area shape="poly" coords="448,29,433,25,406,27,380,25,357,26,358,39,347,42,339,53,331,60,323,72,326,87,304,95,295,104,244,118,244,160,283,176,293,187,280,199,307,211,330,221,352,222,366,231,384,236,407,240,429,243,459,235,478,229,487,223,483,200,483,183,469,182,453,179,432,175,433,161,429,142,400,137,421,127,420,98,415,94,388,91,395,65,408,45,417,37" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 60}) }}" " title="Mucuchies" alt="Mucuchies">
+<area shape="poly" coords="356,29,251,28,253,51,237,71,253,88,248,117,297,103,325,84,329,57,359,42" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 61}) }}" " title="Mucurub�" alt="Mucurub�">
+<area shape="poly" coords="499,24,536,35,543,59,549,88,538,102,525,115,501,124,483,141,535,151,530,165,527,179,479,182,435,170,440,144,412,137,431,133,427,111,420,91,448,82,481,55" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 62}) }}" " title="San Rafael" alt="San Rafael">
+</map>
+ <img src="{{ asset('imagenes/merida/parroquias/2/58.png') }}" border="0" class="parroquia_rangel" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/59.png') }}" border="0"  class="parroquia_rangel" >
+<img src="{{ asset('imagenes/merida/parroquias/2/60.png') }}" border="0"  class="parroquia_rangel" >
+<img src="{{ asset('imagenes/merida/parroquias/2/61.png') }}" border="0"  class="parroquia_rangel" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/62.png') }}" border="0"  class="parroquia_rangel" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="1031" height="434" border="0" usemap="#Rangel" class="parroquia_rangel" >
+
+{% endif %}
+ 
+ {% if id_municipio == 16 %}
+ <map name="aricagua">
+<area shape="poly" coords="642,197,639,178,626,172,620,165,610,159,602,161,590,156,577,156,572,164,552,160,535,170,517,171,498,172,491,180,485,188,489,200,494,213,476,216,457,223,448,236,443,253,456,261,477,261,505,260,527,257,550,252,574,249,581,239,589,230,607,234,627,236,630,249,643,253,659,252,673,251,678,243,664,231,655,212,652,204" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 63}) }}" title="Aricagua" alt="Aricagua">
+<area shape="poly" coords="496,207,490,199,483,192,491,186,492,178,476,175,440,179,429,190,426,202,425,210,399,221,378,220,365,221,318,235,303,246,306,254,340,253,373,254,412,256,437,261,444,238,452,221,482,216" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 64}) }}" title="San Antonio" alt="San Antonio">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/64.png') }}" width="752" height="314" border="0"  class="parroquia">
+<img src="{{ asset('imagenes/merida/parroquias/2/63.png') }}" width="752" height="314" border="0" class="parroquia" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" class="parroquia" usemap="#aricagua">
+
+{% endif %}
+
+ {% if id_municipio == 17 %}
+<map name="Arzobispo">
+<area shape="poly" coords="292,160,319,158,346,162,383,150,342,132,342,113,286,125,235,132,207,142,210,156,237,163,255,157,274,151"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 65}) }}" title="Canagua" alt="Canagua">
+<area shape="poly" coords="238,130,282,122,261,101,299,82,268,72,254,85,238,87,250,103"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 66}) }}" title="Capuri" alt="Capuri">
+<area shape="poly" coords="392,146,389,134,418,127,435,123,439,115,433,99,392,99,374,91,352,94,349,111,346,123,359,137,378,144"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 67}) }}" title="Chacant�" alt="Chacant�">
+<area shape="poly" coords="321,118,345,114,350,94,357,79,341,64,306,77,290,95,259,103,276,117,297,116"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 68}) }}" title="El Molino" alt="El Molino">
+<area shape="poly" coords="222,206,261,196,258,186,287,162,267,153,239,164,211,160,204,177,185,190,179,206,201,208"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 69}) }}" title="Guaymaral" alt="Guaymaral">
+<area shape="poly" coords="495,124,525,131,549,136,559,157,537,169,505,174,476,177,433,183,418,156,420,128,448,124,477,120"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 70}) }}" title="Mucutuy" alt="Mucutuy">
+<area shape="poly" coords="292,245,336,226,376,220,408,218,424,202,433,186,425,160,421,146,408,129,394,135,393,150,360,156,325,160,301,160,283,173,261,179,259,192,241,205,229,209,222,227,237,244,273,243"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 71}) }}" title="Mucuchachi" alt="Mucuchachi">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/65.png') }}" width="752" height="314" border="0" class="municipio">
+<img src="{{ asset('imagenes/merida/parroquias/2/66.png') }}" name="m66" width="752" height="314" border="0"  class="municipio" id="m66" >
+<img src="{{ asset('imagenes/merida/parroquias/2/67.png') }}" name="m66" width="752" height="314" border="0" class="municipio" id="m67" >
+<img src="{{ asset('imagenes/merida/parroquias/2/68.png') }}" name="m68" width="752" height="314" border="0"  class="municipio" id="m68" >
+<img src="{{ asset('imagenes/merida/parroquias/2/69.png') }}" name="m69" width="752" height="314" border="0" class="municipio" id="m69" >
+<img src="{{ asset('imagenes/merida/parroquias/2/70.png') }}" name="m69" width="752" height="314" border="0"  class="municipio" id="m70" >
+<img src="{{ asset('imagenes/merida/parroquias/2/71.png') }}" name="m69" width="752" height="314" border="0"  class="municipio" id="m71" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" width="752" height="314" usemap="#Arzobispo" class="municipio" >
+
+{% endif %}
+
+{% if id_municipio == 18 %}
+<map name="Guaraque">
+<area shape="poly" coords="197,82,213,74,214,51,257,31,257,23,212,16,160,26,152,38,156,57,147,73,156,88,179,83" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 72}) }}" title="Guaraque" alt="Guaraque">
+<area shape="poly" coords="168,110,193,111,217,113,231,131,242,114,248,101,237,88,211,80,162,86,157,103" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 73}) }}" title="Mesa de Quintero" alt="Mesa de Quintero">
+<area shape="poly" coords="212,77,238,84,261,80,263,69,298,74,328,63,322,46,303,32,288,26,259,30" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 74}) }}" title="Rio Negro" alt="Rio Negro">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/72.png') }}" width="752" height="314" border="0" class="guaraque" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/73.png') }}" width="752" height="314" border="0" class="guaraque" >
+ <img src="{{ asset('imagenes/merida/parroquias/2/74.png') }}" width="752" height="314" border="0" class="guaraque" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Guaraque" class="guaraque">
+
+{% endif %}
+
+{% if id_municipio == 19 %}
+<map name="Noguera">
+<area shape="poly" coords="275,194,295,197,323,203,332,184,365,160,405,162,459,172,485,169,470,149,483,135,479,113,413,120,417,96,395,100,360,120,307,141,297,167" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 75}) }}" title="Santa Maria de Caparo" alt="Santa Maria de Caparo">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/75.png') }}" width="752" height="314" border="0" class="noguera">
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Noguera" class="noguera">
+
+{% endif %}
+
+{% if id_municipio == 20 %}
+<map name="Rivas">
+<area shape="poly" coords="450,137,491,95,493,87,530,89,529,76,550,57,576,77,576,102,549,111,543,129,521,146,517,163,489,170,454,160,442,150"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 76}) }}" title="Geronimo Maldonado" alt="Geronimo Maldonado">
+
+<area shape="poly" coords="195,94,211,69,259,64,301,55,346,53,380,59,406,53,446,44,467,48,495,45,522,52,549,58,524,76,528,90,493,88,483,106,466,128,435,148,398,153,384,161,353,162,323,169,287,179,266,153,266,127,237,120,223,128,179,116,177,110" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 77}) }}" title="Bailadores" alt="Bailadores">
+</map>
+<img src="{{ asset('imagenes/merida/parroquias/2/76.png') }}" border="0" class="parroquia">
+<img src="{{ asset('imagenes/merida/parroquias/2/77.png') }}" border="0" class="parroquia"  >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Rivas" class="parroquia" >
+
+{% endif %}
+
+{% if id_municipio == 21 %}
+<map name="Tovar">
+<area shape="poly" coords="266,47,413,54,385,71,348,66,300,70,283,58" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 78}) }}" title="El Amparo" alt="El Amparo">
+
+<area shape="poly" coords="269,56,344,87,261,137,227,158,248,126,258,110,288,99,287,82" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 79}) }}" title="El Llano" alt="El Llano">
+
+<area shape="poly" coords="319,107,358,134,381,179,349,188,308,194,289,182,247,175,221,167,249,142,279,124,301,111" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 80}) }}" title="San Francisco" alt="San Francisco">
+
+<area shape="poly" coords="529,33,563,41,558,86,542,126,504,116,492,140,452,163,405,182,381,177,318,108,340,92,300,68,375,74,426,54,495,34" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 81}) }}" title="Tovar" alt="Tovar">
+</map>
+
+<img src="{{ asset('imagenes/merida/parroquias/2/78.png') }}" width="752" height="314" border="0" class="parroquia_tovar" >
+<img src="{{ asset('imagenes/merida/parroquias/2/79.png') }}" width="752" height="314" border="0" class="parroquia_tovar" >
+<img src="{{ asset('imagenes/merida/parroquias/2/80.png') }}" width="752" height="314" border="0" class="parroquia_tovar" >
+<img src="{{ asset('imagenes/merida/parroquias/2/81.png') }}" width="752" height="314" border="0" class="parroquia_tovar" >
+<img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Tovar" class="parroquia_tovar">
+
+{% endif %}
+
+{% if id_municipio == 22 %}
+<map name="Antonio">
+<area shape="poly" coords="383,20,510,42,488,66,448,83,421,89,414,98,440,112,459,126,452,133,403,129,411,149,416,160,397,174,389,184,345,197,336,210,316,223,289,231,280,214,275,200,248,177,239,155,269,144,293,119,314,118,330,106,318,100,333,77,337,66" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 82}) }}" title="Santa Cruz de Mora" alt="Santa Cruz de Mora">
+
+<area shape="poly" coords="489,67,477,77,450,83,417,90,415,103,445,112,464,126,485,129,505,114,518,95,504,81" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 83}) }}" title="Mesa Bolivar" alt="Mesa Bolivar">
+<area shape="poly" coords="406,128,461,131,445,161,437,181,425,189,407,188,389,177,409,168,416,152" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 84}) }}" title="Mesa de las Palmas" alt="Mesa de las Palmas">
+</map>
+
+  <img src="{{ asset('imagenes/merida/parroquias/2/82.png') }}" width="752" height="314" border="0" usemap="#Map" class="parroquia" >
+  <img src="{{ asset('imagenes/merida/parroquias/2/83.png') }}" width="752" height="314" border="0" usemap="#Map2" class="parroquia" >
+   <img src="{{ asset('imagenes/merida/parroquias/2/84.png') }}" width="752" height="314" border="0" usemap="#Map3" class="parroquia" >
+   <img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Antonio" class="parroquia">
+
+{% endif %}
+
+{% if id_municipio == 23 %}
+<map name="Zea">
+<area shape="poly" coords="342,98,415,91,468,67,489,43,510,47,547,21,550,36,531,65,512,90,488,103,460,114,432,123,415,128,380,114"  href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 85}) }}" title="Ca�o Tigre" alt="Ca�o Tigre">
+
+<area shape="poly" coords="344,99,418,129,462,114,506,89,550,101,554,130,515,144,500,163,468,171,432,162,390,174,347,181,327,183,201,181,190,150,227,132,278,136,286,112,294,104,314,102" href="{{ path('mapas_estadisticos_detalle_parroquia',{'id_parroquia': 86}) }}" title="Zea" alt="Zea">
+</map>
+  <img src="{{ asset('imagenes/merida/parroquias/2/85.png') }}" width="752" height="314" border="0" class="parroquia"  >
+    <img src="{{ asset('imagenes/merida/parroquias/2/86.png') }}" width="752" height="314" border="0" class="parroquia"   >
+	  <img src="{{ asset('imagenes/merida/Transparencia.png') }}" usemap="#Zea" class="parroquia">
+
+ 
+
+{% endif %} 
+
+{% endblock %}

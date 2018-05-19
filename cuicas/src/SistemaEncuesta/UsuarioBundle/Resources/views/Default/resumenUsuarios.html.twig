@@ -1,0 +1,71 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Usuarios Totales{% endblock %}
+{% block titulo %}Usuarios{% endblock %}
+{% block cuerpo %}
+
+<div>
+    {% for mensaje in app.session.flashbag.get('info') %}
+        <script language=Javascript>
+			alert('{{ mensaje }}')
+		</script>
+	{% endfor %}
+</div>
+
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
+	<div class="row">
+		<div class="col-xs-12">
+<table id="tabla4" class="table stacktable" border="0">
+			{% if pagination is not empty %}
+			<thead><tr>
+		{# sorting of properties based on query components #}
+		    <th{% if pagination.isSorted('a.nombres') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nombre(s)', 'a.nombres') }}</th>
+		    <th{% if pagination.isSorted('a.nombres') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Apellido(S)', 'a.apellidos') }}</th>
+			<th>Cédula</th>
+			<th>Correo Electrónico</th>
+			  <th>Rol</th>
+			</thead>
+
+			{% for usuarioP in pagination %}
+			<tr {% if loop.index is odd %}class="color"{% endif %}>
+			    <td>{{ usuarioP.nombres }}</td>
+			    <td>{{ usuarioP.apellidos }}</td>
+			    <td>{{ usuarioP.cedula }}</td>
+			    <td>{{ usuarioP.email }}</td>
+			    {% set rol = usuarioP.getRol %}
+					{% if usuarioP.getRol == 'ROLE_ADMIN' %}
+						{% set rol = "Administrador"  %}
+					{% endif %}
+					{% if usuarioP.getRol == 'ROLE_USUARIO' %}
+						{% set rol = "Usuario"  %}
+					{% endif %}
+					{% if usuarioP.getRol == 'ROLE_SUPERVISOR' %}
+						{% set rol = "Supervisor"  %}
+					{% endif %}
+			    <td>{{ rol }}</td>
+
+
+	{% endfor %}
+	{% endif %}
+		{% if pagination is empty %}
+			<tr>
+			    <td><center>No existe un usuario con estos Datos</center></td> 
+		  	</tr>
+		{% endif %}
+		</table>
+	</div>
+	</div>
+	</div>
+	<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><a href="{{ path('sistema_Encuesta_principal_homepage') }}" > <input class="fueraoverflow btn btn-default" type="button" value="Salir" /></a></center>
+			</div>
+		</div>
+<script>
+$(document).ready(function() {
+	$('#tabla4').stacktable();
+});
+</script>
+
+	{% set usuario = app.user %}
+{% endblock %}

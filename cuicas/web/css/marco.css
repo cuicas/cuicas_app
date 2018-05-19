@@ -1,0 +1,123 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08/08/2014, 02:49:58 PM
+    Author     : Duque Victor
+*/
+/*este id controla el marco de la pagina en general*/
+
+header {
+  width: 100%;
+  height: 100%;
+  /*margin-top: 50px;*/
+  background: #fff;
+  border-bottom: 2px solid #f00;
+
+
+}
+
+body {            
+        background: url(fondo_sistema_nuevo.png);
+         background-size: 100% 100%, height:100%;
+
+        
+}
+
+.fondo {            
+        background: url(fondo_ventana_emergente.png) no-repeat center center fixed;
+         background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        
+}
+
+#cuerpo{
+
+}
+#contenido {
+    min-height: 100%;
+    position: fixed;
+    margin-left: 120px;
+    border: "1px"; 
+    background-attachment: fixed;
+    /*border: 1px solid #d3d7d9;*/
+}
+
+.current, .page, .next, .last, .first, .previous{
+
+  display: inline-block;  
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: 1px solid #404041;
+  border-radius: 4px;
+
+}
+
+.page:hover, .next:hover, .last:hover, .first:hover, .previous:hover, #pdf:hover { 
+    text-decoration: none;
+    border-color: #99190B; 
+    color: #FFFFFF; 
+    background: none; 
+    background-color:#D10000;
+}
+
+.navigation{
+  top: 300px;
+  position: relative;
+  text-align: right;
+  right: 50px;
+}
+
+.datos{
+
+  position:absolute;
+  left: 309px;
+  bottom:10px;
+  z-index: 899;
+  text-shadow: 0 1px 1px rgba(0, 0, 1, 2);
+  /*color: #FFFFFF;*/
+  font-size: 19px;
+}
+
+label:after { content: "" }
+
+#pdf, #buscar_otro{
+  text-decoration: none; 
+  display: inline-block;  
+  padding: 4px 8px; 
+  margin: 1px;
+  color: #FFFFFF;
+  border: 1px solid #282828;
+  -webkit-border-radius: 5px; 
+  -moz-border-radius: 5px; 
+  border-radius: 5px; 
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #525252), color-stop(1, #DE0000) );
+  background:-moz-linear-gradient( center top, #525252 5%, #DE0000 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#525252', endColorstr='#DE0000');
+  background-color:#525252; 
+  position: relative;
+  /* right: 450px; */
+  top: 270px;
+
+}
+
+.footer { 
+  font-size: 10px;
+  color: #000000; 
+  /*top:600px;*/
+  position: relative;
+  width:100%;
+}
+
+.prueba{
+        
+
+      }

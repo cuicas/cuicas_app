@@ -1,0 +1,262 @@
+<script src="{{ asset('js/jquery-1.11.1.js') }}"></script>
+<script src="{{ asset('js/easyTooltip.js') }}"></script>
+
+<link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/solapamiento.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/tablas.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/easyTooltip.css') }}" rel="stylesheet" type="text/css" />
+
+<div class="datos">
+  {# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA#}
+    <div class="datagrid2 datagrid3" style="width: 505;">
+      <table border="1" >
+         {% if encuesta is not empty and encuesta.tipoEncuesta == 'circuito' or encuesta.tipoEncuesta == 'voto-lista' %}
+        <thead>
+          <tr>
+            <th align="center">Total Votos</th><th align="center">Oficialismo</th><th align="center">MUD</th><th align="center">Otros</th>
+            <th align="center">Votos Lista</th><th align="center">Oficialismo</th><th align="center">MUD</th><th align="center">Otros</th>
+          </tr>
+        </thead>
+        {% set total = 0 %}{% set totalO = 0 %}{% set totalM = 0 %}{% set totalOtros = 0 %}
+        {% set totalLista = 0 %}{% set totalListaO = 0 %}{% set totalListaM = 0 %}{% set totalListaOtros = 0 %}
+        {% for candidato in candidatos %}
+          {% if '' != candidato and candidato.getPartido == 'psuv' or candidato.getPartido == 'psuv-gpp' %}
+            {% set totalO = totalO + candidato.cantidadVotosTotal %}
+            {% set totalListaO = totalListaO + candidato.cantidadVotosTotalLista %}
+          {% endif %}
+          {% if '' != candidato and candidato.getPartido == 'mud' %}
+            {% set totalM = totalM + candidato.cantidadVotosTotal %}
+            {% set totalListaM = totalListaM + candidato.cantidadVotosTotalLista %}
+          {% endif %}
+          {% if '' != candidato and candidato.getPartido == 'otros' %}
+            {% set totalOtros = totalOtros + candidato.cantidadVotosTotal %}
+            {% set totalListaOtros = totalListaOtros + candidato.cantidadVotosTotalLista %}
+          {% endif %}
+          {% set total = total + candidato.cantidadVotosTotal %}
+          {% set totalLista = totalLista + candidato.cantidadVotosTotalLista %}
+        {% endfor %}
+        <tr>
+          <td align="center">{{ total }}</td><td align="center">{{ totalO }}</td><td align="center">{{ totalM }}</td><td align="center">{{ totalOtros }}</td><td align="center">{{ totalLista }}</td><td align="center">{{ totalListaO }}</td><td align="center">{{ totalListaM }}</td><td align="center">{{ totalListaOtros }}</td>
+        </tr>
+         {% endif %}
+
+      </table>
+    </div>
+ 
+</div>
+
+<img id="circuito_1" src="{{ asset('imagenes/merida/circuitos/'~colores[1].color~'/1.png') }}" class="transparencia"> 
+<img id="circuito_2" src="{{ asset('imagenes/merida/circuitos/'~colores[2].color~'/2.png') }}"  class="transparencia" >
+<img id="circuito_3" src="{{ asset('imagenes/merida/circuitos/'~colores[3].color~'/3.png') }}" name="paramo" class="transparencia" >
+<img id="circuito_4" src="{{ asset('imagenes/merida/circuitos/'~colores[4].color~'/4.png') }}" class="transparencia">
+<img id="eje_sur" src="{{ asset('imagenes/merida/circuitos.png') }}" class="transparencia" usemap="#mapa" >
+<script type="text/javascript"> 
+
+  $(document).ready(function(){
+
+    $( "area" ).each( function( index, element ){
+      console.log( $( this ).attr('href') );
+      $( this ).easyTooltip({
+        useElement: $( this ).attr('href').substring($( this ).attr('href').lastIndexOf('/')+1)  
+      });
+
+      $(this).mouseenter(function() {
+        identificador = "circuito_"+$( this ).attr('href').substring($( this ).attr('href').lastIndexOf('/')+1)
+        $( "#"+identificador ).css("opacity","0.8");
+      });
+
+      $(this).mouseout(function() {
+        identificador = "circuito_"+$( this ).attr('href').substring($( this ).attr('href').lastIndexOf('/')+1)
+        $( "#"+identificador ).css("opacity","1.0");
+      });
+
+    });
+
+  });
+
+</script>
+
+<map name="mapa">
+  <area shape="poly" coords="244,106,154,121,142,113,125,114,119,104,76,93,72,100,79,111,77,113,89,128,103,126,120,138,125,151,123,161,128,170,126,186,117,192,90,214,78,230,92,239,90,268,107,267,125,261,140,270,150,276,157,287,170,262,179,258,183,258,198,248,196,231,188,232,199,217,200,202,206,188,219,193,222,178,228,166,229,153,253,163,266,155,255,132,240,127,240,126,246,102" href="{{ path('mapas_estadisticos_mapaCircuito2',{'id_circuito': 1}) }}" onmouseover="" onmouseout="" >
+  <div id="1" style="display:none">Circuito 1
+    {% if encuesta is not empty and encuesta.tipoEncuesta == 'circuito' or encuesta.tipoEncuesta == 'voto-lista'%}
+      <div class="datagrid">
+        <table border="1">
+          <thead> 
+            <tr>
+              <th align="center">Partido</th><th align="center">Votos</th><th align="center">Votos Lista</th>
+            </tr>
+          </thead>
+          {% set psuv,mud,otros = 0,0,0 %}{% set psuvLista,mudLista,otrosLista = 0,0,0 %}
+          {% for candidato in candidatos if candidato.encuesta.id == encuesta.id %}
+            {% set votosTotal,votosTotalLista = 0,0 %}
+            {% for c in candidato.cvCandidatos if c.centroVotacion.parroquia.municipio.circuito.id == 1 %}              
+              {% set votosTotal = votosTotal + c.votos %}
+              {% set votosTotalLista = votosTotalLista + c.votosLista %}
+            {% endfor %}
+            {% if candidato.partido == "psuv" %}
+              {% set psuv = votosTotal + psuv %}
+              {% set psuvLista = votosTotalLista + psuvLista %}
+            {% endif %}
+            {% if candidato.partido == "mud" %}
+              {% set mud = votosTotal + mud %}
+              {% set mudLista = votosTotalLista + mudLista %}
+            {% endif %}
+            {% if candidato.partido == "otros" %}
+              {% set otros = votosTotal + otros %}
+              {% set otrosLista = votosTotalLista + otrosLista %}
+            {% endif %}
+          {% endfor %}
+          <tr>
+            <td bgcolor="#cececf" align="center">PSUV</td><td bgcolor="#cececf" align="center">{{ psuv }}</td><td bgcolor="#cececf" align="center">{{ psuvLista }}</td>
+            </tr>
+            <tr>
+              <td bgcolor="#cececf" align="center">MUD</td><td bgcolor="#cececf" align="center">{{ mud }}</td><td bgcolor="#cececf" align="center">{{ mudLista }}</td>
+            </tr>
+            <tr>
+              <td bgcolor="#cececf" align="center">OTROS</td><td bgcolor="#cececf" align="center">{{ otros }}</td><td bgcolor="#cececf" align="center">{{ otrosLista }}</td>
+            </tr>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+
+  <area shape="poly" coords="248,104,472,61,473,50,466,42,464,32,501,21,507,27,505,41,514,50,540,46,558,22,566,17,583,28,584,43,598,59,597,77,589,78,586,93,587,100,588,109,591,126,603,135,614,136,623,145,622,150,619,160,627,175,623,179,629,188,676,186,680,193,688,198,676,214,679,222,660,228,649,247,635,247,621,241,571,254,559,260,566,281,558,291,523,295,499,293,498,280,476,273,469,261,465,257,442,242,448,227,457,215,476,205,492,201,492,198,464,185,444,189,421,196,394,191,377,192,357,200,339,194,321,192,308,185,296,188,290,199,281,187,270,183,262,178,250,178,234,172,232,163,255,165,269,157,272,153,265,144,258,133,245,123" href="{{ path('mapas_estadisticos_mapaCircuito2',{'id_circuito': 2}) }}" onmouseover="" onmouseout="">
+  <div id="2" style="display:none">Circuito 2
+    {% if encuesta is not empty and encuesta.tipoEncuesta == 'circuito' or encuesta.tipoEncuesta == 'voto-lista' %}
+      <div class="datagrid">
+        <table border="1">
+          <thead> 
+            <tr>
+              <th align="center">Partido</th><th align="center">Votos</th><th align="center">Votos Lista</th>
+            </tr>
+          </thead>
+          {% set psuv,mud,otros = 0,0,0 %}{% set psuvLista,mudLista,otrosLista = 0,0,0 %}
+          {% for candidato in candidatos if candidato.encuesta.id == encuesta.id %}
+            {% set votosTotal,votosTotalLista = 0,0 %}
+            {% for c in candidato.cvCandidatos if c.centroVotacion.parroquia.municipio.circuito.id == 2 %}              
+              {% set votosTotal = votosTotal + c.votos %}
+              {% set votosTotalLista = votosTotalLista + c.votosLista %}
+            {% endfor %}
+            {% if candidato.partido == "psuv" %}
+              {% set psuv = votosTotal + psuv %}
+              {% set psuvLista = votosTotalLista + psuvLista %}
+            {% endif %}
+            {% if candidato.partido == "mud" %}
+              {% set mud = votosTotal + mud %}
+              {% set mudLista = votosTotalLista + mudLista %}
+            {% endif %}
+            {% if candidato.partido == "otros" %}
+              {% set otros = votosTotal + otros %}
+              {% set otrosLista = votosTotalLista + otrosLista %}
+            {% endif %}
+          {% endfor %}
+          <tr>
+            <td bgcolor="#cececf" align="center">PSUV</td><td bgcolor="#cececf" align="center">{{ psuv }}</td><td bgcolor="#cececf" align="center">{{ psuvLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">MUD</td><td bgcolor="#cececf" align="center">{{ mud }}</td><td bgcolor="#cececf" align="center">{{ mudLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">OTROS</td><td bgcolor="#cececf" align="center">{{ otros }}</td><td bgcolor="#cececf" align="center">{{ otrosLista }}</td>
+          </tr>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+  
+  <area shape="poly" coords="497,294,490,311,493,319,480,339,467,353,429,363,419,375,396,362,391,347,374,339,371,328,359,327,355,316,342,317,337,309,339,298,333,288,327,275,337,269,355,276,357,276,348,264,350,255,346,250,352,246,360,223,361,216,382,206,397,198,411,200,423,199,441,192,459,190,476,195,486,199,468,207,453,211,442,228,440,240,447,248,463,260,471,272,479,276,494,281" href="{{ path('mapas_estadisticos_mapaCircuito2',{'id_circuito': 3}) }}" onmouseover="" onmouseout="">
+  <div id="3" style="display:none">Circuito 3
+   {% if encuesta is not empty and encuesta.tipoEncuesta == 'circuito' or encuesta.tipoEncuesta == 'voto-lista'%}
+      <div class="datagrid">
+        <table border="1">
+          <thead> 
+            <tr>
+              <th align="center">Partido</th><th align="center">Votos</th><th align="center">Votos Lista</th>
+            </tr>
+          </thead>
+          {% set psuv,mud,otros = 0,0,0 %}{% set psuvLista,mudLista,otrosLista = 0,0,0 %}
+          {% for candidato in candidatos if candidato.encuesta.id == encuesta.id %}
+            {% set votosTotal,votosTotalLista = 0,0 %}
+            {% for c in candidato.cvCandidatos if c.centroVotacion.parroquia.municipio.circuito.id == 3 %}              
+              {% set votosTotal = votosTotal + c.votos %}
+              {% set votosTotalLista = votosTotalLista + c.votosLista %}
+            {% endfor %}
+            {% if candidato.partido == "psuv" %}
+              {% set psuv = votosTotal + psuv %}
+              {% set psuvLista = votosTotalLista + psuvLista %}
+            {% endif %}
+            {% if candidato.partido == "mud" %}
+              {% set mud = votosTotal + mud %}
+              {% set mudLista = votosTotalLista + mudLista %}
+            {% endif %}
+            {% if candidato.partido == "otros" %}
+              {% set otros = votosTotal + otros %}
+              {% set otrosLista = votosTotalLista + otrosLista %}
+            {% endif %}
+          {% endfor %}
+          <tr>
+            <td bgcolor="#cececf" align="center">PSUV</td><td bgcolor="#cececf" align="center">{{ psuv }}</td><td bgcolor="#cececf" align="center">{{ psuvLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">MUD</td><td bgcolor="#cececf" align="center">{{ mud }}</td><td bgcolor="#cececf" align="center">{{ mudLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">OTROS</td><td bgcolor="#cececf" align="center">{{ otros }}</td><td bgcolor="#cececf" align="center">{{ otrosLista }}</td>
+          </tr>
+        </table>
+      </div>
+    {% endif %}
+  </div> 
+  
+  <area shape="poly" coords="80,501,108,495,99,484,114,465,131,467,165,456,195,452,216,452,237,445,262,435,297,433,307,423,344,405,359,402,364,385,381,375,392,381,393,387,413,385,418,378,405,368,397,358,390,347,375,341,367,330,361,327,356,318,340,316,334,305,337,294,323,279,327,267,343,267,350,270,344,257,339,247,346,241,354,231,357,214,391,196,368,202,346,204,320,195,310,190,301,191,290,204,280,202,275,192,263,186,243,181,227,175,226,182,221,193,210,193,201,205,200,227,201,240,203,250,194,257,176,269,168,273,163,286,153,288,143,282,130,267,119,267,93,271,84,267,89,242,82,236,68,238,42,250,20,256,15,272,19,278,35,277,45,288,44,297,54,311,53,324,55,337,66,341,74,357,96,353,115,361,120,364,116,380,127,393,126,405,117,418,106,431,97,445,89,457,80,463,85,483,79,498"          href="{{ path('mapas_estadisticos_mapaCircuito2',{'id_circuito': 4}) }}" onmouseover="" onmouseout="">
+  <div id="4" style="display:none">Circuito 4
+    {% if encuesta is not empty and encuesta.tipoEncuesta == 'circuito' or encuesta.tipoEncuesta == 'voto-lista' %}
+      <div class="datagrid">
+        <table border="1">
+          <thead> 
+            <tr>
+              <th align="center">Partido</th><th align="center">Votos</th><th align="center">Votos Lista</th>
+            </tr>
+          </thead>
+          {% set psuv,mud,otros = 0,0,0 %}{% set psuvLista,mudLista,otrosLista = 0,0,0 %}
+          {% for candidato in candidatos if candidato.encuesta.id == encuesta.id %}
+            {% set votosTotal,votosTotalLista = 0,0 %}
+            {% for c in candidato.cvCandidatos if c.centroVotacion.parroquia.municipio.circuito.id == 4 %}              
+              {% set votosTotal = votosTotal + c.votos %}
+              {% set votosTotalLista = votosTotalLista + c.votosLista %}
+            {% endfor %}
+            {% if candidato.partido == "psuv" %}
+              {% set psuv = votosTotal + psuv %}
+              {% set psuvLista = votosTotalLista + psuvLista %}
+            {% endif %}
+            {% if candidato.partido == "mud" %}
+              {% set mud = votosTotal + mud %}
+              {% set mudLista = votosTotalLista + mudLista %}
+            {% endif %}
+            {% if candidato.partido == "otros" %}
+              {% set otros = votosTotal + otros %}
+              {% set otrosLista = votosTotalLista + otrosLista %}
+            {% endif %}
+          {% endfor %}
+          <tr>
+            <td bgcolor="#cececf" align="center">PSUV</td><td bgcolor="#cececf" align="center">{{ psuv }}</td><td bgcolor="#cececf" align="center">{{ psuvLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">MUD</td><td bgcolor="#cececf" align="center">{{ mud }}</td><td bgcolor="#cececf" align="center">{{ mudLista }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#cececf" align="center">OTROS</td><td bgcolor="#cececf" align="center">{{ otros }}</td><td bgcolor="#cececf" align="center">{{ otrosLista }}</td>
+          </tr>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+ 
+</map>
+
+<div class="punto_4"> Circuito 1 </div> 
+<div class="punto_2"> Circuito 2 </div>
+<div class="punto_1"> Circuito 3 </div>
+<div class="punto_5"> Circuito 4 </div>
+

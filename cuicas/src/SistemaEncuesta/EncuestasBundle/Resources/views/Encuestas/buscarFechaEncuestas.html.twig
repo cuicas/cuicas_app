@@ -1,0 +1,83 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Buscar Encuestas por Fecha{% endblock %}
+{% block titulo %}Buscar Encuesta{% endblock %}
+{% block cuerpo %}
+<form action="{{ path('encuestas_buscar_fecha') }}" method="post" id="forms" {{ form_enctype(formulario) }} >
+    {% for mensaje in app.session.flashbag.get('info') %}
+        <script language=Javascript>
+        $(document).ready(function(){
+            $(this).tab('show');
+            BootstrapDialog.show({
+                title: 'Mensaje',
+                message: ('{{ mensaje }}'),
+                buttons: [{
+                    id: 'btn-ok',   
+                    //icon: 'glyphicon glyphicon-check',       
+                    label: 'Aceptar',
+                    cssClass: 'btn btn-default',
+                    autospin: false,
+                    action: function(dialogRef){    
+                        dialogRef.close();
+                    }
+                }]
+            })
+        });
+        </script>
+    {% endfor %}
+    <div class="col-xs-12 col-md-5 col-md-offset-5">
+        <div class="row">
+            <div class="col-xs-12 col-md-7">
+                <strong>{{ form_label(formulario.fechaInicio) }}</strong>
+                {{ form_widget(formulario.fechaInicio) }}
+                <div class="error">{{ form_errors(formulario.fechaInicio) }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-7">
+                <strong>{{ form_label(formulario.fechaFinal) }}</strong>
+                {{ form_widget(formulario.fechaFinal) }}
+                <div class="error">{{ form_errors(formulario.fechaFinal) }}</div>
+            </div>
+        </div>
+        {{ form_rest(formulario) }}
+        {{ form_errors(formulario) }}
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <center><input class="fueraoverflow btn btn-default" id="form_buscar" type="submit" value="Buscar" /></center>
+            </div> 
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+          $(".datepicker").datepicker({
+        language: "es",
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+        orientation: "top right",
+        todayHighlight: true
+    });
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        }).on('changeDate', function(e){
+            $(this).datepicker('hide');
+    });
+
+        $('#forms').submit(function(event){
+            var fecha = $('#form_fechaInicio').val();
+            var fecha2 = $('#form_fechaFinal').val();
+
+            if (Date.parse(fecha) > Date.parse(fecha2)) {
+                alert('La Fecha de Fin es menor que la Fecha de Inicio');
+                event.preventDefault();
+            }
+
+        });
+       
+    });
+    </script>
+{% endblock %}

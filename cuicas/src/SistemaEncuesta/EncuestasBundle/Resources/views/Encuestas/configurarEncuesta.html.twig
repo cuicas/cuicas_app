@@ -1,0 +1,209 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Configurar Encuesta{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+{% block cuerpo %}
+
+{#<link href="{{ asset('css/formularios2.css') }}" rel="stylesheet" type="text/css" />#}
+<form action="{{ path('encuestas_configurar', {'id_encuesta': encuesta.id}) }}" method="post" onsubmit="return" {{ form_enctype(formulario) }} novalidate >
+	{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+		/*$(document).ready(function(){
+			$(this).tab('show');
+			BootstrapDialog.show({
+				title: 'Mensaje',
+				message: ('{{ mensaje }}'),
+				buttons: [{
+					id: 'btn-ok',   
+					//icon: 'glyphicon glyphicon-check',       
+					label: 'Aceptar',
+					cssClass: 'btn btn-default',
+					autospin: false,
+					action: function(dialogRef){    
+						dialogRef.close();
+					}
+				}]
+			})
+		});*/
+		</script>
+	{% endfor %}
+	<div class="col-xs-12 col-md-4 col-md-offset-2">
+		{% set total = cantidad %}	
+			{% for preguntas in formulario %}		
+			{% set i = loop.index %}
+				{% if (i <= total) %}
+					{% if i == 1 %}
+						<div class="row">
+							<div class="col-xs-12">
+								<strong><label>Pregunta Nro 1</label> </strong>
+								<input name="preguntastype[pregunta1]" id="preguntastype_pregunta1" class="form-control input-sm" style="height:25px; resize:none;" placeholder="" value="¿El encuestado respondio la llamada?" readonly="readonly"><!-- ¿El encuestado respondio la llamada? -->
+							</div>
+						</div>
+				{% endif %}
+				{% if i == 2 %}
+						<div class="row">
+							<div class="col-xs-12">
+								<strong><label>Pregunta Nro 2</label></strong>
+								<input name="preguntastype[pregunta2]" id="preguntastype_pregunta2" class="form-control input-sm" style="height:25px; resize:none;" placeholder="" value="Identificaci&oacute;n" readonly="readonly">
+							</div>
+						</div>
+				{% endif %}
+				{% if i == 3 %}
+						<div class="row">
+							<div class="col-xs-12">
+								<strong><label>Pregunta Nro 3</label></strong>
+								<input name="preguntastype[pregunta3]" id="preguntastype_pregunta3" class="form-control input-sm" style="height:25px; resize:none;" placeholder="" value="Equipo/Cargo/Misi&oacute;n/Centro de Votaci&oacute;n" readonly="readonly">
+							</div>
+						</div>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+		</div>
+
+
+	<div class="col-xs-12 col-md-4">
+		{% for preguntas in formulario %}		
+			{% set i = loop.index %}
+				{% if (i <= total) %}
+				{% if i == 4 or i == 5  or i == 6  or i == 7  or i == 8 %}
+						<div class="row">
+							<div class="col-xs-12">
+								<strong>{{ form_label(preguntas) }}</strong>
+								{{ form_widget(preguntas) }}
+								<div class="error">{{ form_errors(preguntas) }}</div>
+							</div>
+						</div>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+		<div class="row">
+			<div class="col-xs-12">
+				<strong><label>¿La encuesta es definitiva?</label></strong>
+				{% set checked = "" %}
+				{% set checkedNo = "" %}
+				{% if encuesta.definitiva == "true" %}
+					{% set checked = "checked" %}
+					
+				{% else %}
+					{% set checkedNo = "checked" %}
+				{% endif %}
+				Si&nbsp;&nbsp;<input type="radio" class="validate[required]" name="form[definitiva]" value="si" {{checked}}>&nbsp;&nbsp; No&nbsp;&nbsp; <input type="radio" class="validate[required]" name="form[definitiva]" value="no" {{checkedNo}}>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><input class="fueraoverflow btn btn-default" type="submit" value="Guardar"/> <a href="{{ path('encuestas_totales', {"tipoEncuesta":"general"}) }}"><input class="fueraoverflow btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+			</div>
+		</div>
+	</div>
+				
+	{#<div class="floatrigth">
+		<table style="margin-top: -12px;border-collapse: separate;border-spacing: 3px 23px;" >
+		
+			{% set total = cantidad %}		
+			{% for preguntas in formulario %}  	
+			{% set i = loop.index %}		
+			{% if (i <= total) %}
+				<tr>
+					{% if i == 1 or i == 2 or i == 3 or i == 4 or i == 5 %}
+					<td>
+
+					<input type="checkbox" name="item[{{'si' ~ i}}]" id="{{'si' ~ i}}" value="si" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('si')) %} checked {% endif %}{% endif %} {% endfor %} />
+				
+
+					</td>
+					<td>
+						<div for="{{'si' ~ i}}">Sí</div> 
+					</td>
+					{% endif %}
+			
+					{% if i == 2 or i == 3 or i == 4 or i == 5 %}
+					<td>					
+					<input type="checkbox" name="item[{{'no' ~ i}}]" id="{{'no' ~ i}}" value="no" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('no')) %} checked="checked" {% endif %}{% endif %} {% endfor %}  />
+					</td>
+					<td>
+						 <div for="{{'no' ~ i}}">No</div>
+					</td>
+					{% endif %}
+
+					{% if (i == 1) %}
+					<td>					
+					<input type="checkbox" name="item[{{'norespondio' ~ i}}]" id="{{'norespondio' ~ i}}" value="norespondio" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('norespondio')) %} checked {% endif %}{% endif %} {% endfor %}  />
+					</td>
+					<td colspan="5">
+						 <div for="{{'norespondio' ~ i}}">No Respondió</div>
+					</td>
+					{% endif %}
+		
+					{% if (i == 2) %}
+					<td>					
+					<input type="checkbox" name="item[{{'cambiodenumero' ~ i}}]" id="{{'cambiodenumero' ~ i}}" value="cambiodenumero" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('cambiodenumero')) %} checked {% endif %}{% endif %} {% endfor %}  />
+					</td>
+					<td>
+						 <div for="{{'cambiodenumero' ~ i}}">Cambio de número</div>
+					</td>
+					{% endif %}
+				
+				{% if (i == 2) %}
+					<td>					
+					<input type="checkbox" name="item[{{'dicenoser' ~ i}}]" id="{{'dicenoser' ~ i}}" value="dicenoser" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('dicenoser')) %} checked {% endif %}{% endif %} {% endfor %}  />
+					</td>
+					<td>
+						 <div for="{{'dicenoser' ~ i}}">Dice no ser</div>
+					</td>
+					{% endif %}
+				
+				{% if i == 3 or i == 4 or i == 5 %}
+					<td>					
+					<input type="checkbox" name="item[{{'nosabe' ~ i}}]" id="{{'nosabe' ~ i}}" value="nosabe" {% for p in confi_preguntas.EncuestaTipoRespuesta %} {% if (p.getNpregunta == i) %} {% if (p.varificarRepuesta('nosabe')) %} checked {% endif %}{% endif %} {% endfor %}  />
+					</td>
+					<td>
+						 <div for="{{'nosabe' ~ i}}">No sabe</div>
+					</td>
+					{% endif %}
+				</tr>
+				<div class="error">{{ form_errors(preguntas) }}</div>	
+			{% endif %}
+
+		{% endfor %}
+	
+		</table>
+			</div>	#}		
+		
+		{{ form_widget(formulario._token) }}
+		{# {{ form_rest(formulario) }} #}
+	</form>
+	<script>
+
+function validar(){
+	
+	{% set total = cantidad %}	
+	var todo_correcto = true;
+	var pregunta='';
+	{% for preguntas in formulario %}	
+		{% set i = loop.index %}
+			{% if (i <= total) %}
+					
+				if(!document.getElementById("{{'si' ~ i}}").checked && !document.getElementById("{{'no' ~ i}}").checked && !document.getElementById("{{'norespondio' ~ i}}").checked && !document.getElementById("{{'cambiodenumero' ~ i}}").checked && !document.getElementById("{{'dicenoser' ~ i}}").checked){
+			    	todo_correcto = false;
+			    	if (pregunta==''){
+			    	  pregunta = {{i}};
+			    	}
+			      	   else{
+			    	    pregunta = pregunta+ ","+{{i}};
+			    	   }
+			    }
+ 			{% endif %}
+	{% endfor %}  
+
+	if(!todo_correcto){
+		alert('Debe seleccionar al menos una Respuesta en la pregunta:'+pregunta);
+		return false;
+	}
+	    return true;
+}
+
+</script>
+{% endblock %}

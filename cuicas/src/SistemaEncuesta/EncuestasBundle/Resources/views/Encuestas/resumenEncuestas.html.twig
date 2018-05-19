@@ -1,0 +1,170 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Encuestas Totales{% endblock %}
+{% block titulo %}Encuestas{% endblock %}
+{% block cuerpo %}
+<div class="col-xs-12 col-md-8 col-md-offset-2">
+	<div class="row">
+		<div class="col-xs-12">
+<table id="tabla2" class="table stacktable" border="0">
+		{% if pagination is not empty %}
+		<thead>
+			<tr>
+		{# sorting of properties based on query components #}
+		    <th>Nombre</th>
+		    <th width="120">Tipo</th>
+		    <th>Total</th>
+		  	<th width="50">Contactados</th>
+		  	<th colspan="4">Detalles</th>
+		  	</tr>
+		</thead>
+	
+		
+		{# table body #}
+		{% for encuestaP in pagination %}
+			<tr {% if loop.index is odd %}class="color"{% endif %}>
+			    <td>{{ encuestaP.nombreEncuesta }}</td>
+			    {% set tipo = encuestaP.tipoEncuesta %}
+						{% if encuestaP.tipoEncuesta == 'general' %}
+							{% set tipo = "Socio-Política"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'estatal' %}
+							{% set tipo = "Sufragio - Por Estado"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'alcalde' %}
+							{% set tipo = "Sufragio - Por Municipio"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'circuito' %}
+							{% set tipo = "Sufragio - Por Circuito"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'fase1' %}
+							{% set tipo = "Sufragio - 1era Fase"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'fase2' %}
+							{% set tipo = "Sufragio - 2da Fase"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'voto-lista' %}
+							{% set tipo = "Sufragio - Por Circuito - Voto Lista"  %}
+						{% endif %}
+						{% if encuestaP.tipoEncuesta == 'comando' %}
+							{% set tipo = "Comando Campaña"  %}
+						{% endif %}
+					<td>{{ tipo }}</td>
+			    <td valign="middle" align="center">
+			    	{% if encuestaP.tipoEncuesta == 'general' %} 
+			    		{{encuestaP.contactados|length }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'comando' %} 
+			    		{{encuestaP.contactadoComando|length }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'fase1' or encuestaP.tipoEncuesta == 'fase2' %}
+			    		{{ encuestaP.totalContactadosSufragio }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'circuito' or encuestaP.tipoEncuesta == 'alcalde' or encuestaP.tipoEncuesta == 'estatal' or encuestaP.tipoEncuesta == 'voto-lista'  %}
+			    		 	{{ encuestaP.totalContactadosSufragio }}
+			    	{% endif %}
+			    </td>
+			    <td valign="middle" align="center">
+			    	{% if encuestaP.tipoEncuesta == 'general' %} 
+			    		{{encuestaP.totalContactadosSi("si")}}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'fase1' or encuestaP.tipoEncuesta == 'fase2' %}
+			    		{{ encuestaP.totalContactadosSufragio}}
+			    	{% endif %} 
+			    	{% if encuestaP.tipoEncuesta == 'circuito' or encuestaP.tipoEncuesta == 'alcalde' or encuestaP.tipoEncuesta == 'estatal' or encuestaP.tipoEncuesta == 'voto-lista' %}
+			   			{{ encuestaP.totalContactadosSufragio }}   		
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'comando' %} 
+			    		{{encuestaP.totalContactadoComandoSi("si") }}
+			    	{% endif %}
+			    </td>
+			    {% if encuestaP.tipoEncuesta == "fase1" %}
+						{#<td valign="middle" align="center" colspan="1">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id}) }}?instalacion=instalacion" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Instalación</a>
+						</td>
+						<td valign="middle" align="center" align="center" colspan="2">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id}) }}?asistencia=asistencia" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Asistencia</a>
+						</td>#}
+						<td align="center" colspan="2">
+							<center><a href="{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?instalacion=instalacion" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL INDUSTRIL"  class="clsBoton">Inst.</a></center>
+						</td>
+						<td colspan="2" valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?totalGlobal=totalGlobal" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Total</a>
+						</td>
+					{% endif %}
+			    {% if encuestaP.tipoEncuesta == "fase2" %}
+					  <td valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?asistencia=asistencia" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Asist.</a>
+						</td>
+						<td valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?=movilizacion" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Movil.</a>
+						</td>
+						<td valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?totalGlobal=totalGlobal" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Total</a>
+						</td>
+						<td valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?totalizacion=totalizacion" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Totalización</a>
+						</td>
+					{% endif %}
+
+					{% if encuestaP.tipoEncuesta == "general" %}
+					<td align="center" colspan="2">
+							<center><a href="{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'dos'}) }}" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton">Ver</a></center>
+						</td>
+						<td>
+							<center><a href="{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton">Otros</a></center>
+						</td>
+						<td valign="middle" align="center">
+							<a href= "{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}?totalGlobal=totalGlobal" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton" >Total</a>
+						</td>
+					{% endif %}
+
+					{% if encuestaP.tipoEncuesta != "fase1" and encuestaP.tipoEncuesta != "fase2" and encuestaP.tipoEncuesta != "general"%}
+						<td align="center" colspan="4">
+							<center><a href="{{ path('encuestas_ver_detalles',{'id_encuesta': encuestaP.id, 'tipo':'uno'}) }}" class="clsVentanaIFrame clsBoton1" rel="SESPI - PDVSA INDUSTRIAL"  class="clsBoton">Ver</a></center>
+						</td>
+			    {% endif %}
+		    
+		  	</tr>
+		{% endfor %}
+		{% endif %}
+		{% if pagination is empty %}
+			<tr>
+			    <td><center>No existe una encuesta con estos Datos</center></td> 
+		  	</tr>
+		{% endif %}
+	</table>
+	</div>
+	</div>
+	</div>
+{# display navigation #}
+
+<div class="col-xs-12 col-md-5 col-md-offset-5 text-right">
+	<div class="row">
+		<div class="col-xs-12">
+			
+	{{ knp_pagination_render(pagination) }}
+</div>
+</div>
+</div>
+<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center>{% if buscar == "nombre" %}
+				<a class="btn btn-default" href="{{ path('encuestas_buscar_nombre') }}" >Buscar Otro</a>
+			{% endif %}
+			{% if buscar == "fecha" %}
+				<a class="btn btn-default" href="{{ path('encuestas_buscar_fecha') }}" >Buscar Otro</a>
+			{% endif %}
+			{% if pagination|length %}
+				<a class="btn btn-default" href="{{ path('pdf_resumen_encuestas') }}" target="blank" >Imprimir</a>
+			{% endif %}</center>
+			</div>
+		</div>
+	</div>
+<script>
+$(document).ready(function() {
+	$('#tabla2').stacktable();
+});
+</script>
+	
+{% endblock %}

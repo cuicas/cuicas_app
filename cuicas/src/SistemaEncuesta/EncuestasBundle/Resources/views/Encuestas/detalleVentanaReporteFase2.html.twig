@@ -1,0 +1,21 @@
+id CV, Nombre CV, Mesas Instaladas, Cant. Mesas, Cant. Testigo, Chavistas, Opositores, Mesas Cerradas, Cant. Cerradas, Tipo Incidencia, Incidencia
+{% if encuesta is defined %}
+{% for municipio in municipios|sort %}
+{% set encontrado = "" %}
+{% set totalCh = 0 %}{% set totalOp = 0 %}
+{% set totalMesas = 0 %}
+{% set totalTestigos = 0 %}
+{% for contactadosSufragio in datos|sort %}{% if contactadosSufragio.municipio == municipio.id %}{{ contactadosSufragio.id_cv }},{#{{ contactadosSufragio.paq }},#}{{ contactadosSufragio.cv }},{{ contactadosSufragio.apertura }},{% if contactadosSufragio.apertura != 'Ninguna' %}{% set mesas = contactadosSufragio.apertura|split('-') %}{% set totalMesas = totalMesas + mesas|length %}{% endif %}{{contactadosSufragio.cantMesas}},{{ contactadosSufragio.testigos }},{% if contactadosSufragio.testigos != 'Ninguna' and contactadosSufragio.testigos != ''%}{% set testigos = contactadosSufragio.testigos %}{% set totalTestigos = totalTestigos + testigos %}{% endif %}{{ contactadosSufragio.oficialistas }},{% set totalCh = totalCh + contactadosSufragio.oficialistas %}{{ contactadosSufragio.opositores }},{% set totalOp = totalOp + contactadosSufragio.opositores %}{{ contactadosSufragio.cierre }},{{ contactadosSufragio.cantCierre }},{{ contactadosSufragio.tipoIncidencia }},{{ contactadosSufragio.incidencia }}
+{% set encontrado = "si" %}
+{% endif %}
+{% endfor %}
+{% if encontrado == "" %}
+,No existen datos registrados para el municipio {{municipio.nombreMunicipio}}
+{% endif %}
+{% if encontrado == "si" %}
+,Total de mesas aperturadas y cantidad de testigos,{{totalMesas}},,{{totalTestigos}}
+,Total de movilizacion,,,,{{totalCh}},{{totalOp}}
+{% endif %}
+,
+{% endfor %}
+{% endif %}

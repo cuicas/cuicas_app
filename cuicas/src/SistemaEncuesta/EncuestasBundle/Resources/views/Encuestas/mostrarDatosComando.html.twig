@@ -1,0 +1,249 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos del Encuestado{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+
+{% block cuerpo %}
+
+  <form action="{{ path('encuestas_datosEncuestaComando', {'id_encuesta': encuesta.id}) }}" method="post" {{ form_enctype(formulario) }}>
+    {% for mensaje in app.session.flashbag.get('info') %}
+      <script language=Javascript>
+      $(document).ready(function(){
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('{{ mensaje }}'),
+          buttons: [{
+            id: 'btn-ok',   
+            //icon: 'glyphicon glyphicon-check',       
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){    
+              dialogRef.close();
+            }
+          }]
+        })
+      });
+      </script>
+    {% endfor %}
+    {% set id = "" %}
+    {% for indice, llave in results|keys %}
+      {% if indice == 0 and  llave == "id_bene_misiones" %} 
+        {% set id = results.id_bene_misiones %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_clp" %} 
+        {% set id = results.id_clp %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_militancia" %} 
+        {% set id = results.id_militancia %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_rep" %} 
+        {% set id = results.id_rep %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_trab_patria" %} 
+        {% set id = results.id_trab_patria %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_ubch" %} 
+        {% set id = results.id_ubch %}
+      {% endif %}
+    {% endfor %}
+    <div class="col-xs-12 col-md-7 col-md-offset-2">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table1 table-striped table-bordered" id="mytable">
+            <thead>
+              {% if results.area == "municipio" %}
+                <tr>
+                  <td><strong>Municipio</strong></td>
+                  <td>{{ results.identificador }}</td>
+                  <td ><strong>Tel&eacute;fono</strong></td>
+                  <td ><div class="editarTelf1" id="{{id}}">{{results.telefono_1|trim}}</div></td>
+              {% endif %}
+              {% if results.area == "circuito" %}
+                  <td><strong>Circuito</strong></td>
+                  <td>{{results.identificador}}</td>
+                  <td ><strong>Tel&eacute;fono</strong></td>
+                  <td ><div class="editarTelf1" id="{{id}}">{{results.telefono_1|trim}}</div></td>
+                </tr>
+              {% endif %}
+            </thead> 
+          </table><br>
+        </div>
+      </div>
+      </div>
+    <div class="col-xs-12 col-md-8 col-md-offset-2" style="font-size:17px;">
+      <div style="width:750px; height:330px; overflow: auto; position:relative; ">
+        <div class="row">
+          <div class="col-xs-12">
+            ¿Respondieron la llamada?&nbsp;&nbsp; <strong>Si <input type="radio" name="form[1]" class="validate[required]" id="resp_1" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" name="form[1]" id="resp_1" class="validate[required]" value="norespondio">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tel&eacute;fono No Asignado <input type="radio" name="form[1]" id="resp_1" class="validate[required]" value="noasignado"></strong> 
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="form_identificacion" style="display: none;"><strong>1-</strong> Buenos ( días/tarde ) ¿Es usted <strong><b class="editarNombres" style="display: inline" id="{{id}}">{{results.apellidos_nombres}}</b></strong> y su Cédula de Identidad es <strong><b class="editarCedula" style="display: inline" id="{{id}}">{{results.cedula|trim}}</b></strong>?
+            </div>
+            <div id="form_identificacion_resp" style="display: none;">
+              Si <input type="radio" name="form[2]" class="validate[required]" value="si">&nbsp;&nbsp;
+              Número Errado <input type="radio" name="form[2]" class="validate[required]" value="cambiodenumero">
+            </div>
+          </div>
+        </div><br>
+        <div class="row">
+            <div class="col-xs-12">
+              <div id="form_pregun_3" style="display: none;">
+             <strong>2-</strong> ¿Usted pertenece al <strong>Comando de Campaña</strong> y su Cargo es <strong>{{results.id_cargo_comando}}</strong>?
+            </div>
+    
+            <div id="form_pregun_3_resp" style="display: none;">
+              Si <input type="radio" name="form[3]" class="validate[required]" id="resp_1" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" name="form[3]" id="resp_1" class="validate[required]" value="norespondio">
+          </div>
+            </div>
+        </div><br>
+        <div class="row">
+          {% if encuesta.getPreguntas.getPregunta4() is not empty %}
+          <div class="col-xs-12">
+              <div id="form_pregun_4" style="display: none;">
+                <strong>3-</strong> {{encuesta.getPreguntas.getPregunta4()}}
+              </div>
+              <div id="form_pregun_4_resp" style="display: none;">
+                Si <input type="radio" name="form[4]" value="si">
+                &nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" class="validate[required]" name="form[4]" value="no">
+                &nbsp;&nbsp;&nbsp;No sabe <input type="radio" class="validate[required]" name="form[4]" value="nosabe">
+                </div>
+        </div>
+        {% endif %}
+        </div><br>
+        <div class="row">
+          {% if encuesta.getPreguntas.getPregunta5() is not empty %}
+            <div class="col-xs-12">
+              <div id="form_pregun_5" style="display: none;">
+                <strong>4-</strong> {{encuesta.getPreguntas.getPregunta5()}}
+              </div>
+              <div id="form_pregun_5_resp" style="display: none;">
+                  Si <input type="radio" name="form[5]" value="si">
+                  &nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" class="validate[required]" name="form[5]" value="no">
+                  &nbsp;&nbsp;&nbsp;No sabe <input type="radio" class="validate[required]" name="form[5]" value="nosabe">
+              </div>
+            </div>
+        {% endif %}
+        </div>
+      </div>
+      </div>
+    <div class="col-xs-12 col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <center><input class="fueraoverflow2 btn btn-default" type="submit" onclick="return validar()" value="Guardar" name="form[boton_guardar]" /> <input class="fueraoverflow2 btn btn-default" type="submit" id="otro" value="Buscar Otro" name="form[boton_buscar]" /> <a href="{{ path('encuestas_totales', {'tipoEncuesta': "general"}) }}">
+        <input class="fueraoverflow2 btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+        </div>
+      </div>
+    </div> 
+    </div> 
+  </form>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $('#otro').on( "click", function() {
+      $('*[type="radio"]').removeClass( "validate[required]" )
+    });
+
+    $( "#mytable td:even" ).css( "background-color", "#d0d2d3" ); 
+
+    $('*[type="radio"]').click(function(evento){
+
+
+      if ($(this).attr("name")=="form[1]"){
+        if ($(this).attr("value")=="si"){
+          $("#form_identificacion").css("display", "block") && $("#form_identificacion_resp").css("display", "block");          
+        }
+
+          
+        if ($(this).attr("value")=="norespondio"){
+          $('input:radio[name="form[2]"]').attr ('checked',false);
+          $('input:radio[name="form[3]"]').attr ('checked',false);
+          $('input:radio[name="form[4]"]').attr ('checked',false);
+          $('input:radio[name="form[5]"]').attr ('checked',false);
+          $("#form_identificacion").css("display", "none") && $("#form_identificacion_resp").css("display", "none") && $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none");
+         
+        }
+      }
+
+      if ($(this).attr("name")=="form[2]") { 
+
+        if ($(this).attr("value")=="si"){  
+           
+            $("#form_pregun_3").css("display", "block") && $("#form_pregun_3_resp").css("display", "block") && $("#form_pregun_4").css("display", "block") && $("#form_pregun_4_resp").css("display", "block") && $("#form_pregun_5").css("display", "block") && $("#form_pregun_5_resp").css("display", "block");
+        }
+
+        if ($(this).attr("value")=="no"){
+          $('input:radio[name="form[3]"]').attr ('checked',false);
+          $('input:radio[name="form[4]"]').attr ('checked',false);
+          $('input:radio[name="form[5]"]').attr ('checked',false);
+
+          $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none");
+        }
+
+        if ($(this).attr("value")=="dicenoser"){
+          $("#form_pregun_3").css("display", "block") && $("#form_pregun_3_resp").css("display", "block") && $("#form_pregun_4").css("display", "block") && $("#form_pregun_4_resp").css("display", "block") && $("#form_pregun_5").css("display", "block") && $("#form_pregun_5_resp").css("display", "block");
+        }
+
+        if ($(this).attr("value")=="cambiodenumero"){
+          $('input:radio[name="form[3]"]').attr ('checked',false);
+          $('input:radio[name="form[4]"]').attr ('checked',false);
+          $('input:radio[name="form[5]"]').attr ('checked',false);
+          $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none") ;
+         
+        }
+      }
+        
+    });
+      
+    /* campo editables */
+    $('.editarNombres').editable('{{ path("encuestas_editar_datos",{"tipo":"comando_camp"}) }}', {
+       //indicator : "Guardando...",
+       indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+       tooltip   : 'Doble clic para editar...',
+       id   : 'nombres',
+       event  : "dblclick",
+       submit  : 'OK'
+    });
+
+    /* campo editables */
+    $('.editarCedula').editable('{{ path("encuestas_editar_datos",{"tipo":"comando_camp"}) }}', {
+       //indicator : "Guardando...",
+       indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+       tooltip   : 'Doble clic para editar...',
+       id   : 'cedula',
+       event  : "dblclick",
+       submit  : 'OK'
+    });
+
+    /* campo editables telefono*/
+    $('.editarTelf1').editable('{{ path("encuestas_editar_datos",{"tipo":"comando_camp"}) }}', {
+       indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+       tooltip   : 'Doble clic para editar...',
+       id   : 'telefono',
+       event  : "dblclick",
+       submit  : 'OK'
+    });
+
+  });
+
+  function validar() {
+
+    var a = 0, radio=document.getElementsByName("form[1]")
+      for(i=0;i<radio.length;i++) {
+        if(radio.item(i).checked == false) {
+          a++;
+        }
+      }
+        if(a == radio.length) {
+          alert('Debe seleccionar una Respuesta');
+            return false;
+        } else {
+            return true;
+          }
+  }
+
+</script>
+{% endblock %}

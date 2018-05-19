@@ -1,0 +1,302 @@
+/* CSS Document */
+.logo1{
+	position:absolute;
+	left: 2px;
+	top: -2px;
+	overflow: visible;
+	width: 144px;
+	height: 83px;
+
+}
+.paleta{
+	position:absolute;
+	left: 74px;
+	top: 159px;
+	overflow: visible;
+}
+.municipio{
+	position:absolute;
+	left: 237px;
+	top: 0px;
+	overflow: visible;
+	width: 555px;
+
+}
+
+.libertador{
+	  position: absolute;
+  left: 180px;
+  top: 6px;
+  overflow: visible;
+  width: 555px;
+	/*width: 1031px;
+	height: 443px;*/
+}
+
+/*.santos_marquina{
+	position: absolute;
+  left: 180px;
+  top: 6px;
+  overflow: visible;
+  width: 555px;
+
+}*/
+
+.campo_elias{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+	/*width: 755px;
+	height: 314px;*/
+}
+
+.guaraque{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+	/*width: 755px;
+	height: 314px;*/
+}
+.noguera{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+	/*width: 755px;
+	height: 314px;*/
+}
+.regresar{
+	position:absolute;
+	left: 5px;
+	top: 124px;
+	width: 202px;
+	height: 113px;
+}
+
+
+.transparencia{
+	left:99px;
+	top:-60px;
+	position: absolute;
+
+}
+.parroquia{
+	position:absolute;
+	left: 50px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_rangel{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_miranda{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_tovar{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_obispo{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_azulita{
+	position:absolute;
+	left: 112px;
+	top: 6px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+
+}
+.parroquia_adriani{
+	position:absolute;
+	left: 112px;
+	top: 106px;
+	overflow: visible;
+	width: 555px;
+/*height:317px;
+position: absolute;*/
+}
+
+.transparenciaLibertador{
+  position: absolute;
+  left: -50px;
+  top: 6px;
+  overflow: visible;
+  width: 555px;
+}
+
+.titulo {
+	left:310px;
+	top:-1px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 30px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.total{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+	height:21px;
+	position: absolute;
+	left: 51px;
+	top: 11px;
+}
+.conformadas{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+    height:21px;
+	position: absolute;
+	left: 52px;
+	top: 10px;
+}
+.auditadas{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+	height:21px;
+	position: absolute;
+	left: 50px;
+	top: 10px;
+}
+.punto_1_imagen{
+	left:816px;
+	top:531px;
+	width:179px;
+	height:28px;
+	position: absolute;
+
+}
+.punto_2_imagen{
+	left:815px;
+	top:569px;
+	width:179px;
+	height:34px;
+	position: absolute;
+
+}
+.punto_3_imagen{
+	left:815px;
+	top:606px;
+	width:179px;
+	height:37px;
+	position: absolute;
+
+}
+.punto_merida1{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	width:219px;
+	height:22px;
+	position: absolute;
+	left: 267px;
+	top: 9px;
+	background-color: #000000;
+
+}
+.punto_merida2{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	left:269px;
+	top:10px;
+	width:216px;
+	height:22px;
+	position: absolute;
+	background-color: #000000;
+}
+.punto_merida3{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	left:267px;
+	top:9px;
+	width:220px;
+	height:22px;
+	position: absolute;
+	background-color: #000000;
+}
+
+.botones_menu{
+
+	height:5px;
+	position: absolute;
+	left: 22px;
+	top: 74px;
+}
+
+.mensaje_sesion{
+	color:#000000;
+	font-weight:bold;
+	font-size: 16px;
+	width:242px;
+	height:22px;
+	position: absolute;
+	left: 991px;
+	top: 80px;
+}
+
+.centrosVotacion{
+	position: absolute;
+	left: 626px;
+	top: 110px;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.listadoCV{
+	position: absolute;
+	left: 605px;
+	top: 120px;
+}

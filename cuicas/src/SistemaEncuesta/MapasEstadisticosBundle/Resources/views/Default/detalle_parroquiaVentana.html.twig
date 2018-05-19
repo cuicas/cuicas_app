@@ -1,0 +1,127 @@
+{# {% extends '::frontend.html.twig' %} #}
+<script src="{{ asset('js/jquery-1.11.1.js') }}"></script>
+<script src="{{ asset('js/easyTooltip.js') }}"></script>
+
+<link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/solapamiento_municipios.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/tablas.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/easyTooltip.css') }}" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript"> 
+
+  $(document).ready(function(){ 
+
+    $( "a" ).each( function( index, element ){
+      console.log( $( this ).attr('href') );
+      $( this ).easyTooltip({
+        useElement: $( this ).attr('href').substring($( this ).attr('href').lastIndexOf('/')+1)  
+      });
+    });
+  });
+</script>
+
+<div class="datos" style="left:555px;">
+{# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA #}
+  {% if parroquia != '' %}
+    <div class="datagrid2">
+      <table border="1">
+        <thead>
+          <th align="center">Foto</th><th align="center">Nombre(s) y Apellido(s)</th><th align="center">Partido</th><th align="center">Votos</th>{% if encuesta.tipoEncuesta == "circuito" %}<th align="center">Votos Lista</th>{% endif %}
+        </thead> 
+        
+          {% set candidato1, candidato2, candidato3, totalOtros = "Sin Candidato", "Sin Candidato", "Sin Candidato", "Sin Candidato" %}
+          {% set partido1, partido2, partido3 = 0, 0, 0 %}
+          {% set totalVotos1, totalVotos2, totalVotos3 = 0, 0, 0 %}
+          {% set totalVotosLista1, totalVotosLista2, totalVotosLista3 = 0, 0, 0 %}
+          {% set foto1, foto2, foto3 = "sin_foto.png","sin_foto.png","sin_foto.png" %}
+
+          {% for centrosVotacion in parroquia.centroVotacion %}
+            {% for cvCandidato in centrosVotacion.cvCandidatos if cvCandidato.idParroquia == id_parroquia and cvCandidato.idEncuesta == encuesta.id %}
+              {# {% for candidato in cvCandidato.candidato %}{{cvCandidato.idParroquia}}-- {{encuesta.id}} #}
+                
+                {% if cvCandidato.candidato.partido == "psuv" or cvCandidato.candidato.partido == "psuv-gpp" %}
+                  {% set totalVotos1 = totalVotos1 + cvCandidato.votos %}
+                  {% set totalVotosLista1 = totalVotosLista1 + cvCandidato.votosLista %}
+                  {% set candidato1 = cvCandidato.candidato.apellidoNombre %}
+                  {% set partido1 = cvCandidato.candidato.partido %}
+                  {% set foto1 = cvCandidato.candidato.rutaFoto %}
+                {% endif %}
+                 {% if cvCandidato.candidato.partido == "mud" %}
+                  {% set totalVotos2 = totalVotos2 + cvCandidato.votos %}
+                  {% set totalVotosLista2 = totalVotosLista2 + cvCandidato.votosLista %}
+                  {% set candidato2 = cvCandidato.candidato.apellidoNombre %}
+                  {% set partido2 = cvCandidato.candidato.partido %}
+                  {% set foto2 = cvCandidato.candidato.rutaFoto %}
+                {% endif %} 
+                 {% if cvCandidato.candidato.partido == "otros" %}
+                  {% set totalVotos3 = totalVotos3 + cvCandidato.votos %}
+                  {% set totalVotosLista3 = totalVotosLista3 + cvCandidato.votosLista %}
+                  {% set candidato3 = cvCandidato.candidato.apellidoNombre %}
+                  {% set partido3 = cvCandidato.candidato.partido %}
+                  {% set foto3 = cvCandidato.candidato.rutaFoto %}
+                {% endif %}                
+                  
+              {# {% endfor %} #}
+            {% endfor %}            
+          {% endfor %}
+        {% if candidato1 != candidato2 %}
+          {% if candidato1 != "Sin Candidato" %}
+            <tr>
+              <td bgcolor="#cececf"><img class="img-rounded" alt="Imagen" title="{{candidato1}}" id="img" src="{{ asset('imagenes/fotosCandidatos/'~foto1~'') }}" align="center" height="50" width="60" ></td><td bgcolor="#cececf">{{candidato1}}</td><td bgcolor="#cececf">{{partido1}}</td><td bgcolor="#cececf">{{totalVotos1}}</td>{% if encuesta.tipoEncuesta == "circuito" %}<td bgcolor="#cececf">{{totalVotosLista1}}</td>{% endif %}
+            </tr>
+          {% endif %}
+          {% if candidato2 != "Sin Candidato" %}
+            <tr>
+              <td bgcolor="#cececf"><img class="img-rounded" alt="Imagen" title="{{candidato2}}" id="img" src="{{ asset('imagenes/fotosCandidatos/'~foto2~'') }}" align="center" height="50" width="60" ></td><td bgcolor="#cececf">{{candidato2}}</td><td bgcolor="#cececf">{{partido2}}</td><td bgcolor="#cececf">{{totalVotos2}}</td>{% if encuesta.tipoEncuesta == "circuito" %}<td bgcolor="#cececf">{{totalVotosLista2}}</td>{% endif %}
+            </tr>
+          {% endif %}
+          {% if candidato3 != "Sin Candidato" %}
+            <tr>
+              <td bgcolor="#cececf"><img class="img-rounded" alt="Imagen" title="{{candidato3}}" id="img" src="{{ asset('imagenes/fotosCandidatos/'~foto3~'') }}" align="center" height="50" width="60" ></td><td bgcolor="#cececf">{{candidato3}}</td><td bgcolor="#cececf">{{partido3}}</td><td bgcolor="#cececf">{{totalVotos3}}</td>{% if encuesta.tipoEncuesta == "circuito" %}<td bgcolor="#cececf">{{totalVotosLista3}}</td>{% endif %}
+            </tr>
+          {% endif %}
+        {% else %}
+          <tr>
+            <td bgcolor="#cececf"><img class="img-rounded" alt="Imagen" title="{{candidato2}}" id="img" src="{{ asset('imagenes/fotosCandidatos/sin_foto.png') }}" align="center" height="50" width="60" ></td><td bgcolor="#cececf">Sin candidatos</td><td bgcolor="#cececf"> </td><td bgcolor="#cececf">0</td>{% if encuesta.tipoEncuesta == "circuito" %}<td bgcolor="#cececf">0</td>{% endif %}
+          </tr>
+        {% endif %}        
+      </table>
+    </div>
+  {% endif %}
+</div>
+
+<div class="titulo">
+  <div align="center" >Parroquia {{parroquia.nombreParroquia}} </div>
+</div>
+
+
+<div class="botones_menu" style="position: absolute; top: 50px; ">
+  <a href="{{ path('mapas_estadisticos_detalle_municipio_ventana',{'id_municipio': parroquia.municipio.id})}}">Regresar al Mcpio. {{parroquia.municipio.nombreMunicipio}}<br> 
+
+{% macro boton(idMunicipio) %}
+    <img src="{{ asset('imagenes/merida/municipios/regresar/'~idMunicipio~'.png') }}" border="0"></a> 
+</div>
+{% endmacro %}
+
+  {{ _self.boton(parroquia.municipio.id) }}
+
+
+<div style="position: absolute; top: -30px; height:400px; width: 400qpx;"><img src="{{ asset('imagenes/merida/parroquias/colores/individual/'~colorParroquia~'/'~id_parroquia~'.png') }}" border="0" class="parroquia"><!-- width="500"
+  height="400" --></div>
+</div>
+<div id="{{id_parroquia}}" style="display:none">{{parroquia.nombreParroquia}}</div>
+
+
+<div style="position: absolute; left:555px; top: 60px;">
+  <div style="width:375px; height:240px; overflow: auto; position:absolute; ">
+  <div class="datagrid2">
+    <table border="1">
+      <thead>
+        <th align="center">Centros de Votaci&oacute;n</th>
+      </thead>
+      {% for cv in parroquia.centroVotacion %}
+        <tr><td><strong>{{cv.nombreCentro}}</strong></td><tr>
+      {% endfor %}
+  </div>
+</div>
+</div>

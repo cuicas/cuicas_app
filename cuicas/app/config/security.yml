@@ -1,0 +1,51 @@
+# app/config/security.yml
+security:
+  firewalls:
+    frontend:
+      pattern: ^/*
+      anonymous: ~
+      form_login: 
+        #ASí estaba, puede ser ruta al bundle o nombre del routing
+        #login_path: /usuarios/login
+        login_path: usuario_login
+        #ASí estaba, puede ser ruta al bundle o nombre del routing
+        #check_path: /usuarios/login_check
+        check_path: usuario_login_check
+        #use_referer: true
+        #este comando sirve para redirigir a este controller en caso d ke entre por la URL directo
+        default_target_path: sistema_Encuesta_principal_homepage
+        #este coamndo sirve para siempre siempre redirigir a este controller
+        #always_use_default_target_path: true
+
+      logout:
+        path: usuario_logout
+        target: /login
+
+  access_control:
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/usuario/perfil/*, roles: [ROLE_USUARIO, ROLE_SUPERVISOR, ROLE_ADMIN] }
+    - { path: ^/usuario/verPerfil/*, roles: [ROLE_USUARIO, ROLE_SUPERVISOR, ROLE_ADMIN] }
+    - { path: ^/encuestas/encuestasTotal/*, roles: [ROLE_USUARIO, ROLE_SUPERVISOR, ROLE_ADMIN]}
+    - { path: ^/encuestas/buscarPorNombre/*, roles: [ROLE_USUARIO, ROLE_SUPERVISOR, ROLE_ADMIN]}
+    - { path: ^/encuestas/buscarPorFecha/*, roles: [ROLE_USUARIO, ROLE_SUPERVISOR, ROLE_ADMIN]}
+    - { path: ^/encuestas/crearPreguntas/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/cargarMunicipios/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/cargarParroquias/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/cargarCV/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/datosEncuesta/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/datosEncuestaSufragio/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/crear/BuscarPorNombreEncuesta/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/cargarCandidato/BuscarPorNombreCandidato/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/encuestas/resumen/*, roles: [ROLE_SUPERVISOR, ROLE_ADMIN]}
+    - { path: ^/encuestas/verDetallesEncuesta/*, roles: [ROLE_SUPERVISOR, ROLE_ADMIN]}
+    - { path: ^/encuestas/editarDatos/*, roles: [ROLE_USUARIO, ROLE_ADMIN]}
+    - { path: ^/usuario/*, roles: ROLE_ADMIN }
+    - { path: ^/encuestas/*, roles:  [ROLE_ADMIN]}
+    - { path: ^/mapas/*, roles: [ROLE_ADMIN, ROLE_SUPERVISOR] }
+    #- { path: ^/*, roles: ROLE_USUARIO }
+  providers:
+    usuarios:
+      entity: { class: SistemaEncuesta\UsuarioBundle\Entity\Usuario, property: email }
+  encoders:
+    SistemaEncuesta\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
+    #SistemaEncuesta\UsuarioBundle\Entity\Usuario:  plaintext

@@ -1,0 +1,44 @@
+{% extends '::frontend.html.twig' %}
+{% block titulo %}Usuarios Totaleeeees{% endblock %}
+{% block cuerpo %}
+<div>
+     {% for mensaje in app.session.flashbag.get('info') %}
+        <script language=Javascript>
+		$(document).ready(function(){
+			//alert('{{ mensaje }}');
+			$(this).tab('show');
+			BootstrapDialog.show({
+				title: 'Mensaje',
+				message: ('{{ mensaje }}'),
+				buttons: [{
+					id: 'btn-ok',   
+					//icon: 'glyphicon glyphicon-check',       
+					label: 'Aceptar',
+					cssClass: 'btn btn-default',
+					autospin: false,
+					action: function(dialogRef){    
+						dialogRef.close();
+					}
+				}]
+			})
+		});
+		</script>
+    {% endfor %}
+</div>
+	<div class="datagrid" id="posiciontabla">
+		<table>
+			<thead><th>Usuarios Registradooooos</th><th>Rooool</th><th colspan="2"></th></thead>
+			{# recibo del controlador todos los proyectos para luego listarlos y cada uno le doy la opción para asignar los nombre de los campos como también cargar los datos y verlos en el mapa #}
+			
+			{% for usuariosDetalles in usuarios %}
+				<tr>	
+					<td>{{ usuariosDetalles }}</td>
+
+					<td>{{ usuariosDetalles.rol}}</td>
+                                        <td><a href="{{ path('usuario_eliminar',{'usuario_id': usuariosDetalles.id}) }}" class="btn btn-default clsBoton" title="Eliminar Usuario" alt="confirma eliminar" onclick="javascript:var agree=confirm('¿Está seguro que desea eliminar este usuario? '); if (agree) return true; else return false; " class="clsBoton">Eliminar</a> </td>
+				</tr>
+			{% endfor %}	
+		</table> 
+	</div>
+	{% set usuario = app.user %}
+{% endblock %}

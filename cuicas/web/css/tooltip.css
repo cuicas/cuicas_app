@@ -1,0 +1,53 @@
+
+/* 
+    Created on : 23/09/2014, 09:59:37 AM
+    Author     : Duque Victor   
+*/
+#posiciontooltip{
+    position: absolute;
+    top: 220px;
+    right: 30%;
+    z-index: 999;
+}
+.tooltips {
+  position: absolute;
+  top: 165px;
+  right: -250px;
+  display: inline;
+}
+.tooltips span {
+  position: absolute;
+  color: #d10000;
+  text-shadow: 0.5px 0px 0px #000000;
+  background: transparent;
+  visibility: hidden;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 15px;
+  border: 2px solid #000000;
+  opacity: 0.2;
+}
+.tooltips span:after {
+  /*content: ''; genera una flecha*/
+  position: absolute;
+  top: 50%;
+  left: 350px;
+  margin-left: -8px;
+  width: 0; 
+  height: 0;
+  border-top: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  opacity: 0.2;
+}
+.tooltips:hover span {
+  position: absolute;
+  visibility: visible;
+  opacity: 0.8;
+  bottom: 30px;
+  left: 70%;
+  margin-left: -30px;
+  transition: 900ms;
+  border-color: #DE0000;
+  padding: 7px;
+}

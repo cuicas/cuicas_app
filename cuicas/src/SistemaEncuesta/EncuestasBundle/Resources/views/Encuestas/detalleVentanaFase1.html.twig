@@ -1,0 +1,185 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block titulo %}<div style="font-family: sans-serif;">Reporte: {{encuesta.nombreEncuesta|upper}}</div>
+{% set Fecha = "Now"|date("d-m-Y", "America/Caracas") %}
+{% set Hora = "Now"|date("h:i:s", "America/Caracas") %}
+<div style="font-family: sans-serif;">Fecha: {{Fecha}}, Hora: {{Hora}}
+</div>
+{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />  
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/tooltip.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+
+{% endblock %}
+{% block cuerpo %}
+<br><br><br>
+<center>
+  {% if encuesta is defined %}
+      <table class="table stacktable table-hover" border="1" style="position: absolute; top:150px;">
+        {% set totalMesaEstadal = 0 %}
+        {% set totalTestigosEstadal = 0 %}
+        {% set totalMiembrosEstadal = 0 %}
+        {% for circuito in circuitos|sort %}
+            {% set totalMiembrosCircuito = 0 %}
+            {% set totalTestigosCircuito = 0 %}
+            {% set totalMesasCircuito = 0 %}
+            {% if totalGlobal is not empty %}
+              <thead>
+                <th colspan="2" align="center">Total Por Municipio y Circuito</th>
+                <th align="center">Mesas Instaladas</th>
+                <th align="center">Testigos</th>
+                <th align="center">Miembros</th>
+              </thead>
+            {% endif %}
+              <thead>
+                {% if instalacion is not empty %}
+                  <tr>
+                    <td></td><th colspan="2">Circuito: {{circuito}}</th> <td colspan="2"></td>
+                  </tr>
+                {% endif %}
+              </thead>
+          {% for municipio in municipios|sort %}
+            {% if municipio.circuito.id == circuito.id %}
+            {% if instalacion is not empty %}
+              <thead>
+                <tr>
+                  <th colspan="5">Municipio: {{municipio.nombreMunicipio}}</th>
+                </tr>
+                <tr>
+                  <th>Parroquias</th>
+                  <th align="center">Centros de Votaci&oacute;n</th>
+                  <th align="center">Mesas Instaladas</th>
+                  <th align="center">Testigos</th>
+                  <th align="center">Miembros</th>
+                </tr>
+              </thead>
+            {% endif %}
+            {% set encontrado = "" %}
+            {% set totalMiembros = 0 %}
+            {% set totalTestigos = 0 %}
+            {% set totalMesas = 0 %}
+            {% set mesas = 0 %}
+            {% for contactadosSufragio in datos|sort %}
+              {% if contactadosSufragio.municipio == municipio.id %}
+                {% if instalacion is not empty %}
+                  <tr>
+                    <td>
+                      {{ contactadosSufragio.paq }}
+                    </td>
+                    <td>
+                      {{ contactadosSufragio.cv }}
+                    </td>
+                    <td>
+                      {{ contactadosSufragio.mi }}
+                    </td>
+                {% endif %}
+                {% if contactadosSufragio.mi != 'Ninguna' %}
+                      {% set mesas = contactadosSufragio.mi|split(',') %}
+                      {% set totalMesas = totalMesas + mesas|length %}
+                      {% set totalMesasCircuito = mesas|length + totalMesasCircuito %}
+                      {% set totalMesaEstadal = mesas|length + totalMesaEstadal %}
+                {% endif %}
+                {% if instalacion is not empty %}  
+                    <td>
+                      {{ contactadosSufragio.testigos }}
+                    </td>
+                {% endif %}
+                {% if contactadosSufragio.testigos != 0 %}
+                  {% set testigos = contactadosSufragio.testigos|split(',') %}
+                  {# {% set totalTestigos = totalTestigos + testigos|length %} #}
+                  {% set totalTestigos = totalTestigos + testigos|length %}
+                  {% set totalTestigosCircuito = testigos|length + totalTestigosCircuito %}
+                  {% set totalTestigosEstadal = testigos|length + totalTestigosEstadal %}
+                {% endif %}
+                {% if instalacion is not empty %}  
+                    <td>
+                      {{ contactadosSufragio.miembros }}
+                    </td>
+                  </tr>
+                {% endif %}
+                {% if contactadosSufragio.miembros != 'Ninguna' and contactadosSufragio.miembros != 'no'%}
+                          {% set miembros = contactadosSufragio.miembros|split(',') %}
+                          {% set totalMiembros = totalMiembros + miembros|length %}
+                          {% set totalMiembrosCircuito = miembros|length + totalMiembrosCircuito %}
+                          {% set totalMiembrosEstadal = miembros|length + totalMiembrosEstadal %}
+                        {% endif %}                
+                {% set encontrado = "si" %}
+              {% endif %}
+            {% endfor %}
+            {% if encontrado == "" %}
+              {% if instalacion is not empty %} 
+                <tr>
+                  <th colspan="7"> No existen datos registrados en el municipio {{municipio.nombreMunicipio}}</th>
+                </tr>
+              {% endif %}
+            {% endif %}
+            {% if encontrado == "si" %}
+              {% if totalGlobal is not empty %}
+              <tr>
+                <td colspan="2"> {{municipio.nombreMunicipio}}</td><th>{{totalMesas}}</th><th>{{totalTestigos}}</th><th>{{totalMiembros}}</th>
+              </tr>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% if totalGlobal is not empty %}
+          <tr>
+            <th colspan="2"> CIRCUITO {{circuito}}</th><th>{{totalMesasCircuito}}</th><th>{{totalTestigosCircuito}}</th><th>{{totalMiembrosCircuito}}</th>
+          </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+      {% if datos is empty %}
+        <tr>
+          <th>
+            No hay datos que mostrar para encuestas
+          </th>
+        </tr> 
+      {% endif %}
+
+      {% if totalGlobal is not empty %}
+       <table class="table stacktable table-hover" border="1" style="position: absolute; top:100px;">
+        <thead>
+          <tr>
+          <th>Total Estadal</th>
+            <td>Mesas Instaladas: {{totalMesaEstadal}}</td><td>Testigos: {{totalTestigosEstadal}}</td><td>Miembros: {{totalMiembrosEstadal}}</td>
+          </tr>
+         
+
+        </thead>
+    
+        {% endif %} 
+  {% endif %}
+</center>
+{#<a href="{{path('encuestas_resumen') }}" class="clsVentanaCerrar">Imprimir</a> #}
+<center><input type="button" class="btn btn-default" style="position: absolute; top:50px;" onclick="javascript:window.print();" name="Imprimir" value="Imprimir"></center>
+{% endblock %}
+   
+{% block javascripts %}
+  <script>
+    $(document).ready(function(){
+
+
+      $('.clsVentanaCerrar').live('click',function(eEvento){ alert('o');
+        //prevenimos el comportamiento normal del enlace
+        eEvento.preventDefault();
+        //buscamos la ventana padre (del boton "cerrar")
+        var $objVentana=$($(this).parents().get(1));
+        
+        //cerramos la ventana suavemente
+        $objVentana.fadeOut(300,function(){
+          //eliminamos la ventana del DOM
+          $(this).remove();
+          //ocultamos el overlay suavemente
+          $('#divOverlay').fadeOut(500,function(){
+            //eliminamos el overlay del DOM
+            $(this).remove();
+          });
+        });
+      });
+
+    }
+  </script>
+{% endblock %}

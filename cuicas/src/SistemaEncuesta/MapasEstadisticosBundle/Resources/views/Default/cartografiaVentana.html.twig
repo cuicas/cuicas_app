@@ -1,0 +1,161 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/fondo.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/solapamiento.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/solapamiento_municipios.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+{% block cuerpo %}
+
+
+	 
+</div>
+<div class="logo1">
+<div class="botones_menu">
+
+
+{# {% set eje = 1 %} #}
+ {% if id_parroquia == 1 %}
+
+<div class="botones_menu">
+
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 1})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/1.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+
+{% if id_parroquia == 2 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 2})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/2.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 3 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 3})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/3.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 4 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 4})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/4.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 5 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 5})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/5.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 6 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 6})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/6.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 7 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 7})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/7.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 8 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 8})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/8.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 9 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 9})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/9.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{#{% if id_parroquia == 10 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 10})}}"><img src="{{ asset('imagenes/merida/Municipio1.jpg') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/10.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} #}
+{% if id_parroquia == 11 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 11})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/11.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 12 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 12})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/UBCH/12.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 13 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 13})}}"><img src="{{ asset('imagenes/regresar_3.png') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/13.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{#{% if id_parroquia == 14 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 14})}}"><img src="{{ asset('imagenes/merida/Municipio1.jpg') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/14.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} 
+{% if id_parroquia == 15 %}
+
+<div class="botones_menu">
+<a href="{{ path('mapas_estadisticos_detalle_parroquia_ventana',{'id_parroquia': 15})}}"><img src="{{ asset('imagenes/merida/Municipio1.jpg') }}" alt="Regresar" title="Regresar" border="0"></a> 
+</div>
+
+   <div align="center"></a><a href=""><img src="{{ asset('imagenes/merida/parroquias/cartografia/15.jpg') }}" width="752" height="314" border="0" class="parroquia"></a></div>
+</div>
+{% endif %} #}
+
+
+{% endblock %}

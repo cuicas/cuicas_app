@@ -1,0 +1,19 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Usuarios Totaleeees{% endblock %}
+{% block titulo %}Usuarios Totaleeees{% endblock %}
+{% block cuerpo %}
+	<h1><a href="#"> ## NOMBRE DE Los usuarios ## </a></h1>
+	{% for usuariosDetalles in usuarios %}
+		
+		{{ usuariosDetalles}}
+
+	<br />
+	{% endfor %}
+
+	{% for mensaje in app.session.flashbag.get('info') %}
+	<p class="info">{{ mensaje }}</p>
+	{% endfor %}
+
+	{% set usuario = app.user %}
+	
+{% endblock %}

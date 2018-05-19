@@ -1,0 +1,122 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block titulo %}<div style="font-family: sans-serif;">Reporte: {{encuesta.nombreEncuesta|upper}}</div>
+{% set Fecha = "Now"|date("d-m-Y", "America/Caracas") %}
+{% set Hora = "Now"|date("h:i:s", "America/Caracas") %}
+<div style="font-family: sans-serif;">Fecha: {{Fecha}}
+</div>
+<div style="font-family: sans-serif;">Hora: {{Hora}}</div>{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />  
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/tooltip.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block cuerpo %}
+<br><br><br>
+<center>
+  {# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA#}
+  {% if encuesta is defined %}
+  {% set total = encuesta.totalContactadoComandoSiPregunta("si",1)+encuesta.totalContactadoComandoSiPregunta("norespondio",1)+encuesta.totalContactadoComandoSiPregunta("noasignado",1) %}
+    {% if total != 0 %}
+      {% set porcentajeSi = encuesta.totalContactadoComandoSiPregunta("si",1)/ total*100%}
+      {% set porcentajeNo = encuesta.totalContactadoComandoSiPregunta("norespondio",1)/ total*100%}
+      {% set porcentajeNoAsignado = encuesta.totalContactadoComandoSiPregunta("noasignado",1)/ total*100%}
+        <table class="table stacktable table-hover" border="1">
+          <thead> 
+            <tr>
+              <th>Preguntas</th><th align="center">Si</th><th align="center">No</th><th align="center">Telf. No Asignado</th><th align="center">No sabe</th><th align="center">Telf. Errado</th>
+            </tr>
+          </thead>
+          <tr>
+              <td>Respondió</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("si",1) : encuesta.totalContactadoComandoSiPregunta("si",1)}} ({{porcentajeSi|number_format(2, '.', '')}}%)</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("norespondio",1) : encuesta.totalContactadoComandoSiPregunta("norespondio",1)}} ({{porcentajeNo|number_format(2, '.', '')}}%)</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? encuesta.totalContactadoComandoSiPregunta("noasignado",1) : encuesta.totalContactadoComandoSiPregunta("noasignado",1)}} ({{porcentajeNoAsignado|number_format(2, '.', '')}}%)</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+          </tr>
+
+          <tr>
+              <td>Idenficación</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("si",2): encuesta.totalContactadoComandoSiPregunta("si",2)}}</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("cambiodenumero",2): encuesta.totalContactadoComandoSiPregunta("cambiodenumero",2)}}</td>
+          </tr>
+          {# OPTIMIZAR ESTE CÓDIGO ...........................#}
+          <tr>
+            {% if encuesta.preguntas.pregunta3 is not empty %}
+              <td>{{encuesta.preguntas.pregunta3}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("si",3): encuesta.totalContactadoComandoSiPregunta("si",3)}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("no",3): encuesta.totalContactadoComandoSiPregunta("no",3)}}</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              
+            {% endif %}
+          
+          </tr>
+          <tr>
+            {% if encuesta.preguntas.pregunta4 is not empty %}
+              <td>{{encuesta.preguntas.pregunta4}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("si",4): encuesta.totalContactadoComandoSiPregunta("si",4)}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("no",4): encuesta.totalContactadoComandoSiPregunta("no",4)}}</td>
+              <td align="center">N/A</td>
+               <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("nosabe",4): encuesta.totalContactadoComandoSiPregunta("nosabe",4)}}</td>
+             <td align="center">N/A</td>
+            {% endif %}        
+          </tr>
+          <tr>
+            {% if encuesta.preguntas.pregunta5 is not empty %}
+              <td>{{encuesta.preguntas.pregunta5}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("si",5): encuesta.totalContactadoComandoSiPregunta("si",5)}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("no",5): encuesta.totalContactadoComandoSiPregunta("no",5)}}</td>
+              <td align="center">N/A</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'comando' ? encuesta.totalContactadoComandoSiPregunta("nosabe",5): encuesta.totalContactadoComandoSiPregunta("nosabe",5)}}</td>
+              <td align="center">N/A</td>
+            {% endif %}         
+          </tr>
+          {# .................................................#}
+          <!-- <tr>
+            <td align="center">Sub totales</td><td align="center">{% set totalSi = encuesta.totalContactadoComandoSiPregunta("si",1) + encuesta.totalContactadoComandoSiPregunta("si",2) + encuesta.totalContactadoComandoSiPregunta("si",3) + encuesta.totalContactadoComandoSiPregunta("si",4) + encuesta.totalContactadoComandoSiPregunta("si",5)%}{{ totalSi }}</td><td align="center">{% set totalNo = encuesta.totalContactadoComandoSiPregunta("norespondio",1) + encuesta.totalContactadoComandoSiPregunta("no",2) + encuesta.totalContactadoComandoSiPregunta("no",3) + encuesta.totalContactadoComandoSiPregunta("no",4) + encuesta.totalContactadoComandoSiPregunta("no",5)%}{{ totalNo }}</td><td align="center">{{ encuesta.totalContactadoComandoSiPregunta("dicenoser",2) }}</td><td align="center">{% set totalNoSabe = encuesta.totalContactadoComandoSiPregunta("nosabe",3) + encuesta.totalContactadoComandoSiPregunta("nosabe",4) + encuesta.totalContactadoComandoSiPregunta("nosabe",5)%}{{ totalNoSabe }}</td><td align="center">{% set totalCambioNumero = encuesta.totalContactadoComandoSiPregunta("cambiodenumero",3) + encuesta.totalContactadoComandoSiPregunta("cambiodenumero",4) + encuesta.totalContactadoComandoSiPregunta("cambiodenumero",5)%}{{ totalCambioNumero }}</td>
+          </tr> -->
+          <tr>
+            <td align="center"><strong>TOTAL DE LLAMADAS</strong></td><td align="center" colspan="2"><strong>{{total}}</strong></td><td align="center"><strong>TOTAL DE LLAMADAS EFECTIVAS</strong></td><td align="center" colspan="2"><strong>{{ encuesta.totalContactadoComandoSiPregunta("si",1) }}</strong></td>  
+          </tr>
+        </table>
+      {% endif %}
+  {% endif %}
+</center>
+<center><input type="button" class="btn btn-default" onclick="javascript:window.print();" name="Imprimir" value="Imprimir"></center>
+{% endblock %}
+   
+{% block javascripts %}
+  <script>
+$(document).ready(function(){
+
+
+      $('.clsVentanaCerrar').live('click',function(eEvento){ alert('o');
+      //prevenimos el comportamiento normal del enlace
+      eEvento.preventDefault();
+      //buscamos la ventana padre (del boton "cerrar")
+      var $objVentana=$($(this).parents().get(1));
+      
+      //cerramos la ventana suavemente
+      $objVentana.fadeOut(300,function(){
+        //eliminamos la ventana del DOM
+        $(this).remove();
+        //ocultamos el overlay suavemente
+        $('#divOverlay').fadeOut(500,function(){
+          //eliminamos el overlay del DOM
+          $(this).remove();
+        });
+      });
+    });
+
+}
+
+  </script>
+
+  {% endblock %}

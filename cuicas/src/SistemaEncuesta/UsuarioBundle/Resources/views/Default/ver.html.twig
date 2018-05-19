@@ -1,0 +1,9 @@
+{% extends '::frontend.html.twig' %} 
+
+{#} {% block id 'usuario' %}{#} 
+{% block cuerpo %}
+este es  {{ rol}}!
+<br />
+<a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
+{% endblock %}
+{% block title %}Formulario de acceso{% endblock %}

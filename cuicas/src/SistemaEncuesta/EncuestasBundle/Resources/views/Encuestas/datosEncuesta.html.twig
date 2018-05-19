@@ -1,0 +1,137 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos Encuesta{% endblock %}
+{% block titulo %}{{encuesta.nombreEncuesta}}{% endblock %}
+{% block cuerpo %}
+	<form action="{{ path('encuestas_datosEncuesta',{'id_encuesta':encuesta.id}) }}" method="post" {{	form_enctype(formulario) }}>
+		{{ form_errors(formulario) }}
+		{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+		$(document).ready(function(){
+			$(this).tab('show');
+			BootstrapDialog.show({
+				title: 'Mensaje',
+				message: ('{{ mensaje }}'),
+				buttons: [{
+					id: 'btn-ok',   
+					//icon: 'glyphicon glyphicon-check',       
+					label: 'Aceptar',
+					cssClass: 'btn btn-default',
+					autospin: false,
+					action: function(dialogRef){    
+						dialogRef.close();
+					}
+				}]
+			})
+		});
+		</script>
+	{% endfor %}
+		<div class="col-xs-12 ">
+			<div class="row">
+				<div class="col-xs-12">
+					<input type="hidden" id="form_municipio" name="form[municipios]" value="1">
+					<!-- <label for="form_municipio" id='label_form_municipio'>Municipios</label>
+					<select id="form_municipio" name="form[municipios]" class="form-control input-sm validate[required]">
+						<option value="">Seleccionar</option>
+							{# recibo todos los municipios del controlador para listaerlo #}
+							{% for municipio in municipios %}
+								<option value="{{ municipio.getId() }}">{{ municipio.getNombreMunicipio() }}</option>
+							{% endfor %}
+					</select>
+					-->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					
+					<input type="hidden" id="form_parroquia" name="form[parroquia]" value="1">
+					<!-- 
+						<label for="form_parroquia" id='label_form_parroquia'>Parroquias</label>
+						<select id="form_parroquia" name="form[parroquia]" class="form-control input-sm validate[required]">
+							<option value="">Seleccionar</option>
+						</select> -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="informacion" style="max-width: 260px; margin: auto; text-align: center">
+						<label for="form_equipos" id='label_form_equipos'>Empresa</label>
+						<select id="form_equipos" name="form[equipos]" class="form-control input-sm validate[required]">
+							<option value="">Seleccionar</option>
+							<option value="astimarca">ASTIMARCA</option>
+							<option value="cimla">CIMLA</option>
+							<option value="corsobain">CORSOBAIN</option>
+							<option value="diques">DIQUES Y ASTILLEROS</option>
+							<option value="enasal">ENASAL</option>
+							<option value="enatex">ENATEXCA</option>
+							<option value="juncal">ENATUB EL JUNCAL</option>
+							<option value="imosa">ENATUB IMOSA</option>
+							<option value="anzoategui">ENATUB JOSE ANTONIO ANZOATEGUI</option>
+							<option value="revestimiento">ENATUB REVESTIMIENTO</option>
+							<option value="simon">ENATUB SIMON BOLIVAR</option>
+							<option value="horcones">ENATUB LOS HORCONES</option>
+							<option value="enaval">ENAVAL</option>
+							<option value="zaraza">FABRICA DE BLOQUES PEDRO ZARAZA</option>
+							<option value="galba">GUARDIAN DEL ALBA</option>
+							<option value="icvt">ICVT</option>
+							<option value="paca">PACA</option>
+							<option value="pilotes">PILOTES</option>
+							<option value="asfalto">PDVSA ASFALTO</option>
+							<option value="matriz">PDVSA INDUSTRIAL CASA MATRIZ</option>
+							<option value="pignv">PIGNV</option>
+							<option value="pmvca">PMVCA</option>
+							<option value="probasim">PROBASIM</option>
+							<option value="recuvensa">RECUVENSA</option>
+							<option value="unerven">UNERVEN</option>
+							<option value="vensoplast">VENSOPLAST</option>
+							<option value="vhicoa">VHICOA</option>
+							<option value="vietven">VIETVEN</option>
+							
+					</select>
+					</div>
+				</div>
+			</div>
+	</div>
+	<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><input id='buscar_encuestas' class="fueraoverflow btn btn-default" type="submit" value="Siguiente" /> <a href="{{ path('encuestas_totales', {"tipoEncuesta":"general"}) }}"><input class="fueraoverflow btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+			</div>
+		</div>
+	</div>
+</form>
+<script>
+	{% set mun="x" %}
+	{% set paq="x" %}
+	$(document).ready(function(){
+    $('#form_municipio').change(function(){
+    	//declaro una variable myUrl ke contenga la url de la accion para donde va la id del municipio y luego sustituyo la letra x por el valor
+    	//obtenido de la selección de la lista select
+      var myUrl = "{{ path('encuestas_cargarParroquias',{'id_municipio':mun}) }}";					
+			
+			myUrl = myUrl.replace('x', $(this).val());
+
+			//esto se hace para eliminar todos los elementos de la lista y le añado eñ primero ke es seleccionar
+			$('#form_parroquia').empty();
+			$('#form_parroquia').append('<option value='+0+'>Seleccionar</option>');
+			//////////////////////////
+
+			//getJson obtine un diccionario codificado en Json ke viene de la accion myUrl, data es el Json devuelto por la acción
+			$.getJSON( myUrl, function (data){
+				//recorre cada uno de los elementos ke se encuentra en data y luego le añade cada option al select
+      	$.each(data, function(key, valor){
+	 				$('#form_parroquia').append('<option value='+valor.id_paq+'>'+valor.paq+'</option>');
+       	});
+      });
+			//alert($('#form_municipio').val());
+			if($('#form_municipio').val() == "todos"){
+				$('#form_parroquia').append('<option value=\'todos\' selected readonly>Todos</option>');	
+			}
+			else{
+				$('#form_parroquia').append('<option value=\'todos\' >Todos</option>');	
+			}
+			
+			
+    });		
+	});
+</script>
+{% endblock %}

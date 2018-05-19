@@ -1,0 +1,177 @@
+{# 
+Created on : 25/08/2014, 01:05:57 PM
+Author     : Duke Victor
+#}
+{# realiza el llamado al frontend#}
+{% extends '::frontend.html.twig' %}
+{# titulo de la pagina principal#}
+{% block titulo %}Principal{% endblock %}
+{% block cuerpo %}
+{# slider central de la pagina#}
+    <div id="posicionslider" class="wrapper">
+	<ul id="sb-slider" class="sb-slider">
+					<li>
+                                            <a <!--href="http://www.flickr.com/photos/strupler/2969141180" target="_blank"--><img src="{{ asset('images/1.jpg') }}" alt="image1"/></a>
+						<div class="sb-description">
+							<h3>Chávez Vive, la Patria sigue..!!!</h3>
+                                                        <h4>“Debemos continuar siendo soldados de Chávez, consecuentes y disciplinados para empujar el desarrollo del socialismo y de la verdadera justicia social, contra el imperialismo(…), somos leales al Presidente Obrero Nicolás Maduro y al Comandante Chávez” Alexis Ramírez</h4>
+						</div>
+					</li>
+					<li>
+						<a><img src="{{ asset('images/2.jpg') }}" alt="image2"/></a>
+						<div class="sb-description">
+                                                    <h3>Monitoreo y seguimiento en tiempo real.</h3>
+						</div>
+					</li>
+					<li>
+						<a><img src="{{ asset('images/3.jpg') }}" alt="image1"/></a>
+						<div class="sb-description">
+                                                    <h3>Usando la tecnologia para estar en contacto con la sabiduria del pueblo.</h3>
+						</div>
+					</li>
+					<li>
+						<a><img src="{{ asset('images/4.jpg') }}" alt="image1"/></a>
+						<div class="sb-description">
+                                                    <h4>Gobierno Municipal y Regional de la mano, un solo gobierno.</h4>
+						</div>
+					</li>
+					<li>
+						<a><img src="{{ asset('images/5.jpg') }}" alt="image1"/></a>
+						<div class="sb-description">
+                                                    <h3>Todos los hijos de Chávez, rodilla en tierra con la revolución</h3>
+						</div>
+					</li>
+					<li>
+						<a><img src="{{ asset('images/7.jpg') }}" alt="image1"/></a>
+						<div class="sb-description">
+							<h3>Gobierno de Eficiencia en la Calle</h3>
+						</div>
+					</li>
+				</ul>
+
+				<div id="shadow" class="shadow"></div>
+
+				<div id="nav-arrows" class="nav-arrows">
+					<a href="#">Next</a>
+					<a href="#">Previous</a>
+				</div>
+                                
+                                <div id="nav-options" class="nav-options">
+					<span id="navPlay">Play</span>
+					<span id="navPause">Pause</span>
+				</div>
+
+			</div><!-- /wrapper -->
+			<!--<p class="info"><strong>Informacion</strong> Informacion adicional</p>-->
+
+		<script type="text/javascript">
+	$(function() {
+				
+				var Page = (function() {
+
+					var $navArrows = $( '#nav-arrows' ).hide(),
+                                                $navOptions = $( '#nav-options' ).hide(),
+						$shadow = $( '#shadow' ).hide(),
+						slicebox = $( '#sb-slider' ).slicebox( {
+							onReady : function() {
+
+								$navArrows.show();
+                                                                $navOptions.show();
+								$shadow.show();
+
+							},
+                                                        intervernal: 9000,
+							orientation : 'r',
+							cuboidsRandom : true,
+							disperseFactor : 30
+						} ),
+						
+						init = function() {
+
+							initEvents();
+                                                        slicebox.play();
+							
+						},
+						initEvents = function() {
+
+							// add navigation events
+							$navArrows.children( ':first' ).on( 'click', function() {
+
+								slicebox.next();
+								return false;
+
+							} );
+
+							$navArrows.children( ':last' ).on( 'click', function() {
+								
+								slicebox.previous();
+								return false;
+
+							} );
+                                                        
+                                                        $( '#navPlay' ).on( 'click', function() {
+								
+								slicebox.play();
+								return false;
+
+							} );
+
+							$( '#navPause' ).on( 'click', function() {
+								
+								slicebox.pause();
+								return false;
+
+							} );
+
+						};
+
+						return { init : init };
+
+				})();
+
+				Page.init();
+
+			});
+                        
+                        
+		</script>
+     
+   {# slider inferior de la pagina#}
+                
+                <div><h6 id="tituloslider2">Enlaces de Interes<big></h6>              
+ <div id="posicionslider2">
+    <ul  class = " bxslider ex1"> 	
+        <li><a href="http://www.teleinformatica.gob.ve/" target="_blank"><img id="img"  src = "{{ asset('images/171.jpg') }}"/></a></li>
+	<li><a href="http://www.avn.info.ve/" target="_blank"><img id="img" src = "{{ asset('images/avn.jpg') }}"/></a></li> 
+	<li><a href="http://www.bomberosmerida.gov.ve/" target="_blank"><img id="img" src = "{{ asset('images/bomberos.jpg') }}"/></a></li> 
+	<li><a href="http://www.fomdes.gob.ve/" target="_blank"><img id="img" src = "{{ asset('images/fomdes.jpg') }}"/></a></li> 
+	<li><a href="http://www.fundacite-merida.gob.ve/" target="_blank"><img id="img" src = "{{ asset('images/fundacite.jpg') }}"/></a></li> 
+	<li><a href="http://www.gobiernoenlinea.ve/" target="_blank" ><img id="img" src = "{{ asset('images/gobierno_linea.jpg') }}"/></a></li> 
+	<li><a href="http://www.pcmerida.gob.ve/" target="_blank"><img id="img"  src = "{{ asset('images/pcmerida.jpg') }}"/></a></li> 
+	<li><a href="http://www.polimer.gob.ve/" target="_blank"><img id="img"  src = "{{ asset('images/policia.jpg') }}"/></a></li> 
+	<li><a href="http://www.rnv.gov.ve/" target="_blank" ><img id="img" src = "{{ asset('images/rnv.jpg') }}"/></a></li> 
+	<li><a href="http://www.minci.gob.ve/" target="_blank"><img id="img"  src = "{{ asset('images/sibci.jpg') }}"/></a></li> 
+	<li><a href="http://www.telesurtv.net/" target="_blank"><img id="img" src = "{{ asset('images/telesur.jpg') }}"/></a></li> 
+	<li><a href="http://www.yvkemerida.com.ve/" target="_blank"><img id="img"  src = "{{ asset('images/yvke.jpg') }}"/></a></li>
+        <li><a href="http://www.psuv.org.ve/" target="_blank"><img id="img"  src = "{{ asset('images/psuv.jpg') }}"/></a></li>
+        <li><a href="http://www.merida.gob.ve/" target="_blank"><img id="img"  src = "{{ asset('images/gobernacion.jpg') }}"/></a></li>
+        <li><a href="http://www.pdvsa.com/" target="_blank"><img id="img"  src = "{{ asset('images/pdvsa.jpg') }}"/></a></li>
+</ul>
+</div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+            $ ( '.bxslider' ). bxSlider ({
+            speed: 50000 ,
+            pager: false,
+            minSlides: 15 ,
+            maxSlides: 15,
+            slideWidth: 50 ,
+            slideMargin: 1 ,
+            ticker: true,
+            autoHover: true
+            
+                    });
+    });
+    </script>
+</div>
+{% endblock %}

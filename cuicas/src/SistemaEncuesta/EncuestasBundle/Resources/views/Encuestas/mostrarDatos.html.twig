@@ -1,0 +1,499 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos del Encuestado{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+
+{% block cuerpo %}
+
+  <form action="{{ path('encuestas_datosEncuesta', {'id_encuesta': encuesta.id}) }}" method="post" {{ form_enctype(formulario) }}>
+    {% for mensaje in app.session.flashbag.get('info') %}
+      <script language=Javascript>
+        $(document).ready(function(){
+          $(this).tab('show');
+          BootstrapDialog.show({
+            title: 'Mensaje',
+            message: ('{{ mensaje }}'),
+            buttons: [{
+              id: 'btn-ok',
+              label: 'Aceptar',
+              cssClass: 'btn btn-default',
+              autospin: false,
+              action: function(dialogRef){
+                dialogRef.close();
+              }
+            }]
+          })
+        });
+      </script>
+    {% endfor %}
+    {% set id = "" %}
+    {% for indice, llave in results|keys %}
+      {% if indice == 0 and  llave == "id_bene_misiones" %} 
+        {% set id = results.id_bene_misiones %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_clp" %} 
+        {% set id = results.id_clp %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_militancia" %} 
+        {% set id = results.id_militancia %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_rep" %} 
+        {% set id = results.id_rep %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_trab_patria" %} 
+        {% set id = results.id_trab_patria %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_ubch" %} 
+        {% set id = results.id_ubch %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_patrullas_sectoriales" %} 
+        {% set id = results.id_patrullas_sectoriales %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_gmvv" %} 
+        {% set id = results.id_gmvv %}
+      {% endif %}
+      {% if indice == 0 and  llave == "id_poder_popular" %} 
+        {% set id = results.id_poder_popular %}
+      {% endif %}
+       {% if indice == 0 and  llave == "id_patrulleros" %} 
+        {% set id = results.id_patrulleros %}
+      {% endif %}
+    {% endfor %}
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table1 table-striped table-bordered" id="mytable">
+            <thead>
+              <tr>
+                <!-- <td><strong>Municipio</strong></td>
+                <td>{{ municipios }}</td>
+                <td><strong>Parroquia</strong></td>
+                <td>{% if parroquia is defined and parroquia != "todos" %}{{ parroquia }}{% else %}Todas las Parroquias{% endif %}</td> -->
+                <td ><strong style=" background-color='#f34235 !important'">Tel&eacute;fono 1</strong></td>
+                <td ><div class="editarTelf1" id="{{id}}" style="font-size:18px;">{{results.telefono_1|trim}}</td>
+                <td background-color="#f34235" ><strong>Empresa</strong></td>
+                <td ><div class="editarTelf2" id="{{id}}" style="font-size:18px;">{{results.institucion|trim}}</td>
+              </tr>
+            </thead> 
+          </table>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-8 col-md-offset-2" style="font-size:17px;">
+      <div style="width:750px; height:330px; overflow: auto; position:relative; ">   
+        <div class="row">
+          <div class="col-xs-12">
+            ¿Respondieron la llamada?&nbsp;&nbsp; <strong>Si <input type="radio" name="form[1]" class="validate[required]" id="resp_1" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" name="form[1]" id="resp_1" class="validate[required]" value="norespondio">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tel&eacute;fono No Asignado <input type="radio" name="form[1]" id="resp_1" class="validate[required]" value="noasignado"></strong> 
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="form_identificacion" style="display: none;"><strong>1-</strong> Buenos días/tardes , le hablo de PDVSA Industrial ¿Es usted <strong><b class="editarNombres" style="display: inline" id="{{id}}">{{results.apellidos_nombres}}</b></strong> y su Cédula de Identidad es <strong><b class="editarCedula" style="display: inline" id="{{id}}">{{results.cedula|trim}}</b></strong>?
+            </div>
+            <div id="form_identificacion_resp" style="display: none;">
+              Si <input type="radio" name="form[2]" class="validate[required]" value="si">&nbsp;&nbsp;
+              Número Errado <input type="radio" name="form[2]" class="validate[required]" value="cambiodenumero">
+            </div>
+          </div>
+        </div><br>
+        {% set equipos = equipo %}
+        {% if equipo == 'beneficiarios_misiones' %}
+          {% set equipos = "Beneficiario" %}
+        {% endif %}
+        {% if equipo == 'clp' %}
+          {% set equipos = "Circulo de Lucha" %}
+        {% endif %}
+        {% if equipo == 'militancia' %}
+          {% set equipos = "Militancia" %}
+        {% endif %}
+        {% if equipo == 'patrullas_sectoriales' %}
+          {% set equipos = "Patrulla Sectorial" %}
+        {% endif %}
+         {% if equipo == 'rep' %}
+          {% set equipos = Rep %}
+        {% endif %}
+        {% if equipo == 'trabajadores_patria' %}
+          {% set equipos = "Trabajadores" %}
+        {% endif %}
+        {% if equipo == 'ubch' %}
+          {% set equipos = "Ubch" %}
+        {% endif %}
+        {% if equipo == 'gmvv' %}
+          {% set equipos = "Gmvv" %}
+        {% endif %}
+        {% if equipo == 'poder_popular' %}
+          {% set equipos = "Poder Popular" %}
+        {% endif %}
+        {% if equipo == 'patrulleros' %}
+          {% set equipos = "Patrulleros" %}
+        {% endif %}
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="form_pregun_3" style="display: none;">
+             <strong>2-</strong> ¿Es usted trabajador de la empresa <strong>{{results.institucion}}</strong>  {% if results.cargo is defined %} con el Cargo <strong>{{results.cargo|trim}}</strong> {% endif %}{% if results.mision is defined %} con la <strong>{{results.mision|trim}}</strong> {% endif %}?
+            </div>
+    
+            <div id="form_pregun_3_resp" style="display: none;">
+              Si <input type="radio" name="form[3]" class="validate[required]" id="resp_1" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" name="form[3]" id="resp_1" class="validate[required]" value="norespondio">
+          </div>
+          </div>
+        </div><br>
+        <div class="row">
+          {% if encuesta.getPreguntas.pregunta4 is defined and encuesta.getPreguntas.pregunta4() is not empty %}
+            <div class="col-xs-12">
+              <div id="form_pregun_4" style="display: none;">
+                <strong>3-</strong> {{encuesta.getPreguntas.getPregunta4()}}
+              </div>
+              <div id="form_pregun_4_resp" style="display: none;">
+                Si <input type="radio" name="form[4]" value="si">
+                &nbsp;&nbsp;&nbsp;&nbsp;No <input type="radio" class="" name="form[4]" value="no">
+
+                &nbsp;&nbsp;&nbsp;&nbsp;No sabe<input type="radio" class="" name="form[4]" value="no_sabe">
+
+              </div>
+
+
+                {% if encuesta.getPreguntas.pregunta5 is defined and encuesta.getPreguntas.getPregunta5() is not empty %}
+                  
+                    <div id="form_pregun_5" style="display: none;">
+                      <strong>¿</strong> {{encuesta.getPreguntas.getPregunta5()}}<strong>?</strong>
+                    </div>
+                    <div id="form_pregun_5_resp" style="display: none;">
+                     <select name="form[5]" class="form-control input-sm validate[required]">
+                        <option value="">Seleccionar</option>
+                        <option value="1">Guerra económica</option>
+                        <option value="2">Seguridad</option>
+                        <option value="3">Transporte</option>
+                        <option value="4">Servicos</option>
+                        <option value="5">Distrito Capital</option>
+                        <option value="6">Otros</option>
+                        <!--
+                        -->
+                      </select>
+                    </div>
+                  
+                {% endif %}
+
+            </div>
+          {% endif %}
+        </div><br>
+        <div class="row">
+          
+        </div>
+        <div class="row">
+          {% if encuesta.getPreguntas.pregunta6 is defined and encuesta.getPreguntas.pregunta6() is not empty %}
+            <div class="col-xs-12">
+              <div id="form_pregun_6" style="display: none;">
+                <strong>6-</strong> {{encuesta.getPreguntas.getPregunta6()}}
+              </div>
+              <div id="form_pregun_6_resp" style="display: none;">
+
+                <select name="form[6]" class="form-control input-sm validate[required]" id="estados">
+                  <option value="">Seleccionar</option>
+                  <option value="1">Amazonas</option>
+                  <option value="2">Aragua</option>
+                  <option value="3">Anzoátegui</option>
+                  <option value="4">Apure</option>
+                  <option value="5">Barinas</option>
+                  <option value="6">Bolivar</option>
+                  <option value="7">Carabobo</option>
+                  <option value="8">Cojedes</option>
+                  <option value="9">Delta Amacuro</option>
+
+                  <option value="10">Falcón</option>
+                  <option value="11">Guárico</option>
+                  <option value="12">Lara</option>
+                  <option value="13">Mérida</option>
+                  <option value="14">Miranda</option>
+                  <option value="15">Monagas</option>
+                  <option value="16">Nueva Esparta</option>
+                  <option value="17">Portuguesa</option>
+                  <option value="18">Sucre</option>
+
+                  <option value="19">Táchira</option>
+                  <option value="20">Trujillo</option>
+                  <option value="21">Vargas</option>
+                  <option value="22">Yaracuy</option>
+                  <option value="23">Zulia</option>
+
+
+                  <option value="24"><strong>Distrito Capital</strong></option>
+
+                  <option value="25"><strong>NINGUNO</strong></option>
+                  <!--
+                  -->
+                </select>
+              </div>
+            </div>
+          {% endif %}
+        </div><br>
+        <div class="row">
+          {% if encuesta.getPreguntas.pregunta7 is defined and encuesta.getPreguntas.getPregunta7() is not empty %}
+            <div class="col-xs-12">
+              <div id="form_pregun_7" style="display: none;">
+                <strong>7-</strong> {{encuesta.getPreguntas.getPregunta7()}}
+              </div>
+              <div id="form_pregun_7_resp" style="display: none;">
+                <br>
+                <select name="form[7]" class="form-control input-sm validate[required]" style="width:200px;">
+                        <option value="">Seleccionar</option>
+                        <option value="1">Polo patriotico</option>
+                        <option value="2">Avanzada Progresista</option>
+                        <option value="3">Otro</option>
+                        <!--
+                        -->
+                      </select>
+                      <br><br>
+                <!-- <select name="form[6]" class="form-control input-sm validate[required]">
+                  <option value="">Seleccionar</option>
+                  <option value="1">Amazonas | M</option>
+                  <option value="2">Aragua</option>
+                  <option value="3">Anzoátegui</option>
+                  <option value="4">Apure</option>
+                  <option value="5">Barinas</option>
+                  <option value="6">Bolivar</option>
+                  <option value="7">Carabobo</option>
+                  <option value="8">Cojedes</option>
+                  <option value="9">Delta Amacuro</option>
+
+                  <option value="10">Falcón</option>
+                  <option value="11">Guárico</option>
+                  <option value="12">Lara</option>
+                  <option value="13">Mérida</option>
+                  <option value="14">Miranda</option>
+                  <option value="15">Monagas</option>
+                  <option value="16">Nueva Esparta</option>
+                  <option value="17">Portuguesa</option>
+                  <option value="18">Sucre</option>
+
+                  <option value="19">Táchira</option>
+                  <option value="20">Trujillo</option>
+                  <option value="21">Vargas</option>
+                  <option value="22">Yaracuy</option>
+                  <option value="23">Zulia</option>
+
+                </select> -->
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="row">
+          {% if encuesta.getPreguntas.pregunta8 is defined and encuesta.getPreguntas.getPregunta8() is not empty %}
+            <div class="col-xs-12">
+              <div id="form_pregun_8" style="display: none;">
+                <strong>8-</strong> {{encuesta.getPreguntas.getPregunta8()}}
+              </div>
+              <div id="form_pregun_8_resp" style="display: none;">
+                <table class="table-striped table">
+                  <thead>
+                <th>Logístico <input type="radio" name="form[8]" value="logistico"></th>
+                <th>Movilización <input type="radio" class="" name="form[8]" value="movilizacion"></th>
+                <th>Seguridad <input type="radio" class="" name="form[8]" value="seguridad"></th>
+                <th>Salud <input type="radio" class="" name="form[8]" value="salud"></th>
+                <th>Metereológico <input type="radio" class="" name="form[8]" value="metereologico"></th>
+                <th>Eléctrico <input type="radio" class="" name="form[8]" value="electrico"></th>
+                <th>Otro <input type="radio" class="" name="form[8]" value="otro"></th>
+                </thead>
+                </table>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <center><input class="fueraoverflow2 btn btn-default" type="submit" onclick="return validar()" value="Guardar" name="form[boton_guardar]" /> <input class="fueraoverflow2 btn btn-default" type="submit" id="otro" value="Buscar Otro" name="form[boton_buscar]" /> <a href="{{ path('encuestas_datosEncuesta', {'id_encuesta': encuesta.id}) }}">
+        <input class="fueraoverflow2 btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+
+        </div>
+      </div>
+    </div>  
+  </form>
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+
+      $( "#mytable td:even" ).css( "background-color", "#d0d2d3" ); 
+
+      $('#otro').on( "click", function() {
+        $('*[type="radio"]').removeClass( "validate[required]" )
+      });
+
+      $('*[type="radio"]').click(function(evento){
+
+
+        if ($(this).attr("name")=="form[1]"){
+          if ($(this).attr("value")=="si"){
+            $("#form_identificacion").css("display", "block") && $("#form_identificacion_resp").css("display", "block");          
+          }
+
+            
+          if ($(this).attr("value")=="norespondio"){
+            $('input:radio[name="form[2]"]').attr ('checked',false);
+            $('input:radio[name="form[3]"]').attr ('checked',false);
+            $('input:radio[name="form[4]"]').attr ('checked',false);
+            $('input:radio[name="form[5]"]').attr ('checked',false);
+            $("#form_identificacion").css("display", "none") && $("#form_identificacion_resp").css("display", "none") && $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none");
+           
+          }
+
+          if ($(this).attr("value")=="noasignado"){
+            $('input:radio[name="form[2]"]').attr ('checked',false);
+            $('input:radio[name="form[3]"]').attr ('checked',false);
+            $('input:radio[name="form[4]"]').attr ('checked',false);
+            $('input:radio[name="form[5]"]').attr ('checked',false);
+            $("#form_identificacion").css("display", "none") && $("#form_identificacion_resp").css("display", "none") && $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none");
+           
+          }
+        }
+
+        if ($(this).attr("name")=="form[2]") { 
+
+          if ($(this).attr("value")=="si"){  
+             
+              $("#form_pregun_3").css("display", "block") && $("#form_pregun_3_resp").css("display", "block") && $("#form_pregun_4").css("display", "block") && $("#form_pregun_4_resp").css("display", "inline-block") && $("#form_pregun_6").css("display", "inline-block") && $("#form_pregun_6_resp").css("display", "inline-block") && $("#form_pregun_7").css("display", "block") && $("#form_pregun_7_resp").css("display", "block") && $("#form_pregun_8").css("display", "block") && $("#form_pregun_8_resp").css("display", "block");
+          }
+
+          if ($(this).attr("value")=="no"){
+            $('input:radio[name="form[3]"]').attr ('checked',false);
+            $('input:radio[name="form[4]"]').attr ('checked',false);
+            $('input:radio[name="form[5]"]').attr ('checked',false);
+
+            $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none");
+           }
+
+            /*if ($(this).attr("value")=="dicenoser"){
+              $("#form_pregun_3").css("display", "block") && $("#form_pregun_3_resp").css("display", "block") && $("#form_pregun_4").css("display", "block") && $("#form_pregun_4_resp").css("display", "block") && $("#form_pregun_5").css("display", "block") && $("#form_pregun_5_resp").css("display", "block");
+            }*/
+
+          if ($(this).attr("value")=="cambiodenumero"){
+            $('input:radio[name="form[3]"]').attr ('checked',false);
+            $('input:radio[name="form[4]"]').attr ('checked',false);
+            $('input:radio[name="form[5]"]').attr ('checked',false);
+            $("#form_pregun_3").css("display", "none") && $("#form_pregun_3_resp").css("display", "none") && $("#form_pregun_4").css("display", "none") && $("#form_pregun_4_resp").css("display", "none") && $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none") ;
+           
+          }
+        }
+
+
+        /*if ($(this).attr("name")=="form[4]") { 
+          //alert('vamos')
+          if ($(this).attr("value")=="no"){ 
+            $("#form_pregun_5").css("display", "inline-block") && $("#form_pregun_5_resp").css("display", "inline-block") 
+
+          }
+          else{
+            $('input:radio[name="form[5]"]').attr ('val',"");
+            $("#form_pregun_5").css("display", "none") && $("#form_pregun_5_resp").css("display", "none") 
+
+
+          }
+
+        }*/
+
+        if ($(this).attr("name")=="form[6]") {
+
+        }
+          
+      });
+  
+
+      $('#estados').on( "change", function() {
+        //alert($(this).attr("value"))
+        var estates = [ "","Amazonas","Aragua","Anzoátegui","Apure","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro","Falcón", "Guárico", "Lara", "Mérida", "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre", "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"]
+
+
+        var cand_psuv = ["","Miguel Rodríguez","Rodolfo Torres", "Aristobulo Isturiz", "Ramón Carrizales", "Argenis Chávez", "Justo Noguera Pietri", "Rafael Lacava", "Margaud Godoy", "Lizeta Hernández", "Víctor Clark", "José Vasquez", "Carmen Meléndez", "Jehyson Guzman", "Héctor Rodríguez", "Yelitza Santaella", "Carlos Mata Figueroa", "Rafael Calles", "Edwin Rojas", "José Vielma Mora", "Rangel Silva", "Jorge Garcia Carneiro", "Néstor Léon Heredia", "Francisco Arias Cardenas"];
+
+
+        var mud = ["", "Bernabe Gutierrez", "Ismael Garcia", "Antonio Barreto", "José Montilla", "Freddy Superlano", "Andrés Velásquez", "Alejandro Feo La Cruz", "Alberto Galindez", "Larissa González", "Eliezer Sirit", "Pedro Loreto", "Henri Falcón", "Ramón Guevara", "Carlos Ocariz", "Guillermo Call", "Alfredo Díaz", "María Beatriz Martínez", "Robert Alcalá", "Laidy Gómez", "Carlos Andrés González", "José Manuel Olivarez", "Luis Parra", "Juan Pablo Guanipa" ];
+
+
+
+
+
+        $('#form_pregun_7_resp').html( "<br> <strong>Estado: </strong> "+estates[$(this).attr("value")]+ '<br> '+"<strong> GPP: </strong> "+cand_psuv[$(this).attr("value")]+ ' <input type="radio" name="form[7]" value="psuv">'+"<strong> | Sin candidatos: </strong> "+ '  '+mud[$(this).attr("value")]+  ' <input type="radio" name="form[7]" value="mud"><br> <br> ')
+        
+        if ($(this).attr("value") =="25" || $(this).attr("value") =="24"){ 
+            $('#form_pregun_7_resp').html( "<br> <strong>Estado: </strong> NINGUNO"+'<br> '+"<strong> GPP: </strong> NINGUNO"+ ' <input type="radio" name="form[7]" value="ninguno"><br> <br> ')
+        }
+                  /*11"></option>
+                  12"></option>
+                  13"></option>
+                  14"></option>
+                  15"></option>
+                  16"></option>
+                  17"></option>
+                  18"></option>
+
+                  19"></option>
+                  20"></option>
+                  21"></option>
+                  22"></option>
+                  23"></option>]*/
+            //$(this).attr("value")
+      }
+      );
+
+
+      /* campo editables */
+      $('.editarNombres').editable('{{ path("encuestas_editar_datos",{"tipo":equipo}) }}', {
+         //indicator : "Guardando...",
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'nombres',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+
+      /* campo editables */
+      $('.editarCedula').editable('{{ path("encuestas_editar_datos",{"tipo":equipo}) }}', {
+         //indicator : "Guardando...",
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'cedula',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+
+      /* campo editables telefono*/
+      $('.editarTelf1').editable('{{ path("encuestas_editar_datos",{"tipo":equipo}) }}', {
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'telefono1',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+
+      $('.editarTelf2').editable('{{ path("encuestas_editar_datos",{"tipo":equipo}) }}', {
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'telefono2',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+
+
+    });
+
+    function validar() {
+
+      var a = 0, radio=document.getElementsByName("form[1]")
+        for(i=0;i<radio.length;i++) {
+          if(radio.item(i).checked == false) {
+            a++;
+          }
+        }
+          if(a == radio.length) {
+            alert('Debe seleccionar una Respuesta');
+              return false;
+          } else {
+              return true;
+            }
+    }
+
+  </script>
+{% endblock %}

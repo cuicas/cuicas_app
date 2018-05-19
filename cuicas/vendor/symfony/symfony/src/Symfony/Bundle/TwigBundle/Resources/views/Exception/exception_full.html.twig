@@ -1,0 +1,18 @@
+{% extends 'frontend.html.twig' %}
+
+
+{% block titulo %}
+    Acceso Denegado {{ exception.message }}{#  ({{ status_code }} {{ status_text }})#}
+{% endblock %}
+
+{% block cuerpo %}
+    <br /><br /><br /><br /><br />
+    {% if status_code == 500 %}
+    <center>ERROR!!<br /> No tienes autorización para acceder a esta página</center>
+    {% endif %}
+    
+    {% if status_code == 403 %}
+    <center>ERROR!!<br /> No tienes autorización para acceder a esta página</center>
+    {% endif %}
+    
+{% endblock %}

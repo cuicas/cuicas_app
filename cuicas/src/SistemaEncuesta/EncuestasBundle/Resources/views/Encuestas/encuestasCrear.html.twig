@@ -1,0 +1,150 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Crear Encuesta{% endblock %}
+{% block titulo %}Crear Encuesta{% endblock %}
+{% block cuerpo %}
+
+<form action="{{ path('encuestas_crear') }}" id="forms" method="post"  {{	form_enctype(formulario) }} >
+	{{ form_errors(formulario) }}
+	{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+			$(document).ready(function(){
+				$(this).tab('show');
+				BootstrapDialog.show({
+					title: 'Mensaje',
+					message: ('{{ mensaje }}'),
+					buttons: [{
+						id: 'btn-ok',   
+						//icon: 'glyphicon glyphicon-check',       
+						label: 'Aceptar',
+						cssClass: 'btn btn-default',
+						autospin: false,
+						action: function(dialogRef){    
+							dialogRef.close();
+						}
+					}]
+				})
+			});
+		</script>
+	{% endfor %}
+	<div class="col-xs-12 col-md-4 col-md-offset-2">
+		<div class="row">
+			<div class="col-md-12">
+				<strong>{{ form_label(formulario.nombreEncuesta) }}</strong>
+				{{ form_widget(formulario.nombreEncuesta) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>{{ form_label(formulario.descripcion) }}</strong>
+				{{ form_widget(formulario.descripcion) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>{{ form_label(formulario.tipoEncuesta) }}</strong>
+				{{ form_widget(formulario.tipoEncuesta) }}
+			</div>
+		</div>
+		<div class="row" style="display:none" id="form_encuestaFase2" >
+			<div class="col-md-12">
+				<strong><label>Seleccionar encuesta de fase 2</label></strong>
+				<select name="encuestaFase2" class="form-control input-sm validate[required]">
+					<option value="">Seleccionar</option>
+						{% for encuestaFase2 in encuestasFase2 %}
+							<option value="{{ encuestaFase2.id }}">{{ encuestaFase2.nombreEncuesta }}</option>
+						{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-4">
+		<div class="row">
+			<div class="col-md-12">
+				<strong>{{ form_label(formulario.fechaInicio) }}</strong>
+				{{ form_widget(formulario.fechaInicio)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>{{ form_label(formulario.fechaFin) }}</strong>
+				{{ form_widget(formulario.fechaFin) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>¿La encuesta es definitiva?</label>
+				Si&nbsp;<input type="radio" name="definitiva" id="definitiva1" value="true" class="validate[required]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				No&nbsp;<input type="radio" name="definitiva" id="definitiva2" value="false" class="validate[required]">
+				{#<strong>{{ form_label(formulario.definitiva) }}</strong>
+				{{ form_widget(formulario.definitiva) }}#}
+			</div>
+		</div>
+		{{ form_rest(formulario) }}
+	</div>
+	<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><input type="submit" class="fueraoverflow btn btn-default" value="Guardar" /> <a href="{{ path('encuestas_totales', {"tipoEncuesta":"general"}) }}"><input class="fueraoverflow btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+			</div>
+		</div>
+	</div>
+
+</form>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#SistemaEncuesta_EncuestasBundle_encuestatype_tipoEncuesta").change(function(){
+
+			if($(this).val() != "fase2" && $(this).val() != "fase1" && $(this).val() != "comando" && $(this).val() != "general" && $(this).val() != ""){
+				$("#form_encuestaFase2").css("display","block");
+			}
+			else{
+				$("#form_encuestaFase2").css("display","none");
+			}
+		});
+
+		$("#SistemaEncuesta_EncuestasBundle_encuestatype_nombreEncuesta").on("blur", function(){
+      		var url2 =  "{{ path('encuestas_buscar_nombre_encuesta',{'nombreEncuesta':'x'}) }}";
+      	});
+
+		$('#SistemaEncuesta_EncuestasBundle_encuestatype_fechaInicio').change(function(){
+			var primera = $('#SistemaEncuesta_EncuestasBundle_encuestatype_fechaInicio').val();
+			$('.datepicker1').datepicker({
+		        format: 'dd/mm/yyyy',
+		        language: "es",
+		        autoclose: true,
+		        orientation: "top right",
+		        todayHighlight: true,
+				startDate: 'today'
+		    }).on('changeDate', function(e){
+		      $(this).datepicker('hide');
+		    });
+		});
+		
+		$(".datepicker").datepicker({
+	    	format: 'dd/mm/yyyy',
+	        language: "es",
+	        autoclose: true,
+	        orientation: "top right",
+	        todayHighlight: true,
+	        startDate: 'today'	
+	        }).on('changeDate', function(e){
+	            $(this).datepicker('hide');
+	        
+	    });
+
+	    $('#forms').submit(function(event){
+	    	var fecha = $('#SistemaEncuesta_EncuestasBundle_encuestatype_fechaInicio').val();
+	    	var fecha2 = $('#SistemaEncuesta_EncuestasBundle_encuestatype_fechaFin').val();
+
+	    	if (Date.parse(fecha) > Date.parse(fecha2)) {
+	    		alert('La Fecha de Fin es menor que la Fecha de Inicio');
+	    		event.preventDefault();
+	    	}
+
+	    });
+	   
+    });
+    </script>
+{% endblock %}
+

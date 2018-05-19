@@ -1,0 +1,37 @@
+{% extends '::frontend.html.twig' %}
+{% block title %} {{titulo}}{% endblock %}
+{% block titulo %} {{titulo}}{% endblock %}
+{% block cuerpo %}
+	<form action="{{ path(accion) }}" method="post" {{ form_enctype(formulario) }} >	
+{{ form_errors(formulario) }}
+	{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+			$(document).ready(function(){
+				$(this).tab('show');
+				BootstrapDialog.show({
+					title: 'Mensaje',
+					message: ('{{ mensaje }}'),
+					buttons: [{
+						id: 'btn-ok',   
+						//icon: 'glyphicon glyphicon-check',       
+						label: 'Aceptar',
+						cssClass: 'btn btn-default',
+						autospin: false,
+						action: function(dialogRef){    
+							dialogRef.close();
+						}
+					}]
+				})
+			});
+		</script>
+	{% endfor %}
+			{{ form_rest(formulario) }}
+	{% if titulo == 'Modificar Perfil del Usuario' %}
+  	<input type="submit" class="boton_guardar_ventanas btn btn-default" value="Guardar" />
+  	{% endif %}
+  	{% if titulo == 'Registrar Usuario' %}
+  		<input type="submit" class="boton_guardar_ventanas btn btn-default" value="Guardar" />
+  	{% endif %}
+		<a href='{{ path('sistema_mapas_principal_homepage') }}'><input class="boton_salir_ventanas btn btn-default" type="button" value="Salir" /></a>
+	</form>
+{% endblock %}

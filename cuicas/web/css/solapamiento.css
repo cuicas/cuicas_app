@@ -1,0 +1,407 @@
+/* CSS Document */
+/*.....*/
+.logo1{
+	position: absolute;
+	left: 2px;
+	top: -2px;
+	overflow: visible;
+	width: 144px;
+	height: 83px;
+
+}
+
+.logo2{
+	position: absolute;
+	left: 2px;
+	top: 601px;
+	overflow: visible;
+	width: 191px;
+	height: 52px;
+}
+
+.paleta{
+	position: absolute;
+	left: 74px;
+	top: 159px;
+	overflow: visible;
+}
+
+.merida{
+	position: absolute;
+	left: 201px;
+	top: 100px;
+	overflow: visible;
+}
+
+.contenedor{
+position: absolute;
+	left: 200px;
+	top: 100px;
+}
+
+.eje {
+	position: absolute;
+	/*left: 130px;
+	top: -50px;*/
+	width:655px;
+}
+
+.metropolitano{
+	position: absolute;
+	left: 149px;
+	top: -165px;
+}
+
+.metropolitanoCircuito{
+	position: absolute;
+	top: -165px;
+}
+
+.alberto{
+	/*position: absolute;*/
+	left: 354px;
+	top: 115px;
+}
+
+.paramo{
+	position: absolute;
+	left: -150px;
+	top: -95px;
+}
+
+.paramoCircuito{
+	position: absolute;
+	left: 50px;
+	top: 5px;
+}
+
+.sur{
+	position: absolute;
+	left: 200px;
+	top: -285px;	
+}
+
+.mocoties{
+	left: 330px;
+	top: -175px;	
+	position: absolute;
+}
+
+.mocotiesCircuito{
+	left: 220px;
+	top: -75px;	
+	position: absolute;
+}
+
+.transparencia{
+	left:99px;
+	top:0px;
+	width:700px;
+	height:517px;
+	position: absolute;
+
+}
+
+.transparencia2{
+	left:50px;
+	top:100px;
+	width:700px;
+	height:517px;
+	position: absolute;
+
+}
+
+.titulo {
+	left:310px;
+	position: absolute;
+	top:-1px;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 30px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.punto_merida1{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	width:219px;
+	height:22px;
+	position: absolute;
+	left: 267px;
+	top: 29px;
+	background-color: #000000;
+
+}
+
+.punto_merida2{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	left:269px;
+	top:30px;
+	width:216px;
+	height:22px;
+	position: absolute;
+	background-color: #000000;
+}
+
+.punto_merida3{
+	font-weight:bold;
+	font-size: 16px;
+	color:#69bd45;
+	left:257px;
+	top:29px;
+	width:220px;
+	height:22px;
+	position: absolute;
+	background-color: #000000;
+}
+
+.punto_1{ /*metropolitano*/
+	left:568px;
+	top:370px;
+	/*width:153px;*/
+	height:23px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.punto_1_imagen{
+	left:814px;
+	top:454px;
+	width:179px;
+	height:28px;
+	position: absolute;
+
+}
+
+.punto_2_imagen{
+	left:713px;
+	top:591px;
+	width:179px;
+	height:34px;
+	position: absolute;
+
+}
+
+.punto_3_imagen{
+	left:714px;
+	top:639px;
+	width:179px;
+	height:37px;
+	position: absolute;
+
+}
+
+.punto_2{ /*panamericano*/
+	left:363px;
+	top:40px;
+	height:23px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.punto_3{ /*paramo*/
+	left:799px;
+	top:218px;	
+	height:23px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.punto_4{ /*mocoties*/
+	left:50px;
+	top:197px;
+	height:23px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.punto_5{ /*pueblos del sur*/
+	left:15px;
+	top:363px;
+	height:23px;
+	position: absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1em;
+	color: #ec1e24;
+	font-weight:bold;
+	font-size: 20px;
+	text-shadow:0px 0px 0 rgb(197,-9,-3),-1px 0px 0 rgb(168,-38,-32),-2px 0px 0 rgb(139,-67,-61), -3px 0px 0 rgb(110,-96,-90),-4px 0px 3px rgba(0,0,0,0.15),-4px 0px 1px rgba(0,0,0,0.5),0px 0px 3px rgba(0,0,0,.2);
+}
+
+.total{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+	height:21px;
+	position: absolute;
+	left: 51px;
+	top: 11px;
+}
+
+.conformadas{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+    height:21px;
+	position: absolute;
+	left: 52px;
+	top: 10px;
+}
+
+.auditadas{
+	font-weight:bold;
+	font-size: 16px;
+	color:#FFFFFF; 
+	width:145px;
+	height:21px;
+	position: absolute;
+	left: 50px;
+	top: 10px;
+}
+
+.botones_menu{
+	width:21px;
+	height:21px;
+	position: absolute;
+	left: 19px;
+	top: 73px;
+	z-index: 90000;
+}
+
+.mensaje_sesion{
+	color:#000000;
+	font-weight:bold;
+	font-size: 16px;
+	width:244px;
+	height:22px;
+	position: absolute;
+	left: 988px;
+	top: 78px;
+}
+
+.c1{
+	position: absolute;
+	left: 180px;
+	top: -50px;
+
+
+}
+.c2{
+	position: absolute;
+	left: 180px;
+	top: -50px;
+
+
+}
+
+.c3{
+	position: absolute;
+	left: 180px;
+	top: -50px;
+
+}
+.c4{
+	position: absolute;
+	left: 180px;
+	top: -50px;
+
+}
+
+.paramo1{
+	position: absolute;
+	left: 130px;
+	width: 655px;
+	top: 100px;
+
+}
+
+.metropolitano1 {
+	position: absolute;
+	left: 100px;
+	top: -50px;
+	width: 755px;
+}
+
+.albertoadrinai {
+	position: absolute;
+	left: 300px;
+	top: 90px;
+	width: 655px;
+}
+
+.sur1 {
+	position: absolute;
+	left: 330px;
+	top: -110px;
+	width: 655px;
+}
+
+.transparenciaCircuitos{
+	left: 160px;
+	top: -50px;
+	width: 700px;
+	height: 517px;
+	position: absolute;
+
+}
+
+.transparenciaCircuto2 {
+  position: absolute;
+	left: 150px;
+	top: 125px;
+	height: 500px;
+}
+
+.transparenciaCircuto3{
+	position: absolute;
+	left: 170px;
+	top: 20px;
+	height: 500px;
+}
+
+.transparenciaCircuto1{
+	position: absolute;
+	left: 300px;
+	top: 120px;
+}
+
+.transparenciaCircuto4{
+	position: absolute;
+	left: 330px;
+	top: -80px;
+	height: 500px;
+}
+
+.boton_regreso {
+	z-index:10;	
+	height: 50px;
+	width: 50px;
+	position: absolute;
+} 

@@ -1,0 +1,25 @@
+mapas_estadisticos:
+    resource: "@MapasEstadisticosBundle/Resources/config/routing.yml"
+    prefix:   /mapas
+
+encuestas:
+    resource: "@EncuestasBundle/Resources/config/routing.yml"
+    prefix:   /encuestas
+
+usuario:
+    resource: "@UsuarioBundle/Resources/config/routing.yml"
+    prefix:   /usuario
+
+sistema_encuesta_principal:
+    resource: "@SistemaEncuestaPrincipalBundle/Resources/config/routing.yml"
+    prefix:   /
+
+usuario_login:
+    pattern:   /login/
+    defaults: { _controller: UsuarioBundle:Login:login }
+
+usuario_login_check:
+    path:     /login_check
+
+usuario_logout:
+    path:     /logout

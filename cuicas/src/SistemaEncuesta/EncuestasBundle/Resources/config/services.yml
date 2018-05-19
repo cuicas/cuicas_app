@@ -1,0 +1,13 @@
+parameters:
+#    encuestas.example.class: SistemaEncuesta\EncuestasBundle\Example
+
+services:
+#    encuestas.example:
+#        class: %encuestas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+#	intl.twig.extension:
+#		class: Twig_Extensions_Extension_Intl
+#		tags: [{ name: 'twig.extension' }]
+#		IntlDateFormatter::MEDIUM
+
+

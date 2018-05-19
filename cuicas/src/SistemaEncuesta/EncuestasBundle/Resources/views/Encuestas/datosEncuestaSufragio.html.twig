@@ -1,0 +1,202 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos Encuesta Sufragio{% endblock %}
+{% block titulo %}{{encuesta.nombreEncuesta}}{% endblock %}
+{% block cuerpo %}
+<form action="{{ path('encuestas_datosEncuestaSufragio',{'id_encuesta':encuesta.id}) }}" novalidate method="post" {{	form_enctype(formulario) }}>
+	{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+		$(document).ready(function(){
+			$(this).tab('show');
+			BootstrapDialog.show({
+				title: 'Mensaje',
+				message: ('{{ mensaje }}'),
+				buttons: [{
+					id: 'btn-ok',   
+					//icon: 'glyphicon glyphicon-check',       
+					label: 'Aceptar',
+					cssClass: 'btn btn-default',
+					autospin: false,
+					action: function(dialogRef){    
+						dialogRef.close();
+					}
+				}]
+			})
+		});
+		</script>
+	{% endfor %}
+	<div class="col-xs-12 col-md-2 col-md-offset-5">
+			<div class="row">
+				{% if encuesta.tipoEncuesta == 'circuito' %}
+				<div class="col-xs-12">
+					<label for="form_circuito" id='label_form_circuito'>Circuitos</label>
+					<select id="form_circuito" name="form[circuitos]" class="form-control input-sm validate[required]"/>
+						<option value="">Seleccionar</option>
+						{# recibo todos los municipios del controlador para listarlo #}
+						{% for circuito in circuitos %}
+							<option value="{{ circuito.getId() }}">{{ circuito.getNombreCircuito() }}</option>
+						{% endfor %}
+						<option value="todos">Todos</option>
+					</select>
+				</div>
+				{% endif %}
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="form_municipio" id='label_form_municipio'>Municipios</label>
+					<select id="form_municipio" name="form[municipios]" class="form-control input-sm validate[required]"/>
+						<option value="">Seleccionar</option>
+						{% if encuesta.tipoEncuesta != 'circuito' %}
+							{% for municipio in municipios %}
+								<option value="{{ municipio.getId() }}">{{ municipio.getNombreMunicipio() }}</option>
+							{% endfor %}
+						{% endif %}
+						<option value="todos">Todos</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="form_parroquia" id='label_form_parroquia'>Parroquias</label>
+					<select id="form_parroquia" name="form[parroquia]" class="form-control input-sm validate[required]"/>
+						<option value="">Seleccionar</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-13">
+					<label for="form_cv" id='label_form_cv'>Centro de Votaci&oacute;n</label>
+					<select id="form_cv" name="form[cv]" class="form-control input-sm validate[required]"/>
+						<option value="">Seleccionar</option>
+					</select>
+				</div>
+			</div>
+			{{ form_widget(formulario) }}
+	</div>
+	<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><input id='buscar_encuestas' class="fueraoverflow btn btn-default" type="submit" value="Siguiente" /> <a href="{{ path('encuestas_totales', {"tipoEncuesta":"general"}) }}"><input class="fueraoverflow btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+			</div>
+		</div>
+	</div>
+</form>
+<script>
+	{% set circu="x" %}
+	{% set mun="x" %}
+	{% set paq="x" %}
+	$(document).ready(function(){
+		$('#form_circuito').change(function(){
+    	//declaro una variable myUrl ke contenga la url de la accion para donde va la id del municipio y luego sustituyo la letra x por el valor
+    	//obtenido de la selección de la lista select	
+      var myUrl = "{{ path('encuestas_cargarMunicipios',{'id_circuito':circu}) }}";					
+			
+			myUrl = myUrl.replace('x', $(this).val());
+
+			//esto se hace para eliminar todos los elementos de la lista y le añado eñ primero ke es seleccionar
+			$('#form_municipio').empty();
+			$('#form_municipio').append('<option value='+0+'>Seleccionar</option>');
+			//////////////////////////
+
+			//getJson obtine un diccionario codificado en Json ke viene de la accion myUrl, data es el Json devuelto por la acción
+			$.getJSON( myUrl, function (data){
+				//recorre cada uno de los elementos ke se encuentra en data y luego le añade cada option al select
+      	$.each(data, function(key, valor){
+	 				$('#form_municipio').append('<option value='+valor.id_mun+'>'+valor.mun+'</option>');
+       	});
+      });
+
+
+			if($('#form_circuito').val() == "todos"){
+				$('#form_municipio').append('<option value=\'todos\' selected >Todos</option>');	
+				$('#form_parroquia').append('<option value=\'todos\' selected>Todos</option>');
+				$('#form_cv').append('<option value=\'todos\' selected >Todos</option>');
+			}
+			else{
+				$('#form_parroquia').empty();
+				$('#form_parroquia').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_parroquia').append('<option value=\'todos\' >Todos</option>');
+
+				$('#form_municipio').empty();
+				$('#form_municipio').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_municipio').append('<option value=\'todos\' >Todos</option>');	
+
+				$('#form_cv').empty();
+				$('#form_cv').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_cv').append('<option value=\'todos\'>Todos</option>');
+			}
+
+			
+    });
+
+    $('#form_municipio').change(function(){
+    	//declaro una variable myUrl ke contenga la url de la accion para donde va la id del municipio y luego sustituyo la letra x por el valor
+    	//obtenido de la selección de la lista select
+      var myUrl = "{{ path('encuestas_cargarParroquias',{'id_municipio':mun}) }}";					
+			
+			myUrl = myUrl.replace('x', $(this).val());
+
+			//esto se hace para eliminar todos los elementos de la lista y le añado eñ primero ke es seleccionar
+			$('#form_parroquia').empty();
+			$('#form_parroquia').append('<option value='+0+'>Seleccionar</option>');
+			//////////////////////////
+
+			//getJson obtine un diccionario codificado en Json ke viene de la accion myUrl, data es el Json devuelto por la acción
+			$.getJSON( myUrl, function (data){
+				//recorre cada uno de los elementos ke se encuentra en data y luego le añade cada option al select
+      	$.each(data, function(key, valor){
+	 				$('#form_parroquia').append('<option value='+valor.id_paq+'>'+valor.paq+'</option>');
+       	});
+      });
+
+      if($('#form_municipio').val() == "todos"){
+				$('#form_parroquia').append('<option value=\'todos\' selected>Todos</option>');
+				$('#form_cv').append('<option value=\'todos\' selected >Todos</option>');
+			}
+			else{
+				$('#form_parroquia').empty();
+				$('#form_parroquia').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_parroquia').append('<option value=\'todos\' >Todos</option>');
+
+				$('#form_cv').empty();
+				$('#form_cv').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_cv').append('<option value=\'todos\' >Todos</option>');
+			}
+			
+    });
+
+   	$('#form_parroquia').change(function(){ 
+    	//declaro una variable myUrl ke contenga la url de la accion para donde va la id del municipio y luego sustituyo la letra x por el valor
+    	//optenido de la selección de la lista select
+      var myUrl = "{{ path('encuestas_cargarCV',{'id_parroquia':paq}) }}";					
+			myUrl = myUrl.replace('x', $(this).val());
+
+			//esto se hace para eliminar todos los elementos de la lista de cv y le añado el primero ke es seleccionar
+			$('#form_cv').empty();
+			$('#form_cv').append('<option value=\'\'>Seleccionar</option>');
+			//////////////////////////
+
+			//getJson obtine un diccionario codificado en Json ke viene de la accion myUrl, data es el Json devuelto por la acción
+			$.getJSON( myUrl, function (data){ 
+				//recorre cada uno de los elementos ke se encuentra en data y luego le añade cada option al select
+	    	$.each(data, function(key, valor){
+					$('#form_cv').append('<option value='+valor.id_cv+'>'+valor.cv+'</option>');
+       	});
+      });
+
+      if($('#form_parroquia').val() == "todos"){
+				$('#form_cv').empty();
+				$('#form_cv').append('<option value=\'\'>Seleccionar</option>');
+      	$('#form_cv').append('<option value=\'todos\' selected >Todos</option>');
+      }
+      else{
+				$('#form_cv').empty();
+				$('#form_cv').append('<option value=\'\'>Seleccionar</option>');
+				$('#form_cv').append('<option value=\'todos\' >Todos</option>');
+      }
+
+    });
+
+	});
+</script>
+{% endblock %}

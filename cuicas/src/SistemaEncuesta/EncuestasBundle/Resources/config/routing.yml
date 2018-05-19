@@ -1,0 +1,99 @@
+encuestas_pricipal:
+    path:     /
+    defaults: { _controller: EncuestasBundle:Default:index }
+
+encuestas_crear:
+    pattern:     /crear/
+    defaults: { _controller: EncuestasBundle:Encuestas:crear }
+
+encuestas_totales:
+    path:     /encuestasTotal/{tipoEncuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:encuestasTotal }
+
+encuestas_crearPreguntas:
+    path:     /crearPreguntas/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:crearPreguntas }
+
+encuestas_configurar:
+    path:     /configurar/
+    defaults: { _controller: EncuestasBundle:Encuestas:configurarEncuesta }
+
+encuestas_eliminar:
+    path:     /eliminarEncuesta/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:eliminar }
+
+encuestas_respuestas:
+    path:     /configurar/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:respuestas }
+
+encuestas_cargar_candidato:
+    path:     /cargarCandidato/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:cargarCandidato }
+
+encuestas_resumen:
+    path:     /resumen/
+    defaults: { _controller: EncuestasBundle:Encuestas:resumen }
+
+encuestas_prueba:
+    path:     /prueba/
+    defaults: { _controller: EncuestasBundle:Encuestas:prueba }
+
+encuestas_cargarMunicipios:
+    path:     /cargarMunicipios/{id_circuito}
+    defaults: { _controller: EncuestasBundle:Encuestas:cargarMunicipios }
+
+encuestas_cargarParroquias:
+    path:     /cargarParroquias/{id_municipio}
+    defaults: { _controller: EncuestasBundle:Encuestas:cargarParroquias }
+
+encuestas_cargarCV:
+    path:     /cargarCV/{id_parroquia}
+    defaults: { _controller: EncuestasBundle:Encuestas:cargarCV }
+
+encuestas_datosEncuesta:
+    path:     /datosEncuesta/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:datosEncuesta }
+
+encuestas_datosEncuestaSufragio:
+    path:     /datosEncuestaSufragio/{id_encuesta}/
+    defaults: { _controller: EncuestasBundle:Encuestas:datosEncuestaSufragio }
+
+encuestas_datosEncuestaComando:
+    path:     /datosEncuestaComando/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:datosEncuestaComando }
+
+encuestas_ver_detalles:
+    path:     /verDetallesEncuesta/{id_encuesta}/{tipo}/
+    defaults: { _controller: EncuestasBundle:Encuestas:verDetalles }
+
+encuestas_buscar_nombre:
+    path:     /buscarPorNombre/
+    defaults: { _controller: EncuestasBundle:Encuestas:buscarNombre }
+
+encuestas_buscar_fecha:
+    path:     /buscarPorFecha/
+    defaults: { _controller: EncuestasBundle:Encuestas:buscarFecha }
+
+encuestas_buscar_nombre_encuesta:
+    path:     /crear/buscarPorNombreEncuesta/
+    defaults: { _controller: EncuestasBundle:Encuestas:buscarNombreEncuesta }
+
+encuestas_buscar_nombre_candidato:
+    path:     /cargarCandidato/buscarPorNombreCandidato/
+    defaults: { _controller: EncuestasBundle:Encuestas:buscarNombreCandidato }
+
+encuestas_editar_datos:
+    path:     /editarDatos/{tipo}
+    defaults: { _controller: EncuestasBundle:Encuestas:editarDatos }
+
+encuestas_csv:
+    path:     /csv/{id_encuesta}/{repuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:csv }
+
+encuestas_buscar_csv:
+    path:     /buscarCsv/
+    defaults: { _controller: EncuestasBundle:Encuestas:buscarCsv }
+
+encuestas_ver_detalles_reporte:
+    path:     /verDetallesReporte/{id_encuesta}
+    defaults: { _controller: EncuestasBundle:Encuestas:verDetallesReporte }

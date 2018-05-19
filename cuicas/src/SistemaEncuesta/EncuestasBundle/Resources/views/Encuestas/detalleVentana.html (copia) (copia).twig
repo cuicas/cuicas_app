@@ -1,0 +1,305 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block titulo %}
+{% set Fecha = "Now"|date("d-m-Y", "America/Caracas") %}
+{% set Hora = "Now"|date("h:i:s", "America/Caracas") %}
+  <div style="font-family: sans-serif;">Reporte: {{encuesta.nombreEncuesta|upper}} / Fecha: {{Fecha}} Hora: {{Hora}}</div>
+{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />  
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/tooltip.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block cuerpo %}
+
+<center>
+  {# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA #}
+  {% if encuesta is defined %}
+
+  {# 
+    % set si1 = encuesta.totalContactadosSiPregunta("si",1) %}
+    {% set norespondio1 = encuesta.totalContactadosSiPregunta("norespondio",1) %}
+    {% set noasignado1 = encuesta.totalContactadosSiPregunta("noasignado",1) %} 
+    {% set total = si1 + norespondio1 + noasignado1 %}
+
+    {% set si2 = encuesta.totalContactadosSiPregunta("si",2) %}
+    {% set cambiodenumero2 = encuesta.totalContactadosSiPregunta("cambiodenumero",2) %}
+
+    {% set si3 = encuesta.totalContactadosSiPregunta("si",3) %}
+    {% set no3 = encuesta.totalContactadosSiPregunta("norespondio",3) %}
+
+    {% set si4 = encuesta.totalContactadosSiPregunta("si",4) %}
+    {% set no4 = encuesta.totalContactadosSiPregunta("no",4) %}
+    {% set nosabe4 = encuesta.totalContactadosSiPregunta("nosabe",4) %}
+
+    {% set si5 = encuesta.totalContactadosSiPregunta("si",5) %}
+    {% set no5 = encuesta.totalContactadosSiPregunta("no",5) %}
+    {% set nosabe5 = encuesta.totalContactadosSiPregunta("nosabe",5) %} 
+  #}
+ 
+    {% if datosGenerales.total != 0 %}
+      {% set porcentajeSi = datosGenerales.si1/ datosGenerales.total*100%}
+      {% set porcentajeNo = datosGenerales.norespondio1/ datosGenerales.total*100%}
+      {% set porcentajeNoAsignado = datosGenerales.noasignado1/ datosGenerales.total*100%}
+
+        <table class="table stacktable table-hover" border="1">
+          <thead> 
+            <tr>
+              <th>Preguntas</th>
+              <th align="center">Si</th>
+              <th align="center">No</th>
+              <th align="center">Telf. No Asignado</th>
+              <th align="center">No sabe</th>
+              <th align="center">Telf. Errado</th>
+            </tr>
+          </thead>
+          <tr>
+              <td>Respondió</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.si1 : 0}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.norespondio1 : 0}}</td>
+               <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.noasignado1 : 0}}</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+          </tr>
+          <tr>
+              <td></td>
+              <td align="center">{{porcentajeSi|number_format(2, '.', '')}}%</td>
+              <td align="center">{{porcentajeNo|number_format(2, '.', '')}}%</td>
+              <td align="center">{{porcentajeNoAsignado|number_format(2, '.', '')}}%</td>
+               <td align="center" colspan="2"></td>
+          </tr>
+
+          <tr>
+              <td>Idenficación</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.si2 : 0}}</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.cambiodenumero2 : 0}}</td>
+          </tr>
+          {# OPTIMIZAR ESTE CÓDIGO ...........................#}
+          <tr>
+            {% if encuesta.preguntas.pregunta3 is not empty %}
+              <td>Pertenece a la empresa encuestada</td><!-- encuesta.preguntas.pregunta3 -->
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.si3 : 0}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.no3 : 0}}</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              <td align="center">N/A</td>
+              
+            {% endif %}
+          
+          </tr>
+          <tr>
+            {% if encuesta.preguntas.pregunta4 is not empty %}
+              <td>{{encuesta.preguntas.pregunta4}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.si4 : 0}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.no4 : 0}}</td>
+              <td align="center">N/A</td>
+               <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.nosabe4 : 0}}</td>
+             <td align="center">N/A</td>
+            {% endif %}        
+          </tr>
+          <tr>
+            {% if encuesta.preguntas.pregunta5 is not empty %}
+              <td>{{encuesta.preguntas.pregunta5}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.si5 : 0}}</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.no5 : 0}}</td>
+              <td align="center">N/A</td>
+              <td align="center">{{encuesta.tipoEncuesta == 'general' ? datosGenerales.nosabe5 : 0}}</td>
+              <td align="center">N/A</td>
+            {% endif %}         
+          </tr>
+          {# .................................................#}
+          <tr>
+            <td align="center"><strong>TOTAL DE LLAMADAS</strong></td><td align="center" colspan="2"><strong>{{datosGenerales.total}}</strong></td>
+            <td align="center"><strong>TOTAL DE LLAMADAS EFECTIVAS</strong></td><td align="center" colspan="2"><strong>{{ datosGenerales.si1 }}</strong></td>  
+          </tr>
+        </table>
+
+        {% for empresa in datosGenerales.datosEmpresas %}
+          <h2><strong>{{empresa.empresa}}</strong></h2>
+        <table class="table stacktable table-hover" border="1">
+           <thead> 
+            <tr>
+              <th>Preguntas</th>
+              <th align="center">Si</th>
+              <th align="center">No</th>
+              <th align="center">Telf. No Asignado</th>
+              <th align="center">No sabe</th>
+              <th align="center">Telf. Errado</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>Respondió</td>
+                {% set porcentajeSi = 0 %}
+                {% if (empresa.si1+empresa.no1) != 0 %}
+                  {% set porcentajeSi = empresa.si1/(empresa.si1+empresa.no1)*100 %}
+                {% endif %}
+                {% set porcentajeNo = 0 %}
+                {% if (empresa.si1+empresa.no1) != 0 %}
+                  {% set porcentajeNo = empresa.no1/(empresa.si1+empresa.no1)*100 %}
+                {% endif %}
+                <td align="center">{{empresa.si1}}</td>
+                <td align="center">{{empresa.no1}}</td>
+                <td align="center">{{empresa.noasignado1}}</td>
+                <td align="center">N/A</td>
+                <td align="center">N/A</td>
+                
+              </tr>
+              <tr>
+                <td></td>
+                {% set porcentajeSi = 0 %}
+                {% if (empresa.si1+empresa.no1) != 0 %}
+                  {% set porcentajeSi = empresa.si1/(empresa.si1+empresa.no1)*100 %}
+                {% endif %}
+                {% set porcentajeNo = 0 %}
+                {% if (empresa.si1+empresa.no1) != 0 %}
+                  {% set porcentajeNo = empresa.no1/(empresa.si1+empresa.no1)*100 %}
+                {% endif %}
+                {% set porcentajeNo = 0 %}
+                {% if (empresa.si1+empresa.no1) != 0 %}
+                  {% set porcentajeNo = empresa.no1/(empresa.si1+empresa.no1)*100 %}
+                {% endif %}
+                <td align="center">{{ porcentajeSi|number_format(2, '.', '')}}%</td>
+                <td align="center">{{porcentajeNo|number_format(2, '.', '')}}%</td>
+                <td align="center" colspan="3"></td>
+                
+              </tr>
+              <tr>
+                <td>Idenficación</td>
+                <td align="center">{{empresa.si2}}</td>
+                <td align="center">N/A</td>
+                <td align="center">N/A</td>
+                <td align="center">N/A</td>
+                <td align="center">{{empresa.no2}}</td>
+              </tr>
+              <tr>
+                <td>Pertenece a la empresa encuestada</td>
+                <td align="center">{{empresa.si3}}</td>
+                <td align="center">{{empresa.no3}}</td>
+                <td align="center">N/A</td>
+                <td align="center">N/A</td>
+                <td align="center">N/A</td>
+              </tr>
+              <tr>
+                <td>{{encuesta.preguntas.pregunta4}}</td>
+                <td align="center">{{empresa.si4}}</td>
+                <td align="center">{{empresa.no4}}</td>
+                <td align="center">N/A</td>
+                <td align="center">{{empresa.nosabe4}}</td>
+                <td align="center">N/A</td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  Total de Limitaciones:{{empresa.movilizacion + empresa.logistico +empresa.seguridad + empresa.salud + empresa.metereologico + empresa.electrico + empresa.otro}}<br />
+                  Movilización: {{empresa.movilizacion}}, Logística: {{empresa.logistico}}, Seguridad: {{empresa.seguridad}}, Salud: {{empresa.salud}}, Metereológico: {{empresa.metereologico}}, Eléctrico: {{empresa.electrico}}, Otro: {{empresa.otro}}
+                </td>
+              </tr>
+
+          </tbody>
+        </table>
+        {% endfor %}
+
+        <table class="table stacktable table-hover" border="1">
+          <thead>
+            <th>Total de limitantes reportadas</th>
+            <th style=" text-align: center;">Total</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Limitantes de Logística
+              </td>
+              <td align="center">
+                {{datosGenerales.logistico}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes de Movilización
+              </td>
+              <td align="center">
+                {{datosGenerales.movilizacion}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes de Seguridad
+              </td>
+              <td align="center">
+                {{datosGenerales.seguridad}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes de Salud
+              </td>
+              <td align="center">
+                {{datosGenerales.salud}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes Metereologico
+              </td>
+              <td align="center">
+                {{datosGenerales.metereologico}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes Eléctrico
+              </td>
+              <td align="center">
+                {{datosGenerales.electrico}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Limitantes Otro
+              </td>
+              <td align="center">
+                {{datosGenerales.otro}}
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      {% endif %}
+  {% endif %}
+</center>
+
+<center><input type="button" class="btn btn-default" onclick="javascript:window.print();" name="Imprimir" value="Imprimir"></center>
+{% endblock %}
+   
+{% block javascripts %}
+  <script>
+$(document).ready(function(){
+
+
+      $('.clsVentanaCerrar').live('click',function(eEvento){ alert('o');
+      //prevenimos el comportamiento normal del enlace
+      eEvento.preventDefault();
+      //buscamos la ventana padre (del boton "cerrar")
+      var $objVentana=$($(this).parents().get(1));
+      
+      //cerramos la ventana suavemente
+      $objVentana.fadeOut(300,function(){
+        //eliminamos la ventana del DOM
+        $(this).remove();
+        //ocultamos el overlay suavemente
+        $('#divOverlay').fadeOut(500,function(){
+          //eliminamos el overlay del DOM
+          $(this).remove();
+        });
+      });
+    });
+
+}
+
+  </script>
+
+  {% endblock %}

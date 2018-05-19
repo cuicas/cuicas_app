@@ -1,0 +1,5 @@
+{% autoescape false %}
+{% for row in data|sort %}
+circuito {{row.id_circuito}},{{row.nombre_municipio}},{{row.nombre_parroquia}},{{ row.apellidos_nombres }},{{ row.cedula }},{{ row.telefono_1 }}
+{% endfor %}
+{% endautoescape %}

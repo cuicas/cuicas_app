@@ -1,0 +1,24 @@
+id CV, Nombre CV, Mesas Instaladas, Cant. Mesas, Testigo, Miembros UBCH
+{% if encuesta is defined %}
+{% for municipio in municipios|sort %}
+{% set encontrado = "" %}
+{% set totalMiembros = 0 %}
+{% set totalTestigos = 0 %}
+{% set totalMesas = 0 %}
+{% for contactadosSufragio in datos|sort %}{% if contactadosSufragio.municipio == municipio.id %}{{ contactadosSufragio.id_cv }},{{ contactadosSufragio.cv }},{{ contactadosSufragio.mi }},{% if contactadosSufragio.mi != 'Ninguna' %}{{contactadosSufragio.cantMesas}},{% set mesas = contactadosSufragio.mi|split('-') %}{% set totalMesas = totalMesas + mesas|length %}{% endif %}{{ contactadosSufragio.testigos }}{% if contactadosSufragio.testigos != "no" %}{% set totalTestigos = totalTestigos + 1 %}{% endif %},{{ contactadosSufragio.miembros }}
+{% if contactadosSufragio.miembros != 'Ninguna' and contactadosSufragio.miembros != 'no'%}
+{% set miembros = contactadosSufragio.miembros|split(',') %}
+{% set totalMiembros = totalMiembros + miembros|length %}
+{% endif %}
+{% set encontrado = "si" %}
+{% endif %}
+{% endfor %}
+{% if encontrado == "" %}
+No existen datos registrados para el municipio {{municipio.nombreMunicipio}}
+{% endif %}
+{% if encontrado == "si" %}
+,Total de mesas instaladas - de testigos y miembros UBCH que asistieron,{{totalMesas}},,{{totalTestigos}},{{totalMiembros}}
+{% endif %}
+,
+{% endfor %}
+{% endif %}

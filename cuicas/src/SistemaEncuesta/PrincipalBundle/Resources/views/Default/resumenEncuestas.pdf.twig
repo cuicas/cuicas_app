@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+<dynamic-page>	
+<placeholders>
+    <footer>
+    {% set margen %}<page-number/>{% endset %}
+        <div height="20px" text-align= "right">
+            Página <page-number/>
+        </div>
+    </footer>
+</placeholders>
+<img src="{{ pdf_image('banner_sesm.jpeg') }}" width="700px" height="50px" />
+<div text-align= "right"> Usuario: {{ app.user.nombres }}</div>
+<br/>
+<div text-align= "right"> Fecha: {{ "now"|date("d/m/Y") }}</div>
+<br/>
+<div text-align= "right"> Hora: {{ "now"|date("H:i", "America/Caracas") }}</div>
+<br/><br/>
+		<stylesheet>            
+            <complex-attribute name="border" color="white" size="3px" />
+        </stylesheet>
+		<table>
+        <stylesheet>            
+            <complex-attribute name="border" color="white" size="3px" />
+        </stylesheet>
+			<tr padding="3px 10px" background.color="#f34235" font-size="13px" text-align="center" >
+				<td padding="3px 0px 8px 0px">Nombre</td>
+				<td padding="3px 0px 8px 0px">Descripción</td>
+				<td padding="3px 0px 8px 0px">Tipo de Encuesta</td>
+				<td padding="3px 0px 8px 0px">Total</td>
+				<td padding="3px 0px 8px 0px">Contactados</td>
+				
+			</tr>
+			{# recibo del controlador todos los proyectos para luego listarlos y cada uno le doy la opción para asignar los nombre de los campos
+			   como también cargar los datos y verlos en el mapa
+			#}
+			{% for encuestaP in encuesta %}
+				<tr>	
+					<td border.color="#f34235" background.color="#e6e7e8" padding="3px 0px 8px 2px">{{ encuestaP.nombreEncuesta }}</td>				
+					<td border.color="#f34235" background.color="#e6e7e8" padding="3px 0px 8px 2px">{{ encuestaP.descripcion }}</td>
+					{% set tipo = encuestaP.tipoEncuesta %}
+					{% if encuestaP.tipoEncuesta == 'general' %}
+						{% set tipo = "Socio-Política"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'estatal' %}
+						{% set tipo = "Sufragio - Por Estado"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'alcalde' %}
+						{% set tipo = "Sufragio - Por Municipio"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'circuito' %}
+						{% set tipo = "Sufragio - Por Circuito"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'fase1' %}
+						{% set tipo = "Sufragio - 1era Fase"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'fase2' %}
+						{% set tipo = "Sufragio - 2da Fase"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'comando' %}
+						{% set tipo = "Comando Campaña"  %}
+					{% endif %}
+					{% if encuestaP.tipoEncuesta == 'voto-lista' %}
+						{% set tipo = "Sufragio - Por Circuito - Voto Lista"  %}
+					{% endif %}
+					
+					<td border.color="#f34235" background.color="#e6e7e8" padding="3px 0px 8px 2px">{{ tipo }}</td>
+					<td border.color="#f34235" background.color="#e6e7e8" padding="3px 0px 8px 2px">{% if encuestaP.tipoEncuesta == 'general' %} 
+			    		{{encuestaP.contactados|length }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'comando' %} 
+			    		{{encuestaP.contactadoComando|length }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'fase1' or encuestaP.tipoEncuesta == 'fase2' %}
+			    		{{ encuestaP.totalContactadosSufragio }}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'circuito' or encuestaP.tipoEncuesta == 'alcalde' or encuestaP.tipoEncuesta == 'estatal'  %}
+			    		 	{{ encuestaP.totalContactadosSufragio }}
+			    	{% endif %}
+			    </td>
+			    <td border.color="#f34235" background.color="#e6e7e8" padding="3px 0px 8px 2px">
+			    	{% if encuestaP.tipoEncuesta == 'general' %} 
+			    		{{encuestaP.totalContactadosSi("si")}}
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'fase1' or encuestaP.tipoEncuesta == 'fase2' %}
+			    		{{ encuestaP.totalContactadosSufragio}}
+			    	{% endif %} 
+			    	{% if encuestaP.tipoEncuesta == 'circuito' or encuestaP.tipoEncuesta == 'alcalde' or encuestaP.tipoEncuesta == 'estatal'  %}
+			   			{{ encuestaP.totalContactadosSufragio }}   		
+			    	{% endif %}
+			    	{% if encuestaP.tipoEncuesta == 'comando' %} 
+			    		{{encuestaP.totalContactadoComandoSi("si") }}
+			    	{% endif %}
+			    </td>
+					
+				</tr>
+			{% endfor %}
+		</table> 
+</dynamic-page>
+</pdf>

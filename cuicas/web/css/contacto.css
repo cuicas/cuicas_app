@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/08/2014, 01:05:57 PM
+    Author     : Duke Victor
+*/
+
+#posicion{
+    position: absolute;
+    top:160px;
+    
+}
+/*propiedades y ubicacion del titulo en la pagina*/
+#titulo{
+    position: absolute;
+    top:-55px;
+    right: 5px;
+    text-shadow:#818181 3px 3px 3px;
+    text-transform: capitalize;
+}
+/* posicion de los titulos del contenido de la pagina contacto*/
+#posicion2{
+    position: relative;
+    top: 0;
+    right: -110px;
+}
+/* posicion de telefonos y contenido de la pagina contactos*/
+#posicion3{
+    position: relative;
+    top: -17PX;
+    right: -120px;
+}
+/*clase que genera la linea roja donde se ubica el titulo*/
+.hr { 
+  position: relative;
+  height: 3px;
+  width: 990px;
+  margin-left: 10px;
+  top:0px;
+
+}
+/* genera la linea que sub raya los sub titulos de la pagina contactos*/
+.hr2 { 
+  position: relative;
+  background-color: #818181; 
+  height: 2px;
+  width: 45%;
+  right: -110px;
+  top:-25px;
+
+}

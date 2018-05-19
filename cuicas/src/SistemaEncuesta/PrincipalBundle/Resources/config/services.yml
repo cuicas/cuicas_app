@@ -1,0 +1,7 @@
+parameters:
+#    sistema_Encuesta_principal.example.class: SistemaEncuesta\PrincipalBundle\Example
+
+services:
+#    sistema_Encuesta_principal.example:
+#        class: %sistema_Encuesta_principal.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

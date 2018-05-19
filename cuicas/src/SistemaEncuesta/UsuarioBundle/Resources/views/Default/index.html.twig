@@ -1,0 +1,24 @@
+{% extends '::frontend.html.twig' %} 
+{% block title %}Módulo de Usuario{% endblock %}
+{#} {% block id 'usuario' %}{#} 
+{% block cuerpo %}
+{% for mensaje in app.session.flashbag.get('info') %}
+	<p class="info">{{ mensaje }}</p>
+{% endfor %}
+{#{% trans %}#}Bienvenido{#{% endtrans %}#} <strong>{{app.user.nombres }}</strong>
+
+<br /><br />
+<a href="{{ path('sistema_Encuesta_principal_homepage') }}"><h1>Página principal</h1></a>
+
+{% if is_granted('ROLE_ADMIN') %}
+	{# ... #}
+	<a href="{{ path('usuario_registro') }}"><h1>Registrar Usuario</h1></a>
+	<a href="{{ path('usuario_totales') }}"><h1>Usuarios totales</h1></a>
+{% elseif is_granted('ROLE_USUARIO') %}
+	{# ... #}
+	{# <a href="{{ name != '' ? path('usuario_ver',{app.user.nombres}): path('usuario_ver',{'sin usuario'})}}"><h1>Ver Usuario</h1></a> #}
+	{# <a href="{{ path('usuario_ver'{app.user.nombres}) }}"><h1>Ver Usuario</h1></a> #}
+	<a href="{{ path('usuario_ver', { 'rol': app.user.nombres }) }}"><h1>Ver Usuario <strong>{{app.user.nombres }}</strong></h1></a>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos del Encuestado{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+
+{% block cuerpo %}
+
+  <form action="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}" method="post" onsubmit="return validar()" {{ form_enctype(formulario) }} novalidate >
+    {% for mensaje in app.session.flashbag.get('info') %}
+      <script language=Javascript>
+      $(document).ready(function(){
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('{{ mensaje }}'),
+          buttons: [{
+            id: 'btn-ok',   
+            //icon: 'glyphicon glyphicon-check',       
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){    
+              dialogRef.close();
+            }
+          }]
+        })
+      });
+      </script>
+    {% endfor %}
+    <div class="col-xs-12 col-md-4 col-md-offset-2">
+      <div class="row">
+        <div class="col-xs-13">
+          <table class="table1 table-striped table-bordered" id="mytable">
+            <thead>
+              <tr>
+                <td><strong >Municipio</strong></td>
+                <td>{{datos.municipio.nombre}}{#{{ municipios }}#}</td>
+              </tr> 
+              <tr>
+                <td><strong>Parroquia</strong></td>
+                <td>{{datos.parroquia.nombre}}{#{% if parroquia is not empty %} {{ parroquia.nombreParroquia }}{% else %}Todas las parroquias{% endif %} #}</td>
+              </tr> 
+              <tr>
+                <td><strong>Centro</strong></td>
+                <td>{{ cv.nombreCentro }}</td>
+              </tr>
+              <tr>
+                <td ><strong>Coordinador de UBCH</strong></td> 
+                <td ><div class="editarNombre" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.apellidos_nombres}} (CI.{{datos.coordinador.cedula}})</div></td>
+              </tr>
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.telefono_1|trim}} 
+                  {% if datos.coordinador.telefono_2 is defined %}
+                    {% if datos.coordinador.telefono_2 == "''" %} 
+                    {% else %}{{datos.coordinador.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+                <td><strong>Responsable Log&iacute;stica</strong></td>
+                <td><div class="editarNombre" id="{{datos.logistica.id_ubch}}">{{datos.logistica.apellidos_nombres}} (CI.{{datos.logistica.cedula}})</div></td>
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.logistica.id_ubch}}">{{datos.logistica.telefono_1|trim}} 
+                  {% if datos.logistica.telefono_2 is defined %} 
+                    {% if datos.logistica.telefono_2 == "''" %} 
+                    {% else %}{{datos.logistica.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>   
+              <tr>
+                <td><strong>Responsable Movilizaci&oacute;n</strong></td>
+                <td><div class="editarNombre" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.apellidos_nombres}} (CI.{{datos.movilizacion.cedula}})</div></td>
+              </tr> 
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.telefono_1|trim}} 
+                  {% if datos.movilizacion.telefono_2 is defined %}
+                    {% if datos.movilizacion.telefono_2 == "''" %} 
+                    {% else %}{{datos.movilizacion.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+                <td><strong>Responsable Testigos</strong></td>
+                <td><div class="editarNombre" id="{{datos.testigo.id_ubch}}">{{datos.testigo.apellidos_nombres}} (CI.{{datos.testigo.cedula}})</div></td>
+              </tr>  
+              <tr>
+                <td><strong>Tel&eacute;fonos</strong></td>
+                <td><div class="editarTelf" id="{{datos.testigo.id_ubch}}">{{datos.testigo.telefono_1|trim}} 
+                  {% if datos.testigo.telefono_2 is defined %} 
+                    {% if datos.testigo.telefono_2 == "''" %} 
+                    {% else %}{{datos.testigo.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+            </thead> 
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+        <div class="row">
+          <div class="col-xs-13">
+            <strong>¿Cuáles mesas de votaci&oacute;n est&aacute;n instaladas?</strong>
+            {% set mesas = cv.cantidadMesas %}
+              <div>{% for mesa in 1..mesas %}
+                {% set checked = "" %}
+                {% for contactado in contactados %}
+                  {% if contactado.numeroMesa == mesa and contactado.respuesta == "si" %}
+                    {% set checked = "checked disabled='disabled'" %}
+                  {% endif %}
+                {% endfor %}
+                Mesa {{ loop.index }}&nbsp;<input for="{{loop.index}}" type="checkbox" name="form[mesa{{ loop.index }}]" id="{{loop.index}}" value="si" {{checked}} >&nbsp;
+            {% endfor %}</div>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-xs-13">
+            
+            <div><strong>¿Cuantos testigos asistieron?</strong>
+            </div>
+            <div class="col-xs-3">
+              <div>
+                <select id="form_municipio" name="form[testigos]" class="form-control input-sm validate[required]">
+                  <option value="0" {% if testigos is not empty %}{% if  testigos.respuesta == 0 %}selected{% endif %}{% endif %}>0</option>
+                  <option value="1" {% if testigos is not empty %}{% if  testigos.respuesta == 1 %}selected{% endif %}{% endif %}>1</option>
+                  <option value="2" {% if testigos is not empty %}{% if  testigos.respuesta == 2 %}selected{% endif %}{% endif %}>2</option>
+                  <option value="3" {% if testigos is not empty %}{% if  testigos.respuesta == 3 %}selected{% endif %}{% endif %}>3</option>
+                  <option value="4" {% if testigos is not empty %}{% if  testigos.respuesta == 4 %}selected{% endif %}{% endif %}>4</option>
+                  <option value="5" {% if testigos is not empty %}{% if  testigos.respuesta == 5 %}selected{% endif %}{% endif %}>5</option>
+                  <option value="6" {% if testigos is not empty %}{% if  testigos.respuesta == 6 %}selected{% endif %}{% endif %}>6</option>
+                  <option value="7" {% if testigos is not empty %}{% if  testigos.respuesta == 7 %}selected{% endif %}{% endif %}>7</option>
+                  <option value="8" {% if testigos is not empty %}{% if  testigos.respuesta == 8 %}selected{% endif %}{% endif %}>8</option>
+                  <option value="9" {% if testigos is not empty %}{% if  testigos.respuesta == 9 %}selected{% endif %}{% endif %}>9</option>
+                  <option value="10" {% if testigos is not empty %}{% if  testigos.respuesta == 10 %}selected{% endif %}{% endif %}>10</option>
+                  <option value="11" {% if testigos is not empty %}{% if  testigos.respuesta == 11 %}selected{% endif %}{% endif %}>11</option>
+                  <option value="12" {% if testigos is not empty %}{% if  testigos.respuesta == 12 %}selected{% endif %}{% endif %}>12</option>
+                  <option value="13" {% if testigos is not empty %}{% if  testigos.respuesta == 13 %}selected{% endif %}{% endif %}>13</option>
+                  <option value="14" {% if testigos is not empty %}{% if  testigos.respuesta == 14 %}selected{% endif %}{% endif %}>14</option>
+                  <option value="15" {% if testigos is not empty %}{% if  testigos.respuesta == 15 %}selected{% endif %}{% endif %}>15</option>
+                  <option value="16" {% if testigos is not empty %}{% if  testigos.respuesta == 16 %}selected{% endif %}{% endif %}>16</option>
+                  <option value="17" {% if testigos is not empty %}{% if  testigos.respuesta == 17 %}selected{% endif %}{% endif %}>17</option>
+                  <option value="18" {% if testigos is not empty %}{% if  testigos.respuesta == 18 %}selected{% endif %}{% endif %}>18</option>
+                  <option value="19" {% if testigos is not empty %}{% if  testigos.respuesta == 19 %}selected{% endif %}{% endif %}>19</option>
+                  <option value="20" {% if testigos is not empty %}{% if  testigos.respuesta == 20 %}selected{% endif %}{% endif %}>20</option>
+                  <option value="21" {% if testigos is not empty %}{% if  testigos.respuesta == 21 %}selected{% endif %}{% endif %}>21</option>
+                  <option value="22" {% if testigos is not empty %}{% if  testigos.respuesta == 22 %}selected{% endif %}{% endif %}>22</option>
+                  <option value="23" {% if testigos is not empty %}{% if  testigos.respuesta == 23 %}selected{% endif %}{% endif %}>23</option>
+                  <option value="24" {% if testigos is not empty %}{% if  testigos.respuesta == 24 %}selected{% endif %}{% endif %}>24</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-xs-13">
+    
+            <div>
+              <strong>¿UBCH presente?</strong>
+            </div>
+   
+            <div>Si&nbsp;&nbsp;<input type="radio" class="validate[required]" name="form[miembros]" value="si" {% if miembros is not empty %}{% if  miembros.respuesta == "si" %}checked="checked"{% endif %}{% endif %}>&nbsp;&nbsp; No&nbsp;&nbsp;<input type="radio" name="form[miembros]" value="no" {% if miembros  is not empty %}{% if miembros.respuesta == "no" %}checked="checked"{% endif %}{% endif %}></div>
+    
+          </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12">
+    <div class="row">
+      <div class="col-md-13">
+        <center><input class="fueraoverflow btn btn-default" type="submit" value="Guardar" name="form[boton_guardar]" /> <input class="fueraoverflow btn btn-default" type="submit" id="otro" value="Buscar Otro" name="form[boton_buscar]" /> <a href="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}"> <input class="fueraoverflow btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]"/></a></center>
+      </div>
+    </div>
+    </div> 
+  </form>
+
+  <script>
+
+    $(document).ready(function(){ 
+
+      $( "#mytable tr:even" ).css( "background-color", "#d0d2d3" ); 
+
+      $('#otro').on( "click", function() {
+        $('*[type="radio"]').removeClass( "validate[required]" )
+      });
+
+      /* campo editables */
+      $('.editarNombre').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         //indicator : "Guardando...",
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'nombre',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+
+      /* campo editables telefono*/
+      $('.editarTelf').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'telefono',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+
+    });
+  </script>
+{% endblock %}
+
+

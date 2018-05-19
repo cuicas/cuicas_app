@@ -1,0 +1,103 @@
+{# {% extends '::frontend.html.twig' %} #}
+{% block title %}{% endblock %}
+{% block titulo %}<div style="font-family: sans-serif;">Reporte: {{encuesta.nombreEncuesta|upper}}</div>
+{% set Fecha = "Now"|date("d-m-Y", "America/Caracas") %}
+{% set Hora = "Now"|date("h:i:s", "America/Caracas") %}
+<div style="font-family: sans-serif;">Fecha: {{Fecha}}
+</div>
+<div style="font-family: sans-serif;">Hora: {{Hora}}</div>{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('css/marco.css') }}" rel="stylesheet" type="text/css" />  
+  <link href="{{ asset('css/ventanas-modales.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/tooltip.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+  
+{% endblock %}
+{% block cuerpo %}
+<br><br><br>
+<center>
+  {# ESTE IF ES PARA MOSTRAR LOS DATOS DEL PROYECTO EN EL MAPA#}
+  {% if encuesta is defined %}
+      <table class="table stacktable table-hover" border="1">
+        {% for circuito in circuitos|sort %}
+            {% set votosPsuvTotalCircuito = 0 %}
+            {% set votosMudTotalCircuito = 0 %}
+            {% set votosOtrosTotalCircuito = 0 %}
+        <thead>       
+          <th colspan="1">Circuito: {{circuito}}</th>
+        </thead>        
+          {% for municipio in municipios %}
+            {% if municipio.circuito.id == circuito.id %}
+          <thead> 
+            <tr>
+              <th>Municipio: {{municipio.nombreMunicipio}}</th><th align="center">PSUV / PSUV-GPP</th><th align="center">MUD</th><th align="center">OTRO</th>
+            </tr>   
+          </thead> 
+            {% set votosPsuvTotal = 0 %}
+            {% set votosMudTotal = 0 %}
+            {% set votosOtrosTotal = 0 %}
+            {% for parroquia in parroquias if parroquia.municipio.id == municipio.id %}
+            <tr>
+              {% set votosPsuv = 0 %}
+              {% set votosMud = 0 %}
+              {% set votosOtros = 0 %}
+              {% set tipoIncidenciasCv = "" %}
+              {% set incidenciasCv = "" %}
+                {% for cvCandidato in cvCandidatos %}
+                  {% if parroquia.id == cvCandidato.idParroquia %}
+                    {% if cvCandidato.candidato.partido == "psuv" or cvCandidato.candidato.partido == "psuv-gpp"%}
+                      {% set votosPsuv = votosPsuv + cvCandidato.votos %}
+                    {% endif %}
+                    {% if cvCandidato.candidato.partido == "mud" %}
+                      {% set votosMud = votosMud + cvCandidato.votos %}
+                    {% endif %}
+                    {% if cvCandidato.candidato.partido == "otros" %}
+                      {% set votosOtros = votosOtros + cvCandidato.votos %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %} 
+              <td>{{parroquia.nombreParroquia}}</td><td>{{votosPsuv}}</td><td>{{votosMud}}</td><td>{{votosOtros}}</td>
+            </tr>
+            {% set votosPsuvTotal = votosPsuv + votosPsuvTotal %}
+            {% set votosMudTotal = votosMud + votosMudTotal %}
+            {% set votosOtrosTotal = votosOtros + votosOtrosTotal %}
+            {% set votosPsuvTotalCircuito = votosPsuv + votosPsuvTotalCircuito %}
+            {% set votosMudTotalCircuito = votosMud + votosMudTotalCircuito %}
+            {% set votosOtrosTotalCircuito = votosOtros + votosOtrosTotalCircuito %}
+            {% endfor %}
+            <tr>
+              <td><strong>TOTAL</strong></td><td><strong>{{votosPsuvTotal}}</strong></td><td><strong>{{votosMudTotal}}</strong></td><td><strong>{{votosOtrosTotal}}</strong></td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+          <tr>
+              <td><strong>TOTAL POR CIRCUITO</strong></td><td><strong>{{votosPsuvTotalCircuito}}</strong></td><td><strong>{{votosMudTotalCircuito}}</strong></td><td><strong>{{votosOtrosTotalCircuito}}</strong></td>
+            </tr>
+        {% endfor %}    
+      </table>
+  {% endif %}
+</center>
+<center><input type="button" class="btn btn-default" onclick="javascript:window.print();" name="Imprimir" value="Imprimir"></center>
+{#<a href="{{path('encuestas_resumen') }}" class="clsVentanaCerrar">Cerrar</a> 
+<input type="button" onclick="javascript:window.close(); ">#}
+<script>
+$(document).ready(function(){
+  $('.clsVentanaCerrar').live('click',function(eEvento){ alert('o');
+  //prevenimos el comportamiento normal del enlace
+  eEvento.preventDefault();
+  //buscamos la ventana padre (del boton "cerrar")
+  var $objVentana=$($(this).parents().get(1));
+  //cerramos la ventana suavemente
+    $objVentana.fadeOut(300,function(){
+    //eliminamos la ventana del DOM
+      $(this).remove();
+      //ocultamos el overlay suavemente
+      $('#divOverlay').fadeOut(500,function(){
+      //eliminamos el overlay del DOM
+        $(this).remove();
+      });
+    });
+  });
+}
+</script>
+{% endblock %}

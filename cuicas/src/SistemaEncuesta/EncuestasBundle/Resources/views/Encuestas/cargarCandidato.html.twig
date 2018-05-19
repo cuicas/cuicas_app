@@ -1,0 +1,167 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Candidato{% endblock %}
+{% block titulo %} Candidato de {{encuesta.nombreEncuesta}}{% endblock %}
+{% block cuerpo %}
+
+{#<a href="{{ path('sistema_Encuesta_principal_homepage') }}" id="posbotregresar" class="myButton"></a>##}
+
+<form action="{{ path('encuestas_cargar_candidato',{'id_encuesta':encuesta.id}) }}" method="post" novalidate {{ form_enctype(formulario) }} >
+	{% for mensaje in app.session.flashbag.get('info') %}
+		<script language=Javascript>
+		$(document).ready(function(){
+			$(this).tab('show');
+			BootstrapDialog.show({
+				title: 'Mensaje',
+				message: ('{{ mensaje }}'),
+				buttons: [{
+					id: 'btn-ok',   
+					//icon: 'glyphicon glyphicon-check',       
+					label: 'Aceptar',
+					cssClass: 'btn btn-default',
+					autospin: false,
+					action: function(dialogRef){    
+						dialogRef.close();
+					}
+				}]
+			})
+		});
+		</script>
+	{% endfor %}
+	<div class="col-xs-12 col-md-4 col-md-offset-2">
+		<div class="row">
+			<div class="col-xs-12">
+				<strong><label>Apellido(s) y Nombre(s)</label></strong>
+				{{ form_widget(formulario.apellidoNombre) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<strong><label id="label_partido">Partido politico</label></strong>
+				{{ form_widget(formulario.partido) }}
+			</div>
+		</div>
+		<div class="row">
+			<div id="municipios_alcalde" style="display: {% if encuesta.tipoEncuesta == 'alcalde' %}block;{% else %}none;{% endif %}">
+				<div class="col-xs-12">
+					<strong><label for="form_municipio" id='label_form_municipio_candidato'>Municipio</label></strong>
+					<select id="form_municipio_candidato" name="form[municipios]" {% if encuesta.tipoEncuesta == 'alcalde' %}required="required" class="form-control validate[requiredSelect] input-sm"{% endif %}/>
+				<option value="">Seleccionar</option>
+				{# recibo todos los municipios del controlador para listaerlo #}
+					{% for municipio in municipios %}
+					<option value="{{ municipio.getId() }}">{{ municipio.getNombreMunicipio() }}</option>
+					{% endfor %}
+				</select>				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			{% if encuesta.tipoEncuesta == 'alcalde' %}
+				<div class="col-xs-12 col-md-12 divupload" id = "foto">
+					<strong><label>Fotografía</label></strong>
+					<div class="row">
+									<div class="col-md-7">
+							<input type="text" id="inputfile" class="form-control validate[required]"  />
+						</div>
+							<div class="col-md-5 text-right">
+								<div class="upload">
+									<p>Buscar</p>
+									{{ form_widget(formulario.foto) }}
+								</div>
+							</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="row">
+			{% if encuesta.tipoEncuesta == 'circuito' %}
+				<div class="col-xs-12 col-md-12 divupload" id = "foto">
+					<strong><label>Fotografía</label></strong>
+					<div class="row">
+						<div class="col-md-7">
+							<input type="text" id="inputfile" class="form-control validate[required]"  />
+						</div>
+							<div class="col-md-5 text-right">
+								<div class="upload">
+									<p>Buscar</p>
+									{{ form_widget(formulario.foto) }}
+								</div>
+							</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="row">
+			{% if encuesta.tipoEncuesta == 'estatal' or encuesta.tipoEncuesta == 'voto-lista'  %}
+			<div class="col-xs-12 col-md-12" id = "foto_estatal">
+					<strong><label>Fotografía</label></strong>
+					<div class="row">
+						<div class="col-md-7">
+							<input type="text" id="inputfile" class="form-control validate[required]"  />
+						</div>
+							<div class="col-md-5 text-right">
+								<div class="upload">
+									<p>Buscar</p>
+									{{ form_widget(formulario.foto) }}
+								</div>
+							</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="row">	
+			<div class="col-md-12" id="circuitos" style="display:{% if encuesta.tipoEncuesta == 'circuito' %}block;{% else %}none;{% endif %}">
+				<strong><label>Seleccionar el circuito</label></strong>
+				<div>Circuito 1 <input type="radio" class="validate[minCheckbox[1]]" name="form[circuito]" value="1">
+				&nbsp;&nbsp;&nbsp;&nbsp;Circuito 2 <input type="radio" class="validate[minCheckbox[1]]" name="form[circuito]" value="2"></div>
+				<br />
+				<div>Circuito 3 <input type="radio" class="validate[minCheckbox[1]]" name="form[circuito]" value="3">
+				&nbsp;&nbsp;&nbsp;&nbsp;Circuito 4 <input type="radio" class="validate[minCheckbox[1]]" name="form[circuito]" value="4"></div>
+			</div>
+		</div>
+	</div>
+
+		<div class="col-xs-12 col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<center><input class="fueraoverflow1 btn btn-default" type="submit" value="Guardar" name="form[Guardar]" /> <a href="{{ path('encuestas_totales', {"tipoEncuesta":"general"}) }}"><input class="fueraoverflow1 btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+			</div>
+		</div>
+		</div>
+		
+</form>
+<script>
+	$(document).ready(function() { 
+		
+
+		$('#SistemaEncuesta_candidatostype_tipo_eleccion').change(function(){
+			if($(this).val() == 'alcalde'){ 
+				$('#municipios_alcalde').css('display','block');
+				$('input:radio[name="form[circuito]"]').attr("checked",false);
+				$('#circuitos').css('display','none');
+				$('#estatal').css('display','none');
+			}else{
+				if($(this).val() == 'circuito'){ //alert('hola '+$(this).val());
+					$('#circuitos').css('display','block');
+					$('#municipios_alcalde').css('display','none');
+					$('#estatal').css('display','none');
+				}else{
+					$('#circuitos').css('display','none');
+					$('#municipios_alcalde').css('display','none');
+					$('#estatal').css('display','block');
+					$('input:radio[name="form[circuito]"]').attr("checked",false);
+				}
+			}
+		});
+	});
+	
+	$("input:file").change(function(){
+    $("#inputfile").prop("disabled",true);
+    $("#inputfile").val($("input:file").val());
+  });
+</script>
+{% endblock %}
+
+

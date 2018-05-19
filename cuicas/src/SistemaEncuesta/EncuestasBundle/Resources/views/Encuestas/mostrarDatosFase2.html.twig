@@ -1,0 +1,271 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Datos del Encuestado{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+{% block cuerpo %}
+  {#<a href="{{ path('sistema_Encuesta_principal_homepage') }}" id="posbotregresar" class="myButton"></a>#}
+  <form action="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}" method="post" onsubmit="return validar()" {{ form_enctype(formulario) }} novalidate>	
+    {% for mensaje in app.session.flashbag.get('info') %}
+      <script language=Javascript>
+      $(document).ready(function(){
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('{{ mensaje }}'),
+          buttons: [{
+            id: 'btn-ok',
+            //icon: 'glyphicon glyphicon-check',       
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){
+              dialogRef.close();
+            }
+          }]
+        })
+      });
+      </script>
+    {% endfor %}
+  	{{ form_errors(formulario) }}
+    <div class="col-xs-13 col-md-3 col-md-offset-2">
+      <div class="row">
+        <div class="col-xs-13">
+          <table class="table1 table-striped table-bordered" id="mytable1" style="margin-left:-30px;">
+            <thead>
+              <tr>
+              	<td ><strong>Municipio</strong></td>
+              	<td>{{datos.municipio.nombre}}{#{{ municipios }}#}</td>
+              </tr> 
+            	<tr>
+              	<td><strong>Parroquia</strong></td>
+              	<td>{{datos.parroquia.nombre}}{#{{ parroquia.nombreParroquia }}#}</td>
+              </tr>
+            	<tr>
+              	<td><strong>Centro</strong></td>
+              	<td>{{ cv.nombreCentro }}</td>
+            	</tr>
+            	<tr>
+              	<td ><strong>Coordinador de UBCH</strong></td>
+              	<td ><div class="editarNombre" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.apellidos_nombres}} (CI.{{datos.coordinador.cedula}})</div></td>
+              </tr>
+              <tr>
+              	<td><strong>Tel&eacute;fonos</strong></td>
+              	<td><div class="editarTelf" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.telefono_1|trim}}
+                  {% if datos.coordinador.telefono_2 is defined %}
+                    {% if datos.coordinador.telefono_2 == "''" %}
+                    {% else %}{{datos.coordinador.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+              	<td><strong>Responsable Log&iacute;stica</strong></td>
+              	<td><div class="editarNombre" id="{{datos.logistica.id_ubch}}">{{datos.logistica.apellidos_nombres}} (CI.{{datos.logistica.cedula}})</div></td>
+              </tr>
+              <tr>
+              	<td><strong>Tel&eacute;fonos</strong></td>
+              	<td>
+                  <div class="editarTelf" id="{{datos.logistica.id_ubch}}">{{datos.logistica.telefono_1|trim}}
+                    {% if datos.logistica.telefono_2 is defined %}
+                      {% if datos.logistica.telefono_2 == "''" %}
+                      {% else %}{{datos.logistica.telefono_2|trim}}
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+              	<td><strong>Responsable Movilizaci&oacute;n</strong></td>
+              	<td><div class="editarNombre" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.apellidos_nombres}} (CI.{{datos.movilizacion.cedula}})</div></td>
+              </tr>
+              <tr>
+              	<td><strong>Tel&eacute;fonos</strong></td>
+              	<td><div class="editarTelf" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.telefono_1|trim}} 
+                  {% if datos.movilizacion.telefono_2 is defined %}
+                    {% if datos.movilizacion.telefono_2 == "''" %}
+                    {% else %}{{datos.movilizacion.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+              	<td><strong>Responsable Testigos</strong></td>
+              	<td><div class="editarNombre" id="{{datos.testigo.id_ubch}}">{{datos.testigo.apellidos_nombres}} (CI.{{datos.testigo.cedula}})</div></td>
+              </tr>
+              <tr>
+              	<td><strong>Tel&eacute;fonos</strong></td>
+              	<td><div class="editarTelf" id="{{datos.testigo.id_ubch}}">{{datos.testigo.telefono_1|trim}}
+                  {% if datos.testigo.telefono_2 is defined %}
+                    {% if datos.testigo.telefono_2 == "''" %}
+                    {% else %}{{datos.testigo.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center"><a href="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuestaFase2.id}) }}?totalizacion=totalizacion" target="_blank"><strong><input class="btn-default" type="button" value="Totalizaci&oacute;n" name="form[boton_buscar]" {% if encuestaFase2.id == 0 %}onclick="javascript:$(document).ready(function(){$(this).tab('show'); BootstrapDialog.show({title: 'ERROR',message: ('No existe una encuesta de sufragio fase 3 configurada'),buttons: [{id: 'btn-ok',label: 'Aceptar', cssClass: 'btn btn-default', autospin: false, action: function(dialogRef){dialogRef.close();}}]})}); event.preventDefault();"{% endif %}/></strong></a></td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-1">
+      <div class="row">
+        <div class="col-xs-12">
+         	<div style="width:490px; height:360px; overflow: auto; position:relative; ">
+            <table class="table1" id="mytable" border="0">
+            	<thead>
+            		<tr>
+            			<td colspan="0" bgcolor="#d0d2d3" width="120"><strong> Finalizaci&oacute;n <input type="checkbox" id='form_f' name="form[apertura]" value="si" onclick="mostrar();"> </strong></td>
+                  <td colspan="0" align="center"><div class="primero"><strong>¿Apertura?</strong></div></td>
+                  <td colspan="0" align="center"><div class="primero"><strong>¿Testigos?</strong></div></td>
+                  <td colspan="0" align="center"><div class="finalizacion" style="display:none;"><strong>¿Cierre?</strong></div></td>
+                  <td colspan="2" align="center"><div class="finalizacion" style="display:none;"><strong>¿Participaci&oacute;n?</strong></div></td>
+            		</tr>
+              	{% set contactados = cv.getContactadosSufragioEncuesta(encuesta) %}
+            		{% for cant_mesas in 1..cv.cantidadMesas %}
+                  {% set no1, no2, no3, no4, no5 = "","","","","" %}
+               		<tr>
+                    <td colspan="0">
+                      <strong>&nbsp;Mesa {{ loop.index }}</strong>
+                 		</td>
+                 		<td align="center">
+                 			<div class="primero">
+                        Si&nbsp;<input type="radio" id="apertura_{{ loop.index }}" name="form[apertura_{{ loop.index }}]" value="si" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(1,cant_mesas) == "si" %}checked{% endif %}{% if gg.getRepuestaEncuesta(1,cant_mesas) == "no" %}{% set no1 = "checked" %}{% endif %}{% endfor %} class="validate[required]">&nbsp;&nbsp;&nbsp;No&nbsp;<input id="apertura_{{ loop.index }}" type="radio" name="form[apertura_{{ loop.index }}]" value="no" {{no1}} class="validate[required]" >
+            	        </div>
+                  	</td>
+              		  <td align="center">
+                      <div class="primero">
+                        <select id="testigos_{{ loop.index }}" name="form[testigos_{{ loop.index }}]" class="form-control validate[required]">
+                          <option value="0" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(2,cant_mesas) == 0 %}selected{% endif %}{% endfor %}>0</option>
+                          <option value="1" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(2,cant_mesas) == 1 %}selected{% endif %}{% endfor %}>1</option>
+                          <option value="2" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(2,cant_mesas) == 2 %}selected{% endif %}{% endfor %}>2</option>
+                          <option value="3" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(2,cant_mesas) == 3 %}selected{% endif %}{% endfor %}>3</option>
+                        </select>
+            	        </div>
+                    </td>                    
+                    <td align="center">
+                      <div class="finalizacion" style="display:none;">
+                      Si <input type="radio" name="form[cierre_{{ loop.index }}]" value="si" {% for gg in contactados %}{% if gg.getRepuestaEncuesta(5,cant_mesas) == "si" %}checked{% endif %}{% if gg.getRepuestaEncuesta(5,cant_mesas) == "no" %}{% set no5 = "checked" %}{% endif %}{% endfor %}>
+                      &nbsp;&nbsp;&nbsp;No <input type="radio" name="form[cierre_{{ loop.index }}]" value="no" {{no5}}>
+                      </div>
+                    </td>
+                    <td align="center">
+                      {% if cant_mesas == 1 %}
+                        <div class="finalizacion" style="display:none;">Chavistas
+                          <input style="width:70px;" class="form-control" type="number"  id="o_participacion_{{ loop.index }}" min="0" name="form[o_participacion_{{ loop.index }}]" value="{% for gg in contactados %}{% if gg.getRepuestaEncuesta(3,cant_mesas) is defined %}{{gg.getRepuestaEncuesta(3,cant_mesas)|trim}}{% endif %}{% endfor %}">
+                        </div>
+                      {% else %}
+                        <div class="finalizacion" style="display:none;">
+                          <input style="width:70px;" class="form-control" type="hidden"  id="o_participacion_{{ loop.index }}" min="0" name="form[o_participacion_{{ loop.index }}]" value="0">
+                        </div>
+                      {% endif %}
+                    </td>
+                    <td align="center">
+                      {% if cant_mesas == 1 %}
+                        <div class="finalizacion" style="display:none;">Opositores
+                          <input style="width:70px;"  class="form-control" type="number" id="op_participacion_{{ loop.index }}" min="0" name="form[op_participacion_{{ loop.index }}]" value="{% for gg in contactados %}{% if gg.getRepuestaEncuesta(4,cant_mesas) is defined %}{{gg.getRepuestaEncuesta(4,cant_mesas) }}{% endif %}{% endfor %}">
+                        </div>
+                      {% else %}
+                         <div class="finalizacion" style="display:none;">
+                          <input style="width:70px;"  class="form-control" type="hidden" id="op_participacion_{{ loop.index }}" min="0" name="form[op_participacion_{{ loop.index }}]" value="0">
+                        </div>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                <tr class="incidencias">
+                  <td colspan="6"><br><strong for="form_tipo_incidencia" id='label_form_tipo_incidencia'>Tipo de incidencia</strong></td>
+                 <tr>
+                   <td colspan="2"><select id="form_tipo_incidencia" name="form[tipo_incidencia]" class="form-control input-sm validate[required]">
+                    <option value="">Seleccionar</option>
+                    <option value="ninguna" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "ninguna" %}selected="selected"{% endif %}{% endif %}>Ninguna</option>
+                    <option value="logistica" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "logistica" %}selected="selected"{% endif %}{% endif %}>Log&iacute;stica</option>
+                    <option value="seguridad" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "seguridad" %}selected="selected"{% endif %}{% endif %}>Seguridad/Orden P&uacute;blico</option>
+                    <option value="energia" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "energia" %}selected="selected"{% endif %}{% endif %}>Energia/Servicios</option>
+                    <option value="meteorologicos" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "meteorologicos" %}selected="selected"{% endif %}{% endif %}>Meteorol&oacute;gicos</option>
+                    <option value="cne" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "cne" %}selected="selected"{% endif %}{% endif %}>CNE</option>
+                    <option value="otras" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "otras" %}selected="selected"{% endif %}{% endif %}>Otras</option>
+                    <option value="resuelta" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "resuelta" %}selected="selected"{% endif %}{% endif %}>Resuelta</option>
+                  </select>
+                  </td>
+                </tr>
+            		<tr class="incidencias">
+              		<td colspan="9">
+                		<strong>Incidencias</strong>
+             			</td>
+            		</tr>
+            		<tr class="incidencias">
+              		<td colspan="9"><textarea style="width:450px; height:100px; resize:none;" id="label2p" class="textarea form-control" name="form[incidencias]" maxlength="255">{% if incidencias is not empty %}{{incidencias.getDescripcion}}{% endif %}</textarea></td>
+              	</tr>
+              </thead>   
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-xs-12 col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <center></a><input class="fueraoverflow2 btn btn-default" type="submit" value="Guardar" name="form[boton_guardar_fase2]" />{% if buscarTodo == "todos" %} <input class="fueraoverflow2 btn btn-default" type="submit" id="otro" value="Buscar Otro" name="form[boton_buscar]" />{% endif %} <a href="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}"><input class="fueraoverflow2 btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a></center>
+        </div>
+      </div>
+    </div> 
+
+  </form>
+  <script>
+
+    $(document).ready(function(){ 
+
+      $( "#mytable1 tr:even" ).css( "background-color", "#d0d2d3" ); 
+
+      $('#otro').on( "click", function() {
+        $('*[type="radio"]').removeClass( "validate[required]" );
+        $('#form_tipo_incidencia').removeClass( "validate[required]" );
+      });
+      
+      $( "#mytable tr:odd" ).css( "background-color", "#d0d2d3" );
+      $('#mytable tr').each(function() {
+        if($(this).attr("class") == "incidencias"){
+          $(this).css( "background-color", "" );
+          
+        }
+      });
+
+      $('#form_f').click( function(){ 
+        if(this.checked == true){
+          $(".primero").css("display","none")
+          $(".finalizacion").css("display","block");
+
+        }
+        else{ 
+          $(".primero").css("display","block")
+          $(".finalizacion").css("display","none");
+        }
+      });
+      
+      /* campo editables */
+      $('.editarNombre').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         //indicator : "Guardando...",
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",         
+         tooltip   : 'Doble clic para editar...',
+         id   : 'nombre',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+
+      /* campo editables telefono*/
+      $('.editarTelf').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         indicator : 'Guardando...',
+         tooltip   : 'Doble clic para editar...',
+         id   : 'telefono',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+    });
+  </script>
+{% endblock %}

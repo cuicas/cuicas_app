@@ -1,0 +1,5 @@
+SistemaEncuesta\UsuarioBundle\Entity\Usuario:
+
+properties:
+  name:
+    - NotBlank: { message: "author.name.not_blank" }

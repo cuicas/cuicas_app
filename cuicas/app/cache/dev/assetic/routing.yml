@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: /var/www/html/sistema_2017/cuicas_2018/app/config/routing_dev.yml

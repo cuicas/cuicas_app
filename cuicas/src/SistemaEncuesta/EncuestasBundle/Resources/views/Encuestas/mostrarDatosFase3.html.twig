@@ -1,0 +1,258 @@
+{% extends '::frontend.html.twig' %} 
+{% block title %}Datos del Encuestado{% endblock %}
+{% block titulo %} {{encuesta.nombreEncuesta}} {% endblock %}
+
+{% block cuerpo %}
+
+  <form action="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}" class="formgrande"  method="post" onsubmit="return validar()" {{ form_enctype(formulario) }} >
+    {% for mensaje in app.session.flashbag.get('info') %}
+      <script language=Javascript>
+      $(document).ready(function(){
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('{{ mensaje }}'),
+          buttons: [{
+            id: 'btn-ok',   
+            //icon: 'glyphicon glyphicon-check',       
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){    
+              dialogRef.close();
+            }
+          }]
+        })
+      });
+      </script>
+    {% endfor %}
+      
+    {{ form_errors(formulario) }}
+    <div class="col-xs-13 col-md-4 col-md-offset-2">
+      <div class="row">
+        <div class="col-xs-13">
+          <table class="table1 table-striped table-bordered" id="mytable">
+            <thead>
+              <tr>
+                <td><strong>Municipio</strong></td>
+                <td>{{datos.municipio.nombre}}{#{{ municipios }}#}</td>
+              </tr> 
+              <tr>
+                <td><strong>Parroquia</strong></td>
+                <td>{{datos.parroquia.nombre}}{#{{ parroquia.nombreParroquia }}#}</td>
+              </tr> 
+              <tr>
+                <td><strong>Centro</strong></td>
+                <td>{{ cv.nombreCentro }}</td>
+              </tr>
+              <tr>        
+                <td ><strong>Coordinador de UBCH</strong></td> 
+                <td ><div class="editarNombre" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.apellidos_nombres}} (CI.{{datos.coordinador.cedula}})</div></td>
+              </tr>
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.coordinador.id_ubch}}">{{datos.coordinador.telefono_1|trim}} 
+                  {% if datos.coordinador.telefono_2 is defined %}
+                    {% if datos.coordinador.telefono_2 == "''" %}
+                    {% else %}{{datos.coordinador.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+              <tr>
+                <td><strong>Responsable Log&iacute;stica</strong></td>
+              <td><div class="editarNombre" id="{{datos.logistica.id_ubch}}">{{datos.logistica.apellidos_nombres}} (CI.{{datos.logistica.cedula}})</div></td>
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.logistica.id_ubch}}">{{datos.logistica.telefono_1|trim}} 
+                  {% if datos.logistica.telefono_2 is defined %}
+                    {% if datos.logistica.telefono_2 == "''" %}
+                    {% else %}{{datos.logistica.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>   
+              <tr>
+                <td><strong>Responsable Movilizaci&oacute;n</strong></td>
+                <td><div class="editarNombre" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.apellidos_nombres}} (CI.{{datos.movilizacion.cedula}})</div></td>
+              </tr> 
+              <tr>
+                <td ><strong>Tel&eacute;fonos</strong></td>
+                <td ><div class="editarTelf" id="{{datos.movilizacion.id_ubch}}">{{datos.movilizacion.telefono_1|trim}} 
+                  {% if datos.movilizacion.telefono_2 is defined %}
+                    {% if datos.movilizacion.telefono_2 == "''" %}
+                    {% else %}{{datos.movilizacion.telefono_2|trim}}
+                    {% endif %}
+                  {% endif %}
+                </div></td>
+              </tr>
+            <tr>
+              <td><strong>Responsable Testigos</strong></td>
+              <td><div class="editarNombre" id="{{datos.testigo.id_ubch}}">{{datos.testigo.apellidos_nombres}} (CI.{{datos.testigo.cedula}})</div></td>
+            </tr>  
+            <tr>
+              <td><strong>Tel&eacute;fonos</strong></td>
+              <td><div class="editarTelf" id="{{datos.testigo.id_ubch}}">{{datos.testigo.telefono_1|trim}} 
+                {% if datos.testigo.telefono_2 is defined %}
+                  {% if datos.testigo.telefono_2 == "''" %}
+                  {% else %}{{datos.testigo.telefono_2|trim}}
+                  {% endif %}
+                {% endif %}
+              </div></td>
+            </tr>
+            </thead> 
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <div class="row">
+        <div class="col-xs-12">
+          <div style="width:395px; ">
+            <table class="table1" id="mytable" border="0">
+              <thead>
+                <tr>
+                  {% for candidato in candidatos %}
+                    {% if candidato.apellidoNombre is defined %}
+                      <td width=130><strong>{{candidato.apellidoNombre}}</strong><br><img class="img-rounded" alt="Imagen" title="{{candidato.apellidoNombre}}" id="img" src="{{ asset('imagenes/fotosCandidatos/'~candidato.rutaFoto~'') }}" height="50" width="60" >
+                      </td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div style="width:399px; height:300px; overflow: auto; position:relative; ">
+            <table class="table1" id="mytable1" border="0">
+              
+              {% for cant_mesas in 1..cv.cantidadMesas %}
+                <tr>
+                  {% for candidato in candidatos %}
+                    {% if candidato.apellidoNombre is defined %}
+                      {% set valueVoto = '' %}
+                      {% set valueVotoLista = '' %}
+                      {% set mesaActual = loop.parent.loop.index %}
+                      {% for votoMesa in votosMesa %}
+                        {% if votoMesa.candidato.id ==  candidato.id and votoMesa.nroMesa == mesaActual and 
+                        votoMesa.centroVotacion.id == cv.id %}
+                          {% set valueVoto = votoMesa.votos %}
+                          {% set valueVotoLista = votoMesa.votosLista %}
+                        {% endif %}
+                      {% endfor %}
+                      <td width=130>
+                        <strong>Mesa {{ loop.parent.loop.index }}</strong>
+                        <input style="width:78px;"  class="form-control" type="number" id="candidato_{{loop.parent.loop.index}}" name="form[{{candidato.id~"_"~loop.parent.loop.index}}]" min="0" maxlength="10" onkeypress="return isNumber(event);" placeholder="Nominal" value="{{ valueVoto }}" {% if valueVoto is not empty %}readonly='true'{% endif %}><input style="width:78px;"  class="form-control" type="number" id="candidato_{{loop.parent.loop.index}}" name="form[lista_{{candidato.id~"_"~loop.parent.loop.index}}]" min="0" maxlength="10" onkeypress="return isNumber(event);" placeholder="lista" value="{{ valueVotoLista }}" {% if valueVotoLista is not empty %}readonly='true'{% endif %}>
+                      </td>{% endif %}
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              {% if candidatos is empty %}
+                <tr>
+                  <td colspan="15"><strong>Sin candidatos</strong></td>
+                </tr>
+              {% endif %}
+              <tr class="incidencias">
+                  <td colspan="9"><br /><strong for="form_tipo_incidencia" id='label_form_tipo_incidencia'>Tipo de incidencia</strong></td>
+              <tr>
+                <td colspan="2"><select id="form_tipo_incidencia" name="form[tipo_incidencia]" class="form-control input-sm validate[required]">
+                    <option value="ninguna" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "ninguna" %}selected="selected"{% endif %}{% endif %}>Ninguna</option>
+                    <option value="logistica" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "logistica" %}selected="selected"{% endif %}{% endif %}>Log&iacute;stica</option>
+                    <option value="seguridad" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "seguridad" %}selected="selected"{% endif %}{% endif %}>Seguridad/Orden P&uacute;blico</option>
+                    <option value="energia" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "energia" %}selected="selected"{% endif %}{% endif %}>Energia/Servicios</option>
+                    <option value="meteorologicos" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "meteorologicos" %}selected="selected"{% endif %}{% endif %}>Meteorol&oacute;gicos</option>
+                    <option value="cne" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "cne" %}selected="selected"{% endif %}{% endif %}>CNE</option>
+                    <option value="otras" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "otras" %}selected="selected"{% endif %}{% endif %}>Otras</option>
+                    <option value="resuelta" {% if incidencias is not null %}{% if incidencias.tipoIncidencia|trim == "resuelta" %}selected="selected"{% endif %}{% endif %}>Resuelta</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="15"><strong>Incidencias</strong></td>
+              </tr>
+              <tr>
+                <td colspan="15">
+                  <textarea style="width:380px; height:100px; resize:none;" class="form-control" name="form[incidencias]" maxlength="255"></textarea>
+                </td>
+              </tr>                            
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <center> <input class="fueraoverflow2 btn btn-default" type="submit" value="Guardar" name="form[boton_guardar_fase3]" /> {% if totalizacion != "totalizacion" and buscarTodo == "todos" %}<input class="fueraoverflow2 btn btn-default" type="submit" id="otro" value="Buscar Otro" name="form[boton_buscar]" /> {% endif %}
+            <a href="{{ path('encuestas_datosEncuestaSufragio', {'id_encuesta': encuesta.id}) }}"><input class="fueraoverflow2 btn btn-default" type="button" value="Cancelar" name="form[boton_cancelar]" /></a>
+          </center>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){ 
+      
+      $( "#mytable1 tr:even" ).css( "background-color", "#d0d2d3" ); 
+
+      $('#otro').on( "click", function() {
+        $('*[type="number"]').removeClass( "validate[required]" );
+        $('#form_tipo_incidencia').removeClass( "validate[required]" );
+      });
+
+      $( "#mytable tr:even" ).css( "background-color", "#d0d2d3" ); 
+      var candidatos = "{{ candidatos | length}}";
+      
+      if(candidatos == 0){
+
+        $(this).tab('show');
+        BootstrapDialog.show({
+          title: 'Mensaje',
+          message: ('Este centro de votación no tiene candidatos asignados'),
+          buttons: [{
+            id: 'btn-ok',   
+            //icon: 'glyphicon glyphicon-check',
+            label: 'Aceptar',
+            cssClass: 'btn btn-default',
+            autospin: false,
+            action: function(dialogRef){    
+              dialogRef.close();
+            }
+          }]
+        })
+      }
+      /* campo editables */
+      $('.editarNombre').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         //indicator : "Guardando...",
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'nombre',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+
+      /* campo editables telefono*/
+      $('.editarTelf').editable('{{ path("encuestas_editar_datos",{"tipo":"ubch"}) }}', {
+         indicator : "<img src='{{ asset('images/bx_loader.gif') }}'>",
+         tooltip   : 'Doble clic para editar...',
+         id   : 'telefono',
+         event  : "dblclick",
+         submit  : 'OK'
+      });
+      /*  */
+
+
+    });
+
+    function isNumber(e) {
+      k = (document.all) ? e.keyCode : e.which;
+      if (k==8 || k==0) return true;
+      patron = /\d/;
+      n = String.fromCharCode(k);
+      return patron.test(n);
+    }
+
+  </script> 
+{% endblock %}

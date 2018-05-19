@@ -1,0 +1,45 @@
+mapas_estadisticos_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MapasEstadisticosBundle:Default:index }
+
+#mapas_estadisticos_mapa:
+#   pattern:     /
+#   defaults: { _controller: MapasEstadisticosBundle:Default:mapa }
+
+mapas_estadisticos_mapa2:
+    pattern:     /mapa2/{id_eje}
+    defaults: { _controller: MapasEstadisticosBundle:Default:mapa2 }
+mapas_estadisticos_detalle_municipio:
+    pattern:     /detalle_municipio/{id_municipio}
+    defaults: { _controller: MapasEstadisticosBundle:Default:detalle_municipio }
+mapas_estadisticos_detalle_parroquia:
+    pattern:     /detalle_parroquia/{id_parroquia}
+    defaults: { _controller: MapasEstadisticosBundle:Default:detalle_parroquia }
+
+mapas_cargar_proyecto:
+    pattern:     /{id_proyecto}
+    defaults: { _controller: MapasEstadisticosBundle:Proyectos:cargarProyectos }
+
+
+mapas_cargar_proyecto_ventana:
+    pattern:     /ventana/{id_encuesta}
+    defaults: { _controller: MapasEstadisticosBundle:Proyectos:cargarProyectosVentana }
+mapas_estadisticos_mapa_ventana2:
+    pattern:     /mapa2_ventana/{id_eje}
+    defaults: { _controller: MapasEstadisticosBundle:Default:mapa2Ventana }
+mapas_estadisticos_detalle_municipio_ventana:
+    pattern:     /detalle_municipio_ventana/{id_municipio}
+    defaults: { _controller: MapasEstadisticosBundle:Default:detalle_municipioVentana }
+mapas_estadisticos_detalle_parroquia_ventana:
+    pattern:     /detalle_parroquia_ventana/{id_parroquia}
+    defaults: { _controller: MapasEstadisticosBundle:Default:detalle_parroquiaVentana }
+mapas_estadisticos_cartografia_ventana:
+    pattern:     /cartografia_ventana/{id_parroquia}
+    defaults: { _controller: MapasEstadisticosBundle:Default:cartografiaVentana }
+mapas_circuito_ventana:
+    pattern:     /circuito/{id_encuesta}
+    defaults: { _controller: MapasEstadisticosBundle:Default:mapaCircuito }
+mapas_estadisticos_mapaCircuito2:
+    pattern:     /mapa2_circuito/{id_circuito}
+    defaults: { _controller: MapasEstadisticosBundle:Default:mapaCircuito2 }
+
